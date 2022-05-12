@@ -3,14 +3,36 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-userRouter.get('/', async (req, res) => {
-  const users = await User.find({});
+userRouter.get('/', async (_req, res) => {
+  const users = await User.find({})
+    .populate('contacts', 'username')
+    .populate('invitations', 'username');
   res.json(users);
 });
 
 userRouter.get('/:id', async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id)
+    .populate('contacts', 'username')
+    .populate('invitations', 'username');
   res.json(user);
+});
+
+userRouter.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  const user = await User.findOne({ username });
+
+  const passwordCorrect = user === null
+    ? false
+    : await bcrypt.compare(password, user.passwordHash);
+
+  if (!(user && passwordCorrect)) {
+    return res.status(401).json({
+      error: 'invalid username or password'
+    });
+  }
+
+  res.status(200).json(user);
 });
 
 userRouter.post('/register', async (req, res) => {

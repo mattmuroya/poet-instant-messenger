@@ -50,3 +50,25 @@ describe('user registration', () => {
   expect(res.error.text).toBe('{"error":"username unavailable"}')
   });
 });
+
+describe('user login', () => {
+  test('can log in with valid credentials', async () => {
+    const res = await api.post('/api/users/login')
+      .send({
+        username: 'user1',
+        password: 'user1234'
+      })
+      .expect(200);
+    expect (res.body.username).toBe('user1');
+  });
+
+  test('invalid credentails are rejected', async () => {
+    const res = await api.post('/api/users/login')
+      .send({
+        username: 'user2',
+        password: 'wrongPassword'
+      })
+      .expect(401);
+    expect(res.error.text).toBe('{"error":"invalid username or password"}');
+  });
+});
