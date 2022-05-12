@@ -52,14 +52,15 @@ describe('user registration', () => {
 });
 
 describe('user login', () => {
-  test.only('can log in with valid credentials', async () => {
+  test('can log in with valid credentials', async () => {
     const res = await api.post('/api/users/login')
       .send({
         username: 'user1',
         password: 'user1234'
       })
       .expect(200);
-    expect (res.body.username).toBe('user1');
+    expect(res.body.username).toBe('user1');
+    expect(typeof res.body.token).toBe('string');
   });
 
   test('invalid credentails are rejected', async () => {
@@ -70,5 +71,31 @@ describe('user login', () => {
       })
       .expect(401);
     expect(res.error.text).toBe('{"error":"invalid username or password"}');
+  });
+});
+
+describe('getting user data', () => {
+  test('can get user data with valid token', async () => {
+    const loginRes = await api.post('/api/users/login')
+      .send({
+        username: 'admin',
+        password: 'admin1234'
+      });
+    const token = loginRes.body.token;
+    const res = await api.get('/api/users')
+      .set({
+        Authorization: `bearer ${token}`
+      })
+      .expect(200);
+    expect(res.body).toHaveLength(4); // 4th user added in prev test
+  });
+
+  test('get user data rejected with missing/invalid token', async () => {
+    const res = await api.get('/api/users')
+      .set({
+        Authorization: 'bearer BADTOKEN'
+      })
+      .expect(401);
+    expect(res.error.text).toBe('{"error":"token missing or invalid"}');
   });
 });

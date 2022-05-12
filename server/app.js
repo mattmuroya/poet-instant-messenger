@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'production') {
 // REQUEST PROCESSORS
 app.use(express.json());
 app.use(reqLogger);
-app.use(tokenExtractor)
+app.use(tokenExtractor);
 
 // ROUTES
 app.use('/api/users', userRouter);

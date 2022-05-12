@@ -3,18 +3,34 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-userRouter.get('/', async (_req, res) => {
-  const users = await User.find({})
-    .populate('contacts', 'username')
-    .populate('invitations', 'username');
-  res.json(users);
+userRouter.get('/', async (req, res) => {
+  try {
+    const decodedToken = jwt.verify(req.token, process.env.JWT_SECRET);
+    const users = await User.find({})
+      .populate('contacts', 'username')
+      .populate('invitations', 'username');
+    res.json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(401).json({
+      error: 'token missing or invalid'
+    });
+  }
 });
 
 userRouter.get('/:id', async (req, res) => {
-  const user = await User.findById(req.params.id)
-    .populate('contacts', 'username')
-    .populate('invitations', 'username');
-  res.json(user);
+  try {
+    const decodedToken = jwt.verify(req.token, process.env.JWT_SECRET);
+    const user = await User.findById(req.params.id)
+      .populate('contacts', 'username')
+      .populate('invitations', 'username');
+    res.json(user);
+  } catch (error) {
+    console.log(error);
+    res.status(401).json({
+      error: 'token missing or invalid'
+    });
+  }
 });
 
 userRouter.post('/login', async (req, res) => {
