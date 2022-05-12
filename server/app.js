@@ -9,9 +9,9 @@ const {
   tokenExtractor,
   catchAll
 } = require('./middleware/middleware');
-// const userRouter = require('./controllers/userRouter');
-// const chatRouter = require('./controllers/chatRouter');
-// const messageRouter = require('./controllers/messageRouter');
+const userRouter = require('./routes/userRouter');
+// const chatRouter = require('./routes/chatRouter');
+// const messageRouter = require('./routes/messageRouter');
 
 (async () => {
   try {
@@ -32,7 +32,7 @@ app.use(reqLogger);
 app.use(tokenExtractor)
 
 // ROUTES
-// app.use('/api/users', userRouter);
+app.use('/api/users', userRouter);
 // app.use('/api/chats', chatRouter);
 // app.use('/api/messages', messageRouter);
 app.use(catchAll);
