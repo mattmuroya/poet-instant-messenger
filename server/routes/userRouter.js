@@ -13,7 +13,7 @@ userRouter.get('/:id', async (req, res) => {
   res.json(user);
 });
 
-userRouter.post('/signup', async (req, res) => {
+userRouter.post('/register', async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {

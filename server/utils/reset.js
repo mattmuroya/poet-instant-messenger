@@ -1,26 +1,27 @@
+const mongoose = require('mongoose');
 const supertest = require('supertest');
 const app = require('../app');
 const api = supertest(app);
 
 const User = require('../models/user');
-const { info } = require('../utils/info');
+const { info } = require('./info');
 
-const resetTestDb = async () => {
+const resetTestData = async () => {
   await User.deleteMany({});
 
-  const admin = await api.post('/api/users/signup')
+  const admin = await api.post('/api/users/register')
     .send({
       username: 'admin',
       password: 'admin1234'
     });
   
-  const user1 = await api.post('/api/users/signup')
+  const user1 = await api.post('/api/users/register')
     .send({
       username: 'user1',
       password: 'user1234'
     });
 
-  const user2 = await api.post('/api/users/signup')
+  const user2 = await api.post('/api/users/register')
     .send({
       username: 'user2',
       password: 'user1234'
@@ -69,13 +70,18 @@ const resetTestDb = async () => {
   //   });
 };
 
+const closeConnection = async () => {
+  await mongoose.connection.close();
+}
+
 const reset = async () => {
   await resetTestDb();
-  await require('mongoose').connection.close();
+  await closeConnection();
   info('test Db reset complete')
 }
 
 module.exports = {
-  resetTestDb,
+  resetTestData,
+  closeConnection,
   reset
 };
