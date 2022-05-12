@@ -52,7 +52,7 @@ describe('user registration', () => {
 });
 
 describe('user login', () => {
-  test('can log in with valid credentials', async () => {
+  test.only('can log in with valid credentials', async () => {
     const res = await api.post('/api/users/login')
       .send({
         username: 'user1',

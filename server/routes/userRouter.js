@@ -32,7 +32,17 @@ userRouter.post('/login', async (req, res) => {
     });
   }
 
-  res.status(200).json(user);
+  const token = jwt.sign(
+    { id: user._id.toString() },
+    process.env.JWT_SECRET,
+    { expiresIn: 60*60*24 }
+  );
+
+  res.status(200).json({
+    id: user._id.toString(),
+    username: user.username,
+    token
+  });
 });
 
 userRouter.post('/register', async (req, res) => {
