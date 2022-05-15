@@ -13,9 +13,9 @@ export default function Taskbar() {
 }
 
 const Bar = styled.div`
-  height: 36px;
+  height: 32px;
   width: 100%;
-  padding: 3px;
+  padding: 4px 3px 3px;
   box-sizing: border-box;
   position: fixed;
   bottom: 0;
