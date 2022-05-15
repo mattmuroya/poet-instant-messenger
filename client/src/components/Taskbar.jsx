@@ -1,17 +1,21 @@
 import styled from "styled-components";
+import windowsLogo from "../assets/windows-logo.png";
 
 export default function Taskbar() {
   return (
     <Bar>
-      <StartButton>Start</StartButton>
+      <StartButton>
+        <img src={windowsLogo} alt="welcome" style={{ height: "1.4rem" }} />
+        <span>Start</span>
+      </StartButton>
     </Bar>
   );
 }
 
 const Bar = styled.div`
-  height: 32px;
+  height: 36px;
   width: 100%;
-  padding: 3px 0 4px;
+  padding: 3px;
   box-sizing: border-box;
   position: fixed;
   bottom: 0;
@@ -21,7 +25,9 @@ const Bar = styled.div`
 
 const StartButton = styled.button`
   height: 100%;
-  margin-left: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-weight: bold;
   -webkit-font-smoothing: none !important;
 `;

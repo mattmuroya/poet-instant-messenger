@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import windowsLogo from "../assets/windows-logo.png";
 
 export default function Regsiter() {
   return (
@@ -6,7 +7,7 @@ export default function Regsiter() {
       <div className="window" style={{ width: "300px" }}>
         <div className="title-bar">
           <div className="title-bar-text">
-            Poet Instant Messenger - Register
+            Register - Poet Instant Messenger
           </div>
           <div className="title-bar-controls">
             {/* <button aria-label="Minimize"></button>
@@ -16,8 +17,8 @@ export default function Regsiter() {
         </div>
         <div className="window-body">
           <img
-            src="https://images.unsplash.com/photo-1502472584811-0a2f2feb8968?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80"
-            alt="welcome"
+            src={windowsLogo}
+            alt="register"
             style={{ width: "100%", paddingBottom: "10px" }}
           />
           <form>

@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import windowsLogo from "../assets/windows-logo.png";
 
 export default function Login() {
   return (
     <section>
-      <div className="window" style={{ width: "300px" }}>
+      <div className="window" style={{ width: "350px" }}>
         <div className="title-bar">
-          <div className="title-bar-text">Poet Instant Messenger - Login</div>
+          <div className="title-bar-text">Login - Poet Instant Messenger</div>
           <div className="title-bar-controls">
             {/* <button aria-label="Minimize"></button>
             <button aria-label="Maximize"></button> */}
@@ -14,8 +15,8 @@ export default function Login() {
         </div>
         <div className="window-body">
           <img
-            src="https://images.unsplash.com/photo-1531419859879-934d18f6c42d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-            alt="welcome"
+            src={windowsLogo}
+            alt="login"
             style={{ width: "100%", paddingBottom: "10px" }}
           />
           <form>
@@ -27,7 +28,6 @@ export default function Login() {
               <label htmlFor="password">Password</label>
               <input id="password" type="password" />
             </div>
-
             <div className="field-row" style={{ justifyContent: "flex-end" }}>
               <button>Login</button>
             </div>
