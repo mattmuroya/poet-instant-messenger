@@ -10,8 +10,6 @@ export default function Regsiter() {
             Register - Poet Instant Messenger
           </div>
           <div className="title-bar-controls">
-            {/* <button aria-label="Minimize"></button>
-            <button aria-label="Maximize"></button> */}
             <button aria-label="Close"></button>
           </div>
         </div>
@@ -41,12 +39,10 @@ export default function Regsiter() {
             <div className="field-row" style={{ justifyContent: "flex-end" }}>
               <button>Register</button>
             </div>
-            <div className="field-row">
-              <p>
-                Already have an account? <Link to="/login">Login</Link>
-              </p>
-            </div>
           </form>
+          <p>
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
         </div>
       </div>
     </section>

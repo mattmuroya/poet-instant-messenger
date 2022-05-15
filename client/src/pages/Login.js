@@ -16,8 +16,6 @@ export default function Login() {
         <div className="title-bar">
           <div className="title-bar-text">Login - Poet Instant Messenger</div>
           <div className="title-bar-controls">
-            {/* <button aria-label="Minimize"></button>
-            <button aria-label="Maximize"></button> */}
             <button aria-label="Close"></button>
           </div>
         </div>
@@ -39,9 +37,6 @@ export default function Login() {
             <div className="field-row" style={{ justifyContent: "flex-end" }}>
               <button>Login</button>
             </div>
-            {/* <div className="field-row"> */}
-
-            {/* </div> */}
           </form>
           <p>
             Don't have an account? <Link to="/register">Register</Link>
