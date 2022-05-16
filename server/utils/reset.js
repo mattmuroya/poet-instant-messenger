@@ -4,7 +4,6 @@ const app = require("../app");
 const api = supertest(app);
 
 const User = require("../models/user");
-const { info } = require("./info");
 
 const resetTestData = async () => {
   await User.deleteMany({});
@@ -70,9 +69,9 @@ const closeConnection = async () => {
 };
 
 const reset = async () => {
-  await resetTestDb();
+  await resetTestData();
   await closeConnection();
-  info("test Db reset complete");
+  console.log("test Db reset complete");
 };
 
 module.exports = {

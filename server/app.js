@@ -1,14 +1,11 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const info = require("./utils/info");
 const { MONGODB_URL } = require("./utils/config");
-const { info } = require("./utils/info");
+const reqLogger = require("./middleware/reqLogger");
+const tokenValidator = require("./middleware/tokenValidator");
 
-const {
-  reqLogger,
-  tokenExtractor,
-  catchAll,
-} = require("./middleware/middleware");
 const userRouter = require("./routes/userRouter");
 // const chatRouter = require('./routes/chatRouter');
 // const messageRouter = require('./routes/messageRouter');
@@ -29,12 +26,18 @@ if (process.env.NODE_ENV === "production") {
 // REQUEST PROCESSORS
 app.use(express.json());
 app.use(reqLogger);
-app.use(tokenExtractor);
+app.use(tokenValidator);
 
-// ROUTES
+// REQUEST ROUTERS
 app.use("/api/users", userRouter);
 // app.use('/api/chats', chatRouter);
 // app.use('/api/messages', messageRouter);
-app.use(catchAll);
+
+// CATCH ROUTE
+app.use((_req, res) => {
+  res.status(404).json({
+    error: "Unknown endpoint.",
+  });
+});
 
 module.exports = app;
