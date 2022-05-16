@@ -100,6 +100,6 @@ describe("getting user data", () => {
         Authorization: "bearer BADTOKEN",
       })
       .expect(401);
-    expect(res.error.text).toBe('{"error":"token missing or invalid"}');
+    expect(res.error.text).toBe('{"error":"Token missing or invalid."}');
   });
 });

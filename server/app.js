@@ -9,6 +9,8 @@ const tokenValidator = require("./middleware/tokenValidator");
 const userRouter = require("./routes/userRouter");
 // const chatRouter = require('./routes/chatRouter');
 // const messageRouter = require('./routes/messageRouter');
+const catchRouter = require("./routes/catchRouter");
+const errorHandler = require("./middleware/errorHandler");
 
 (async () => {
   try {
@@ -33,11 +35,10 @@ app.use("/api/users", userRouter);
 // app.use('/api/chats', chatRouter);
 // app.use('/api/messages', messageRouter);
 
-// CATCH ROUTE
-app.use((_req, res) => {
-  res.status(404).json({
-    error: "Unknown endpoint.",
-  });
-});
+// CATCH ROUTER
+app.use(catchRouter);
+
+// ERROR HANDLER
+app.use(errorHandler);
 
 module.exports = app;
