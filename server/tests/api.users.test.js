@@ -27,7 +27,7 @@ describe("user registration", () => {
         password: "hunter-2",
       })
       .expect(400);
-    expect(res.error.text).toBe('{"error":"username and password required"}');
+    expect(res.error.text).toBe('{"error":"Username and password required."}');
   });
 
   test("missing password returns 400", async () => {
@@ -37,7 +37,7 @@ describe("user registration", () => {
         username: "mattmuroya",
       })
       .expect(400);
-    expect(res.error.text).toBe('{"error":"username and password required"}');
+    expect(res.error.text).toBe('{"error":"Username and password required."}');
   });
 
   test("duplicate username returns 409", async () => {
@@ -48,7 +48,7 @@ describe("user registration", () => {
         password: "hunter-2",
       })
       .expect(409);
-    expect(res.error.text).toBe('{"error":"username unavailable"}');
+    expect(res.error.text).toBe('{"error":"Username unavailable."}');
   });
 });
 
@@ -73,7 +73,7 @@ describe("user login", () => {
         password: "wrongPassword",
       })
       .expect(401);
-    expect(res.error.text).toBe('{"error":"invalid username or password"}');
+    expect(res.error.text).toBe('{"error":"Invalid username or password."}');
   });
 });
 
@@ -97,9 +97,40 @@ describe("getting user data", () => {
     const res = await api
       .get("/api/users")
       .set({
-        Authorization: "bearer BADTOKEN",
+        Authorization: "bearer BAD_TOKEN",
       })
       .expect(401);
     expect(res.error.text).toBe('{"error":"Token missing or invalid."}');
+  });
+
+  test("can get user by id", async () => {
+    const loginRes = await api.post("/api/users/login").send({
+      username: "admin",
+      password: "admin1234",
+    });
+    const id = loginRes.body.id;
+    const token = loginRes.body.token;
+    const res = await api
+      .get(`/api/users/${id}`)
+      .set({
+        Authorization: `bearer ${token}`,
+      })
+      .expect(200);
+    expect(res.body.username).toBe("admin");
+  });
+
+  test("get user by id rejected with bad id", async () => {
+    const loginRes = await api.post("/api/users/login").send({
+      username: "admin",
+      password: "admin1234",
+    });
+    const token = loginRes.body.token;
+    const res = await api
+      .get("/api/users/BAD_ID")
+      .set({
+        Authorization: `bearer ${token}`,
+      })
+      .expect(400);
+    expect(res.error.text).toBe('{"error":"Invalid userId."}');
   });
 });
