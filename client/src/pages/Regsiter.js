@@ -1,25 +1,29 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import styled from "styled-components";
 import windowsLogo from "../assets/windows-logo.png";
 
 export default function Regsiter() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const inputsAreValid = () => {
     if (!username || !password) {
-      alert("Username and password required.");
+      setErrorMessage("Username and password required.");
       return false;
     } else if (username.length > 32) {
-      alert("Username limited to 32 characters.");
+      setErrorMessage("Username limited to 32 characters.");
       return false;
     } else if (password.length < 8) {
-      alert("Password must be at least 8 characters.");
+      setErrorMessage("Password must be at least 8 characters.");
       return false;
     } else if (password !== confirmPassword) {
-      alert("Passwords do not match.");
+      setErrorMessage("Passwords do not match.");
       return false;
     }
     return true;
@@ -34,10 +38,15 @@ export default function Regsiter() {
           password,
         });
         console.log(data);
+        navigate("/login", {
+          state: {
+            successMessage: "User registration successful! Please login below.",
+          },
+        });
       }
     } catch (error) {
       console.error(error.response);
-      alert(error.response.data.error);
+      setErrorMessage(error.response.data.error);
     }
     //
   };
@@ -59,6 +68,7 @@ export default function Regsiter() {
             alt="register"
             style={{ width: "100%", paddingBottom: "10px" }}
           />
+          <ErrorMessage>{errorMessage}</ErrorMessage>
           <form onSubmit={(e) => handleRegistration(e)}>
             <div className="field-row-stacked">
               <label htmlFor="username">Username</label>
@@ -96,3 +106,8 @@ export default function Regsiter() {
     </section>
   );
 }
+
+const ErrorMessage = styled.div`
+  color: #ff0000;
+  padding-bottom: 1rem;
+`;
