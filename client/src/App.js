@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import "./App.css";
 import "98.css";
-import Chat from "./pages/Chat";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Regsiter from "./pages/Regsiter";
 import NotFound from "./pages/NotFound";
@@ -13,7 +13,7 @@ export default function App() {
     <Desktop>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Chat />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Regsiter />} />
           <Route path="*" element={<NotFound />} />

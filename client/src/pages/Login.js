@@ -1,13 +1,31 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import windowsLogo from "../assets/windows-logo.png";
 import styled from "styled-components";
 
 export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
   const handleLoginAsGuest = () => {
     console.log("to implement: set guest user");
     navigate("/");
+  };
+
+  const handleLogin = async (e) => {
+    try {
+      e.preventDefault();
+      const { data } = await axios.post("/api/users/login", {
+        username,
+        password,
+      });
+      alert("to implement: login response handling");
+    } catch (error) {
+      console.error(error.response.data.error);
+    }
   };
 
   return (
@@ -25,14 +43,22 @@ export default function Login() {
             alt="login"
             style={{ width: "100%", paddingBottom: "10px" }}
           />
-          <form>
+          <form onSubmit={(e) => handleLogin(e)}>
             <div className="field-row-stacked">
               <label htmlFor="username">Username</label>
-              <input id="username" type="text" />
+              <input
+                id="username"
+                type="text"
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </div>
             <div className="field-row-stacked">
               <label htmlFor="password">Password</label>
-              <input id="password" type="password" />
+              <input
+                id="password"
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <div className="field-row" style={{ justifyContent: "flex-end" }}>
               <button>Login</button>

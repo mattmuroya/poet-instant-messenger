@@ -1,4 +1,4 @@
-const tokenValidator = (req, _res, next) => {
+const tokenExtractor = (req, _res, next) => {
   const auth = req.get("authorization");
   if (auth && auth.toLowerCase().startsWith("bearer ")) {
     req.token = auth.substring(7);
@@ -6,4 +6,4 @@ const tokenValidator = (req, _res, next) => {
   next();
 };
 
-module.exports = tokenValidator;
+module.exports = tokenExtractor;

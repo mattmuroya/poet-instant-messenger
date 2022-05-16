@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const info = require("./utils/info");
 const { MONGODB_URL } = require("./utils/config");
 const reqLogger = require("./middleware/reqLogger");
-const tokenValidator = require("./middleware/tokenValidator");
+const tokenExtractor = require("./middleware/tokenExtractor");
 
 const userRouter = require("./routes/userRouter");
 // const chatRouter = require('./routes/chatRouter');
@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === "production") {
 // REQUEST PROCESSORS
 app.use(express.json());
 app.use(reqLogger);
-app.use(tokenValidator);
+app.use(tokenExtractor);
 
 // REQUEST ROUTERS
 app.use("/api/users", userRouter);
