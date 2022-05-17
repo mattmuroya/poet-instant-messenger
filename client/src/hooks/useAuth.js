@@ -16,6 +16,7 @@ export const useAuth = () => {
           const { data } = await axios.post("/api/auth", lastSavedUser, {
             headers: {
               Authorization: `bearer ${lastSavedUser.token}`,
+              // Authorization: "bearer BADTOKEN",
             },
           });
           console.log(data);
