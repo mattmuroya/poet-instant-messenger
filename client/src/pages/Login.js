@@ -1,5 +1,7 @@
-import { useEffect, useState, useCallback } from "react";
-import { Link, useLocation, useHistory, useNavigate } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { UserContext } from "../contexts/UserContext";
+
 import axios from "axios";
 import windowsLogo from "../assets/windows-logo.png";
 import styled from "styled-components";
@@ -11,6 +13,8 @@ export default function Login() {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { setUser } = useContext(UserContext);
 
   useEffect(() => {
     // clear the 'registration successful' message on reload
@@ -34,6 +38,7 @@ export default function Login() {
           password,
         });
         console.log(data);
+        setUser(data);
         navigate("/");
       }
     } catch (error) {
