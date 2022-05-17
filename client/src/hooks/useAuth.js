@@ -19,7 +19,7 @@ export const useAuth = () => {
               // Authorization: "bearer BADTOKEN",
             },
           });
-          console.log(data);
+          localStorage.setItem("poet_user", JSON.stringify(data));
           setSavedUser(data);
           setUser(data);
         }
