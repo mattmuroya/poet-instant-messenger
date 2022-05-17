@@ -6,6 +6,7 @@ const { MONGODB_URL } = require("./utils/config");
 const reqLogger = require("./middleware/reqLogger");
 const tokenExtractor = require("./middleware/tokenExtractor");
 
+const authRouter = require("./routes/authRouter");
 const userRouter = require("./routes/userRouter");
 // const chatRouter = require('./routes/chatRouter');
 // const messageRouter = require('./routes/messageRouter');
@@ -31,6 +32,7 @@ app.use(reqLogger);
 app.use(tokenExtractor);
 
 // REQUEST ROUTERS
+app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 // app.use('/api/chats', chatRouter);
 // app.use('/api/messages', messageRouter);
