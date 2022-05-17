@@ -5,6 +5,7 @@ import { UserContext } from "../contexts/UserContext";
 import axios from "axios";
 import windowsLogo from "../assets/windows-logo.png";
 import styled from "styled-components";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -16,10 +17,16 @@ export default function Login() {
 
   const { setUser } = useContext(UserContext);
 
+  const { savedUser, authCheckCompleted } = useAuth();
+
   useEffect(() => {
-    // clear the 'registration successful' message on reload
     window.history.replaceState(null, "");
   }, []);
+
+  useEffect(() => {
+    console.log("hi there");
+    if (savedUser) navigate("/");
+  }, [savedUser, navigate]);
 
   const inputsAreValid = () => {
     if (!username || !password) {
@@ -38,6 +45,7 @@ export default function Login() {
           password,
         });
         console.log(data);
+        localStorage.setItem("poet_user", JSON.stringify(data));
         setUser(data);
         navigate("/");
       }
@@ -53,55 +61,58 @@ export default function Login() {
   };
 
   return (
-    <section>
-      <div className="window" style={{ width: "300px" }}>
-        <div className="title-bar">
-          <div className="title-bar-text">Login - Poet Instant Messenger</div>
-          <div className="title-bar-controls">
-            <button aria-label="Close"></button>
+    authCheckCompleted &&
+    !savedUser && (
+      <section>
+        <div className="window" style={{ width: "300px" }}>
+          <div className="title-bar">
+            <div className="title-bar-text">Login - Poet Instant Messenger</div>
+            <div className="title-bar-controls">
+              <button aria-label="Close"></button>
+            </div>
+          </div>
+          <div className="window-body">
+            <img
+              src={windowsLogo}
+              alt="login"
+              style={{ width: "100%", paddingBottom: "10px" }}
+            />
+            <ErrorMessage>{errorMessage}</ErrorMessage>
+            {location.state && (
+              <SuccessMessage>{location.state.successMessage}</SuccessMessage>
+            )}
+            <form onSubmit={(e) => handleLogin(e)}>
+              <div className="field-row-stacked">
+                <label htmlFor="username">Username</label>
+                <input
+                  id="username"
+                  type="text"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              <div className="field-row-stacked">
+                <label htmlFor="password">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="field-row" style={{ justifyContent: "flex-end" }}>
+                <button>Login</button>
+              </div>
+            </form>
+            <p>
+              Don't have an account? <Link to="/register">Register</Link>
+            </p>
+            <p>
+              Or, login as a{" "}
+              <LinkButton onClick={handleLoginAsGuest}>Guest</LinkButton>
+            </p>
           </div>
         </div>
-        <div className="window-body">
-          <img
-            src={windowsLogo}
-            alt="login"
-            style={{ width: "100%", paddingBottom: "10px" }}
-          />
-          <ErrorMessage>{errorMessage}</ErrorMessage>
-          {location.state && (
-            <SuccessMessage>{location.state.successMessage}</SuccessMessage>
-          )}
-          <form onSubmit={(e) => handleLogin(e)}>
-            <div className="field-row-stacked">
-              <label htmlFor="username">Username</label>
-              <input
-                id="username"
-                type="text"
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div className="field-row-stacked">
-              <label htmlFor="password">Password</label>
-              <input
-                id="password"
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div className="field-row" style={{ justifyContent: "flex-end" }}>
-              <button>Login</button>
-            </div>
-          </form>
-          <p>
-            Don't have an account? <Link to="/register">Register</Link>
-          </p>
-          <p>
-            Or, login as a{" "}
-            <LinkButton onClick={handleLoginAsGuest}>Guest</LinkButton>
-          </p>
-        </div>
-      </div>
-    </section>
+      </section>
+    )
   );
 }
 

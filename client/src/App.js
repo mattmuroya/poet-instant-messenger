@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserContext } from "./contexts/UserContext";
+import { useAuth } from "./hooks/useAuth";
 
 import styled from "styled-components";
 import "./App.css";
@@ -15,9 +16,20 @@ import Taskbar from "./components/Taskbar";
 export default function App() {
   const [user, setUser] = useState(null);
 
+  // const { savedUser, loading, error } = useAuth();
+
+  // console.log({ loading });
+  // console.log({ error });
+  // console.log({ savedUser });
+
+  // useEffect(() => {
+  //   setUser(savedUser);
+  // }, [savedUser]);
+
   return (
     <Desktop>
       <UserContext.Provider value={{ user, setUser }}>
+        {/* {!loading && ( */}
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -26,6 +38,7 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        {/* )} */}
         <Taskbar />
       </UserContext.Provider>
     </Desktop>
