@@ -6,7 +6,7 @@ import app from "../app";
 
 const api = supertest(app);
 
-const resetTestData = async () => {
+export const resetTestData = async () => {
   await User.deleteMany({});
 
   const admin = await api.post("/api/users/register").send({
@@ -65,18 +65,12 @@ const resetTestData = async () => {
   //   });
 };
 
-const closeConnection = async () => {
+export const closeConnection = async () => {
   await mongoose.connection.close();
 };
 
-const reset = async () => {
+export const reset = async () => {
   await resetTestData();
   await closeConnection();
   info("test Db reset complete");
-};
-
-export default {
-  resetTestData,
-  closeConnection,
-  reset,
 };

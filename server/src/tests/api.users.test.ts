@@ -1,7 +1,7 @@
-const supertest = require("supertest");
-const app = require("../app");
+import supertest from "supertest";
+import app from "../app";
 const api = supertest(app);
-const { resetTestData, closeConnection } = require("../utils/reset");
+import { resetTestData, closeConnection } from "../utils/reset";
 
 beforeAll(resetTestData);
 afterAll(closeConnection);
