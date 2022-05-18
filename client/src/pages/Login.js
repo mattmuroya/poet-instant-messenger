@@ -3,8 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 
 import axios from "axios";
-import windowsLogo from "../assets/windows-logo.png";
-import styled from "styled-components";
+import windowsLogo from "../assets/images/windows-logo.png";
 import { useAuth } from "../hooks/useAuth";
 
 export default function Login() {
@@ -63,86 +62,53 @@ export default function Login() {
   return (
     authCheckCompleted &&
     !savedUser && (
-      <section>
-        <div className="window" style={{ width: "300px" }}>
-          <div className="title-bar">
-            <div className="title-bar-text">Login - Poet Instant Messenger</div>
-            <div className="title-bar-controls">
-              <button aria-label="Close"></button>
-            </div>
-          </div>
-          <div className="window-body">
-            <img
-              src={windowsLogo}
-              alt="login"
-              style={{ width: "100%", paddingBottom: "10px" }}
-            />
-            <ErrorMessage>{errorMessage}</ErrorMessage>
-            {location.state && (
-              <SuccessMessage>{location.state.successMessage}</SuccessMessage>
-            )}
-            <form onSubmit={(e) => handleLogin(e)}>
-              <div className="field-row-stacked">
-                <label htmlFor="username">Username</label>
-                <input
-                  id="username"
-                  type="text"
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
-              <div className="field-row-stacked">
-                <label htmlFor="password">Password</label>
-                <input
-                  id="password"
-                  type="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className="field-row" style={{ justifyContent: "flex-end" }}>
-                <button>Login</button>
-              </div>
-            </form>
-            <p>
-              Don't have an account? <Link to="/register">Register</Link>
-            </p>
-            <p>
-              Or, login as a{" "}
-              <LinkButton onClick={handleLoginAsGuest}>Guest</LinkButton>
-            </p>
+      <div className="window login-window">
+        <div className="title-bar">
+          <div className="title-bar-text">Login - Poet Instant Messenger</div>
+          <div className="title-bar-controls">
+            <button aria-label="Close"></button>
           </div>
         </div>
-      </section>
+        <div className="window-body">
+          <img src={windowsLogo} alt="login" />
+          <div className="error-message">{errorMessage}</div>
+          {location.state && (
+            <div className="success-message">
+              {location.state.successMessage}
+            </div>
+          )}
+          <form onSubmit={(e) => handleLogin(e)}>
+            <div className="field-row-stacked">
+              <label htmlFor="username">Username</label>
+              <input
+                id="username"
+                type="text"
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="field-row-stacked">
+              <label htmlFor="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="field-row" style={{ justifyContent: "flex-end" }}>
+              <button>Login</button>
+            </div>
+          </form>
+          <p>
+            Don't have an account? <Link to="/register">Register</Link>
+          </p>
+          <p>
+            Or, login as a{" "}
+            <button className="link-button" onClick={handleLoginAsGuest}>
+              Guest
+            </button>
+          </p>
+        </div>
+      </div>
     )
   );
 }
-
-const ErrorMessage = styled.div`
-  color: #ff0000;
-  padding-bottom: 1rem;
-`;
-
-const SuccessMessage = styled.div`
-  color: #008000;
-  padding-bottom: 1rem;
-`;
-
-const LinkButton = styled.button`
-  display: inline-block;
-  box-shadow: none;
-  padding: 0;
-  min-width: 0;
-  min-height: 0;
-  width: auto;
-  height: auto;
-  color: #0000ff;
-  text-decoration: underline;
-  cursor: pointer;
-
-  &:focus,
-  &:active {
-    box-shadow: none !important;
-    padding: 0 !important;
-    outline: 1px dotted #0000ff;
-    outline-offset: 0px;
-  }
-`;

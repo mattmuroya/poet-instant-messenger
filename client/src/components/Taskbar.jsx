@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 
-import styled from "styled-components";
-import windowsLogo from "../assets/windows-logo.png";
+import windowsLogo from "../assets/images/windows-logo.png";
 
 export default function Taskbar() {
   const { user } = useContext(UserContext);
@@ -12,31 +11,11 @@ export default function Taskbar() {
   };
 
   return (
-    <Bar>
-      <StartButton onClick={handleStartButtonClick}>
-        <img src={windowsLogo} alt="welcome" style={{ height: "1.4rem" }} />
+    <div className="taskbar">
+      <button className="start-button" onClick={handleStartButtonClick}>
+        <img src={windowsLogo} alt="start" />
         <span>Start</span>
-      </StartButton>
-    </Bar>
+      </button>
+    </div>
   );
 }
-
-const Bar = styled.div`
-  height: 32px;
-  width: 100%;
-  padding: 4px 3px 3px;
-  box-sizing: border-box;
-  position: fixed;
-  bottom: 0;
-  box-shadow: inset 0 1px #dfdfdf, inset 0 2px #ffffff;
-  background: #c0c0c0;
-`;
-
-const StartButton = styled.button`
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: bold;
-  -webkit-font-smoothing: none !important;
-`;
