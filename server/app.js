@@ -10,7 +10,7 @@ const authRouter = require("./routes/authRouter");
 const userRouter = require("./routes/userRouter");
 // const chatRouter = require('./routes/chatRouter');
 // const messageRouter = require('./routes/messageRouter');
-const catchRouter = require("./routes/catchRouter");
+const catchHandler = require("./middleware/catchHandler");
 const errorHandler = require("./middleware/errorHandler");
 
 (async () => {
@@ -37,8 +37,8 @@ app.use("/api/users", userRouter);
 // app.use('/api/chats', chatRouter);
 // app.use('/api/messages', messageRouter);
 
-// CATCH ROUTER
-app.use(catchRouter);
+// CATCH HANDLER
+app.use(catchHandler);
 
 // ERROR HANDLER
 app.use(errorHandler);

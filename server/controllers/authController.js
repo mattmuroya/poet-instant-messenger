@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 module.exports.validateToken = (req, res, next) => {
   try {
-    console.log("attempting to validate token...");
     const savedUser = req.body;
     // will execute catch if invalid/expired
     jwt.verify(req.token, process.env.JWT_SECRET);
