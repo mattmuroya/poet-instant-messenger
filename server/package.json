@@ -7,7 +7,7 @@
     "start": "NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development nodemon index.js",
     "test": "NODE_ENV=test jest --verbose --runInBand",
-    "reset": "node -e \"require('./utils/reset').reset()\""
+    "reset": "NODE_ENV=development node -e \"require('./utils/reset').reset()\""
   },
   "keywords": [],
   "author": "",

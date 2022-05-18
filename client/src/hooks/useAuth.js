@@ -24,7 +24,7 @@ export const useAuth = () => {
           setUser(data);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         localStorage.removeItem("poet_user");
       } finally {
         setAuthCheckCompleted(true);

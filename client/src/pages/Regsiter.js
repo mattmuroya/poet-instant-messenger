@@ -43,7 +43,6 @@ export default function Regsiter() {
           username,
           password,
         });
-        console.log(data);
         navigate("/login", {
           state: {
             successMessage: "User registration successful! Please login below.",
@@ -70,7 +69,7 @@ export default function Regsiter() {
         </div>
         <div className="window-body">
           <img src={windowsLogo} alt="register" />
-          <div className="error-message">{errorMessage}</div>
+          <p className="error-message">{errorMessage}</p>
           <form onSubmit={(e) => handleRegistration(e)}>
             <div className="field-row-stacked">
               <label htmlFor="username">Username</label>

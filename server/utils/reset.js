@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const supertest = require("supertest");
 const app = require("../app");
 const api = supertest(app);
+const info = require("../utils/info");
 
 const User = require("../models/user");
 
@@ -71,7 +72,7 @@ const closeConnection = async () => {
 const reset = async () => {
   await resetTestData();
   await closeConnection();
-  console.log("test Db reset complete");
+  info("test Db reset complete");
 };
 
 module.exports = {

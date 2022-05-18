@@ -23,7 +23,6 @@ export default function Login() {
   }, []);
 
   useEffect(() => {
-    console.log("hi there");
     if (savedUser) navigate("/");
   }, [savedUser, navigate]);
 
@@ -43,7 +42,6 @@ export default function Login() {
           username,
           password,
         });
-        console.log(data);
         localStorage.setItem("poet_user", JSON.stringify(data));
         setUser(data);
         navigate("/");
@@ -55,7 +53,7 @@ export default function Login() {
   };
 
   const handleLoginAsGuest = () => {
-    console.log("to implement: set guest user");
+    alert("to implement: set guest user");
     navigate("/");
   };
 
@@ -71,11 +69,9 @@ export default function Login() {
         </div>
         <div className="window-body">
           <img src={windowsLogo} alt="login" />
-          <div className="error-message">{errorMessage}</div>
+          <p className="error-message">{errorMessage}</p>
           {location.state && (
-            <div className="success-message">
-              {location.state.successMessage}
-            </div>
+            <p className="success-message">{location.state.successMessage}</p>
           )}
           <form onSubmit={(e) => handleLogin(e)}>
             <div className="field-row-stacked">
@@ -100,8 +96,7 @@ export default function Login() {
           </form>
           <p>
             Don't have an account? <Link to="/register">Register</Link>
-          </p>
-          <p>
+            <br />
             Or, login as a{" "}
             <button className="link-button" onClick={handleLoginAsGuest}>
               Guest
