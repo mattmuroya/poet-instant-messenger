@@ -1,7 +1,7 @@
-const http = require("http");
-const app = require("./app");
-const { Server } = require("socket.io");
-const { PORT } = require("./utils/config");
+import http from "http";
+import app from "./app";
+import { Server } from "socket.io";
+import config from "./utils/config";
 const info = require("./utils/info");
 
 const server = http.createServer(app);
@@ -27,6 +27,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(PORT, () => {
-  info(`Server running on port ${PORT}`);
+server.listen(config.PORT, () => {
+  info(`Server running on port ${config.PORT}`);
 });

@@ -1,6 +1,6 @@
-const info = require("../utils/info");
+import info from "../utils/info";
 
-const reqLogger = (req, _res, next) => {
+export default (req, _res, next) => {
   info("---");
   info("Time:   ", new Date().toLocaleTimeString());
   info("Method: ", req.method);
@@ -8,5 +8,3 @@ const reqLogger = (req, _res, next) => {
   info("Body:   ", req.body, "\n");
   next();
 };
-
-module.exports = reqLogger;

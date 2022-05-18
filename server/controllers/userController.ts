@@ -1,8 +1,8 @@
-const User = require("../models/user");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import User from "../models/user";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-module.exports.getAllUsers = async (req, res, next) => {
+export const getAllUsers = async (req, res, next) => {
   try {
     const decodedToken = jwt.verify(req.token, process.env.JWT_SECRET);
     const users = await User.find({})
@@ -14,7 +14,7 @@ module.exports.getAllUsers = async (req, res, next) => {
   }
 };
 
-module.exports.getUserById = async (req, res, next) => {
+export const getUserById = async (req, res, next) => {
   try {
     const decodedToken = jwt.verify(req.token, process.env.JWT_SECRET);
     const user = await User.findById(req.params.id)
@@ -26,7 +26,7 @@ module.exports.getUserById = async (req, res, next) => {
   }
 };
 
-module.exports.loginUser = async (req, res, next) => {
+export const loginUser = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
@@ -54,7 +54,7 @@ module.exports.loginUser = async (req, res, next) => {
   }
 };
 
-module.exports.registerUser = async (req, res, next) => {
+export const registerUser = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {

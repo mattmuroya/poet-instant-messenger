@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -12,14 +12,14 @@ const userSchema = new mongoose.Schema({
   contacts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      // specify 'User' model referenced by this obj Id references
+      // specify 'User' model referenced by this obj Id
       ref: "User",
     },
   ],
   invitations: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      // specify 'User' model referenced by this obj Id references
+      // specify 'User' model referenced by this obj Id
       ref: "User",
     },
   ],
@@ -34,4 +34,4 @@ userSchema.set("toJSON", {
   },
 });
 
-module.exports = mongoose.model("User", userSchema);
+export default mongoose.model("User", userSchema);

@@ -1,6 +1,7 @@
-const jwt = require("jsonwebtoken");
+import { RequestHandler } from "express";
+import jwt from "jsonwebtoken";
 
-module.exports.validateToken = (req, res, next) => {
+export const validateToken: RequestHandler = (req, res, next) => {
   try {
     const savedUser = req.body;
     // will execute catch if invalid/expired

@@ -1,6 +1,6 @@
-const info = require("../utils/info");
+import info from "../utils/info";
 
-const errorHandler = (error, _req, res, next) => {
+export default (error, _req, res, next) => {
   info(error);
 
   if (error.name === "JsonWebTokenError") {
@@ -14,5 +14,3 @@ const errorHandler = (error, _req, res, next) => {
   // forwards to default express error handler
   next(error);
 };
-
-module.exports = errorHandler;

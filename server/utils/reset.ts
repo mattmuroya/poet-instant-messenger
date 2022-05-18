@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
-const supertest = require("supertest");
-const app = require("../app");
-const api = supertest(app);
-const info = require("../utils/info");
+import mongoose from "mongoose";
+import User from "../models/user";
+import supertest from "supertest";
+import info from "./info";
+import app from "../app";
 
-const User = require("../models/user");
+const api = supertest(app);
 
 const resetTestData = async () => {
   await User.deleteMany({});
@@ -75,7 +75,7 @@ const reset = async () => {
   info("test Db reset complete");
 };
 
-module.exports = {
+export default {
   resetTestData,
   closeConnection,
   reset,
