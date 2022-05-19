@@ -31,7 +31,14 @@ ul.tree-view,
 .title-bar {
   font-family: "Ubuntu", Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: auto;
-  font-size: 13px;
+  font-size: 12px;
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
 }
 
 input[type="text"],
@@ -46,9 +53,14 @@ input[type="password"] {
   letter-spacing: 1px;
 }
 
+details::-webkit-details-marker {
+  display: none !important;
+}
+
 /* === */
 
 .desktop {
+  position: relative;
   min-height: 100vh;
   min-width: 100vw;
   display: flex;
@@ -81,6 +93,23 @@ input[type="password"] {
         height: 100%;
       }
     }
+  }
+}
+
+.not-found-window {
+  width: 300px;
+
+  .window-body {
+    .content {
+      // <img src={Error} alt="not found" />
+      //   <p>404: Not Found.</p>
+      display: flex;
+      gap: 1rem;
+    }
+  }
+
+  img {
+    width: 3rem;
   }
 }
 
@@ -124,7 +153,45 @@ input[type="password"] {
 }
 
 .home-window {
-  width: 90%;
-  min-width: 300px;
-  max-width: 1200px;
+  height: 80vh;
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+
+  .title-bar {
+  }
+
+  .window-body {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+
+    .sidebar {
+      flex: 0 0 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      // overflow: hidden;
+      // overflow-y: scroll;
+
+      .status {
+        flex: 0 0 100px;
+      }
+
+      .contact-list {
+        overflow-y: scroll;
+        flex: 1;
+      }
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      .chat {
+        flex: 1;
+      }
+    }
+  }
 }
