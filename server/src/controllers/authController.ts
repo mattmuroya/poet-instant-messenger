@@ -1,21 +1,32 @@
-import { RequestHandler } from "express";
+import { getSavedUserFromReqBody } from "./utils/controllerUtils";
+import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-export const validateToken: RequestHandler = (req, res, next) => {
+export const validateToken = (
+  req: RequestWithToken,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const savedUser = req.body;
-    // will execute catch if invalid/expired
-    jwt.verify(req.token, process.env.JWT_SECRET);
+    const { id, username } = getSavedUserFromReqBody(req.body);
 
+    let token = "";
+    if (req.token) token = req.token;
+
+    let SECRET = "";
+    if (process.env.JWT_SECRET) SECRET = process.env.JWT_SECRET;
+
+    jwt.verify(token, SECRET);
     const newToken = jwt.sign(
-      { id: savedUser.id.toString(), username: savedUser.username },
-      process.env.JWT_SECRET,
+      { id: id.toString(), username: username },
+      SECRET,
       {
         expiresIn: 60 * 60 * 24,
       }
     );
     res.json({
-      ...savedUser,
+      id,
+      username,
       token: newToken,
     });
   } catch (error) {
