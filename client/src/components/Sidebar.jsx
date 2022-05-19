@@ -6,9 +6,6 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar">
-      <div className="status">
-        <p>Hello, {user.username}!</p>
-      </div>
       <ul className="tree-view contact-list">
         <li>
           <details open>
@@ -66,6 +63,9 @@ export default function Sidebar() {
           </details>
         </li>
       </ul>
+      <div className="status">
+        <p>Hello, {user.username}!</p>
+      </div>
     </div>
   );
 }

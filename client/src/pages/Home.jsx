@@ -1,7 +1,9 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
 import { UserContext } from "../contexts/UserContext";
+
+import Sidebar from "../components/Sidebar";
+import ChatContainer from "../components/ChatContainer";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -23,6 +25,12 @@ export default function Home() {
         </div>
         <div className="window-body">
           <Sidebar />
+          <ChatContainer />
+        </div>
+        <div className="status-bar">
+          <p className="status-bar-field">Press F1 for help</p>
+          <p className="status-bar-field">Slide 1</p>
+          <p className="status-bar-field">CPU Usage: 14%</p>
         </div>
       </div>
     )
