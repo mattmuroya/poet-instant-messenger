@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 
 import TitleBar from "../components/TitleBar";
-import MobileNav from "../components/MobileNav";
-import Sidebar from "../components/Sidebar";
+import Toolbar from "../components/Toolbar";
+import ContactsContainer from "../components/ContactsContainer";
 import ChatContainer from "../components/ChatContainer";
 
 export default function Home() {
@@ -13,8 +13,7 @@ export default function Home() {
 
   const navigate = useNavigate();
 
-  const mobileNav = useRef();
-  const sidebar = useRef();
+  const contactsContainer = useRef();
   const chatContainer = useRef();
 
   useEffect(() => {
@@ -22,7 +21,7 @@ export default function Home() {
   }, [user, navigate]);
 
   useEffect(() => {
-    if (window.innerWidth < 600) {
+    if (window.innerWidth < 700) {
       setMobile(true);
     }
   }, []);
@@ -36,16 +35,16 @@ export default function Home() {
 
   const handleResize = () => {
     // only re-renders if the value changes
-    window.innerWidth < 600 ? setMobile(true) : setMobile(false);
+    window.innerWidth < 700 ? setMobile(true) : setMobile(false);
   };
 
   return (
     user && (
       <div className="window home-window">
         <TitleBar title="Home" />
-        {mobile && <MobileNav innerRef={mobileNav} />}
+        <Toolbar mobile={mobile} />
         <div className="window-body">
-          <Sidebar innerRef={sidebar} mobile={mobile} />
+          <ContactsContainer innerRef={contactsContainer} mobile={mobile} />
           <ChatContainer innerRef={chatContainer} mobile={mobile} />
         </div>
         <div className="status-bar">
