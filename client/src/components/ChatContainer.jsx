@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
-import MobileNav from "./MobileNav";
 
-export default function ChatContainer() {
+export default function ChatContainer({ innerRef }) {
   const [message, setMessage] = useState("");
 
   const messageInput = useRef();
@@ -21,8 +20,7 @@ export default function ChatContainer() {
   };
 
   return (
-    <div className="chat-container">
-      <MobileNav />
+    <div ref={innerRef} className="chat-container">
       <div className="message-pane">
         <p>hello, world!</p>
         <p>hello, world!</p>

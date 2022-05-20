@@ -155,7 +155,7 @@ details::-webkit-details-marker {
 .home-window {
   height: 80vh;
   width: 80vw;
-  max-width: 1100px;
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
 }
@@ -176,22 +176,6 @@ details::-webkit-details-marker {
 
 .status {
   flex: 0 0 80px;
-}
-
-@media screen and (max-width: 600px) {
-  .sidebar {
-    display: none;
-    /* flex: 0 0 0; */
-  }
-
-  .chat-container {
-    flex: 0 0 100%;
-  }
-
-  .status,
-  .sidebar ul {
-    font-size: 16px;
-  }
 }
 
 .contact-list {
@@ -229,8 +213,44 @@ details::-webkit-details-marker {
   flex: 1;
   resize: none;
   height: 80px;
+  padding: 6px;
 }
 
-/* .message-input input[type="text"] {
-  height: 80px;
+/* === */
+
+.mobile-nav {
+  margin: 8px 8px 0;
+}
+
+/* === */
+
+.collapsed {
+  display: none;
+}
+
+.expanded {
+  flex: 0 0 100%;
+}
+
+/*
+{
+.full-width {
+  flex: 0 0 100%;
+}
+
+@media screen and (max-width: 600px) {
+  .sidebar {
+    display: none;
+  }
+
+  .chat-container {
+    flex: 0 0 100%;
+  }
+
+  .status,
+  .sidebar ul,
+  .chat-container,
+  .message-input textarea {
+    font-size: 16px;
+  }
 } */

@@ -1,10 +1,10 @@
-export default function MobileNav() {
-  const returnToContactList = () => {
-    //
-  };
+export default function MobileNav({ innerRef }) {
+  // const returnToContactList = () => {
+  //   //
+  // };
 
   return (
-    <div className="mobile-nav">
+    <div ref={innerRef} className="mobile-nav">
       <button className="back-button"> &lt; Back</button>
     </div>
   );

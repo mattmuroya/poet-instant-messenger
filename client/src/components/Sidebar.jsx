@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 
-export default function Sidebar() {
+export default function Sidebar({ innerRef, mobile }) {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="sidebar">
+    <div ref={innerRef} className={`sidebar ${mobile ? "collapsed" : ""}`}>
       <ul className="tree-view contact-list">
         <li>
           <details open>
