@@ -180,6 +180,11 @@ details::-webkit-details-marker {
 
 @media screen and (max-width: 600px) {
   .sidebar {
+    display: none;
+    /* flex: 0 0 0; */
+  }
+
+  .chat-container {
     flex: 0 0 100%;
   }
 
@@ -203,8 +208,8 @@ details::-webkit-details-marker {
   gap: 10px;
 }
 
-.message-window {
-  /* overflow-y: scroll; */
+.message-pane {
+  overflow-y: scroll;
   flex: 1;
   display: block;
   background: var(--button-highlight);
@@ -213,14 +218,14 @@ details::-webkit-details-marker {
   margin: 0;
 }
 
-.message-form {
+.message-input {
   flex: 0 0 80px;
   display: flex;
   gap: 10px;
   /* align-items: center; */
 }
 
-.message-form textarea {
+.message-input textarea {
   flex: 1;
   resize: none;
   height: 80px;

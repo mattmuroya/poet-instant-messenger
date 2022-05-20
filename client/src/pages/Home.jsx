@@ -4,6 +4,7 @@ import { UserContext } from "../contexts/UserContext";
 
 import Sidebar from "../components/Sidebar";
 import ChatContainer from "../components/ChatContainer";
+import TitleBar from "../components/TitleBar";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -17,12 +18,7 @@ export default function Home() {
   return (
     user && (
       <div className="window home-window">
-        <div className="title-bar">
-          <div className="title-bar-text">Home - Poet Instant Messenger</div>
-          <div className="title-bar-controls">
-            <button aria-label="Close"></button>
-          </div>
-        </div>
+        <TitleBar title="Home" />
         <div className="window-body">
           <Sidebar />
           <ChatContainer />
