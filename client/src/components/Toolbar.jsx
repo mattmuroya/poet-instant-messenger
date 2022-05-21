@@ -1,14 +1,15 @@
-export default function Toolbar({ mobile }) {
-  // const returnToContactList = () => {
-  //   //
-  // };
-
+export default function Toolbar({
+  mobile,
+  chatListExpanded,
+  setChatListExpanded,
+  handleLogout,
+}) {
   return (
     <div className="toolbar">
-      {mobile && <button className="back-button"> &lt; Back</button>}
-      <button className="back-button"> Add Friends</button>
-      <button className="back-button"> Create A Chat Room</button>
-      <button className="back-button"> Sign Out</button>
+      <button onClick={handleLogout}>Sign Out</button>
+      {mobile && !chatListExpanded && (
+        <button onClick={() => setChatListExpanded(true)}>◀️ Chats</button>
+      )}
     </div>
   );
 }

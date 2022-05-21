@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-export default function ChatContainer({ innerRef }) {
+export default function ChatContainer() {
   const [message, setMessage] = useState("");
 
   const messageInput = useRef();
@@ -20,7 +20,7 @@ export default function ChatContainer({ innerRef }) {
   };
 
   return (
-    <div ref={innerRef} className="chat-container">
+    <div className="chat-container">
       <div className="message-pane">
         <p>hello</p>
         <p>hey wazup!</p>
