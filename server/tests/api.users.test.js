@@ -1,6 +1,7 @@
 const supertest = require("supertest");
 const app = require("../app");
 const api = supertest(app);
+const User = require("../models/user");
 const { resetTestData, closeConnection } = require("../utils/reset");
 
 beforeAll(resetTestData);
@@ -15,10 +16,10 @@ describe("user registration", () => {
         password: "hunter-2",
       })
       .expect(201);
-    expect(res.body.username).toBe("mattmuroya");
-    expect(res.body.friends).toHaveLength(0);
-    expect(res.body.invitesReceived).toHaveLength(0);
-    expect(res.body.invitesSent).toHaveLength(0);
+    expect(res.body.user.username).toBe("mattmuroya");
+    expect(res.body.user.friends).toHaveLength(0);
+    expect(res.body.user.invitesReceived).toHaveLength(0);
+    expect(res.body.user.invitesSent).toHaveLength(0);
   });
 
   test("missing username returns 400", async () => {
@@ -62,7 +63,6 @@ describe("user login", () => {
         password: "user1234",
       })
       .expect(200);
-    expect(res.body.username).toBe("user1");
     expect(typeof res.body.token).toBe("string");
   });
 
@@ -91,7 +91,7 @@ describe("getting user data", () => {
         Authorization: `bearer ${token}`,
       })
       .expect(200);
-    expect(res.body).toHaveLength(4); // 4th user added in prev test
+    expect(res.body.users).toHaveLength(4); // 4th user added in prev test
   });
 
   test("get user data rejected with missing/invalid token", async () => {
@@ -105,19 +105,19 @@ describe("getting user data", () => {
   });
 
   test("can get user by id", async () => {
+    const userToGet = await User.findOne({ username: "user1" });
+    const id = userToGet._id.toString();
     const loginRes = await api.post("/api/users/login").send({
       username: "admin",
       password: "admin1234",
     });
-    const id = loginRes.body.id;
-    const token = loginRes.body.token;
     const res = await api
       .get(`/api/users/${id}`)
       .set({
-        Authorization: `bearer ${token}`,
+        Authorization: `bearer ${loginRes.body.token}`,
       })
       .expect(200);
-    expect(res.body.username).toBe("admin");
+    expect(res.body.user.username).toBe("user1");
   });
 
   test("get user by id rejected with bad id", async () => {
@@ -125,11 +125,10 @@ describe("getting user data", () => {
       username: "admin",
       password: "admin1234",
     });
-    const token = loginRes.body.token;
     const res = await api
       .get("/api/users/BAD_ID")
       .set({
-        Authorization: `bearer ${token}`,
+        Authorization: `bearer ${loginRes.body.token}`,
       })
       .expect(400);
     expect(res.error.text).toBe('{"error":"Invalid userId."}');

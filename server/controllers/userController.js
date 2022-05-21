@@ -9,7 +9,7 @@ module.exports.getAllUsers = async (req, res, next) => {
       .populate("friends", "username")
       .populate("invitesReceived", "username")
       .populate("invitesSent", "username");
-    res.json(users);
+    res.json({ users });
   } catch (error) {
     next(error);
   }
@@ -22,7 +22,7 @@ module.exports.getUserById = async (req, res, next) => {
       .populate("friends", "username")
       .populate("invitesReceived", "username")
       .populate("invitesSent", "username");
-    res.json(user);
+    res.json({ user });
   } catch (error) {
     next(error);
   }
@@ -40,17 +40,11 @@ module.exports.loginUser = async (req, res, next) => {
       });
     }
     const token = jwt.sign(
-      { id: user._id.toString(), username: user.username },
+      { id: user._id.toString() },
       process.env.JWT_SECRET,
-      {
-        expiresIn: 60 * 60 * 24,
-      }
+      { expiresIn: 86400 }
     );
-    res.status(200).json({
-      id: user._id.toString(),
-      username: user.username,
-      token,
-    });
+    res.status(200).json({ token });
   } catch (error) {
     next(error);
   }
@@ -77,12 +71,11 @@ module.exports.registerUser = async (req, res, next) => {
       });
     }
     const passwordHash = await bcrypt.hash(password, 10);
-    const user = new User({
+    const user = await User.create({
       username,
       passwordHash,
     });
-    await user.save();
-    res.status(201).json(user);
+    res.status(201).json({ user });
   } catch (error) {
     next(error);
   }

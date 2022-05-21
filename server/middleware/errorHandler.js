@@ -6,7 +6,7 @@ const errorHandler = (error, _req, res, next) => {
   if (error.name === "JsonWebTokenError") {
     return res.status(401).json({ error: "Token missing or invalid." });
   } else if (error.name === "TokenExpiredError") {
-    return res.status(401).json({ error: "Token Expired" });
+    return res.status(401).json({ error: "Token expired." });
   } else if (error.name === "CastError") {
     return res.status(400).json({ error: "Invalid userId." });
   }
