@@ -12,14 +12,17 @@ describe("user registration", () => {
     const res = await api
       .post("/api/users/register")
       .send({
-        username: "mattmuroya",
+        username: "Matt_Muroya",
         password: "hunter-2",
       })
       .expect(201);
-    expect(res.body.user.username).toBe("mattmuroya");
+    expect(res.body.user.username).toBe("Matt_Muroya");
     expect(res.body.user.friends).toHaveLength(0);
     expect(res.body.user.invitesReceived).toHaveLength(0);
     expect(res.body.user.invitesSent).toHaveLength(0);
+
+    const savedUser = await User.findOne({ username: res.body.user.username });
+    expect(savedUser.usernameCanonical).toBe("matt_muroya");
   });
 
   test("missing username returns 400", async () => {
@@ -36,21 +39,34 @@ describe("user registration", () => {
     const res = await api
       .post("/api/users/register")
       .send({
-        username: "mattmuroya",
+        username: "MattMuroya",
       })
       .expect(400);
     expect(res.error.text).toBe('{"error":"Username and password required."}');
   });
 
-  test("duplicate username returns 409", async () => {
+  test("duplicate username (case-insensitive) returns 409", async () => {
     const res = await api
       .post("/api/users/register")
       .send({
-        username: "mattmuroya",
+        username: "matt_muroya",
         password: "hunter-2",
       })
       .expect(409);
     expect(res.error.text).toBe('{"error":"Username unavailable."}');
+  });
+
+  test("username with invalid character returns 400", async () => {
+    const res = await api
+      .post("/api/users/register")
+      .send({
+        username: "mattmuroya ",
+        password: "hunter-2",
+      })
+      .expect(400);
+    expect(res.error.text).toBe(
+      '{"error":"Username can contain only letters, numbers, and underscores."}'
+    );
   });
 });
 
@@ -61,6 +77,17 @@ describe("user login", () => {
       .send({
         username: "user1",
         password: "user1234",
+      })
+      .expect(200);
+    expect(typeof res.body.token).toBe("string");
+  });
+
+  test("can log in with case-insensitive username", async () => {
+    const res = await api
+      .post("/api/users/login")
+      .send({
+        username: "matt_muroya",
+        password: "hunter-2",
       })
       .expect(200);
     expect(typeof res.body.token).toBe("string");

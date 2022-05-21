@@ -44,7 +44,9 @@ module.exports.getUserById = async (req, res, next) => {
 module.exports.loginUser = async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const user = await User.findOne({
+      usernameCanonical: username.toLowerCase(),
+    });
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.passwordHash);
     if (!(user && passwordCorrect)) {
@@ -66,9 +68,14 @@ module.exports.loginUser = async (req, res, next) => {
 module.exports.registerUser = async (req, res, next) => {
   try {
     const { username, password } = req.body;
+    const usernameCanonical = username ? username.toLowerCase() : undefined;
     if (!username || !password) {
       return res.status(400).json({
         error: "Username and password required.",
+      });
+    } else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+      return res.status(400).json({
+        error: "Username can contain only letters, numbers, and underscores.",
       });
     } else if (username.length > 32) {
       return res.status(400).json({
@@ -78,7 +85,7 @@ module.exports.registerUser = async (req, res, next) => {
       return res.status(400).json({
         error: "Password must be at least 8 characters.",
       });
-    } else if (await User.findOne({ username })) {
+    } else if (await User.findOne({ usernameCanonical })) {
       return res.status(409).json({
         error: "Username unavailable.",
       });
@@ -86,10 +93,12 @@ module.exports.registerUser = async (req, res, next) => {
     const passwordHash = await bcrypt.hash(password, 10);
     const user = await User.create({
       username,
+      usernameCanonical,
       passwordHash,
     });
     res.status(201).json({ user });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

@@ -10,7 +10,7 @@ const errorHandler = (error, _req, res, next) => {
   } else if (error.name === "CastError") {
     return res.status(400).json({ error: "Invalid userId." });
   }
-
+  console.error(error);
   // forwards to default express error handler
   next(error);
 };

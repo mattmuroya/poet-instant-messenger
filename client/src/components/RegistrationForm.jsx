@@ -51,7 +51,9 @@ export default function RegistrationForm() {
     <form onSubmit={(e) => handleRegistration(e)}>
       <p className="error-message">{errorMessage}</p>
       <div className="field-row-stacked">
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">
+          Username (letters, numbers, and underscores)
+        </label>
         <input
           id="username"
           type="text"
