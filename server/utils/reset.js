@@ -25,11 +25,11 @@ const resetTestData = async () => {
   });
 
   await User.findByIdAndUpdate(user1.body.id, {
-    $push: { contacts: user2.body.id },
+    $push: { friends: user2.body.id },
   });
 
   await User.findByIdAndUpdate(user2.body.id, {
-    $push: { contacts: user1.body.id },
+    $push: { friends: user1.body.id },
   });
 
   //=====

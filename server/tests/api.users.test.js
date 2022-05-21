@@ -16,8 +16,9 @@ describe("user registration", () => {
       })
       .expect(201);
     expect(res.body.username).toBe("mattmuroya");
-    expect(res.body.contacts).toHaveLength(0);
-    expect(res.body.invitations).toHaveLength(0);
+    expect(res.body.friends).toHaveLength(0);
+    expect(res.body.invitesReceived).toHaveLength(0);
+    expect(res.body.invitesSent).toHaveLength(0);
   });
 
   test("missing username returns 400", async () => {

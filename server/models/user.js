@@ -8,18 +8,25 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  passwordHash: String,
-  contacts: [
+  passwordHash: {
+    required: true,
+    type: String,
+  },
+  friends: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      // specify 'User' model referenced by this obj Id references
       ref: "User",
     },
   ],
-  invitations: [
+  invitesReceived: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      // specify 'User' model referenced by this obj Id references
+      ref: "User",
+    },
+  ],
+  invitesSent: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
   ],

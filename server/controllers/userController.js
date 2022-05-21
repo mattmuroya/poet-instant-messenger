@@ -6,8 +6,9 @@ module.exports.getAllUsers = async (req, res, next) => {
   try {
     const decodedToken = jwt.verify(req.token, process.env.JWT_SECRET);
     const users = await User.find({})
-      .populate("contacts", "username")
-      .populate("invitations", "username");
+      .populate("friends", "username")
+      .populate("invitesReceived", "username")
+      .populate("invitesSent", "username");
     res.json(users);
   } catch (error) {
     next(error);
@@ -18,8 +19,9 @@ module.exports.getUserById = async (req, res, next) => {
   try {
     const decodedToken = jwt.verify(req.token, process.env.JWT_SECRET);
     const user = await User.findById(req.params.id)
-      .populate("contacts", "username")
-      .populate("invitations", "username");
+      .populate("friends", "username")
+      .populate("invitesReceived", "username")
+      .populate("invitesSent", "username");
     res.json(user);
   } catch (error) {
     next(error);
