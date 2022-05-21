@@ -7,7 +7,7 @@ import TitleBar from "../components/TitleBar";
 import LoginForm from "../components/LoginForm";
 
 export default function Login() {
-  const { savedUser, authCheckCompleted } = useAuth();
+  const { userIsAuthorized, authCheckCompleted } = useAuth();
 
   const navigate = useNavigate();
 
@@ -16,12 +16,12 @@ export default function Login() {
   }, []);
 
   useEffect(() => {
-    if (savedUser) navigate("/");
-  }, [savedUser, navigate]);
+    if (userIsAuthorized) navigate("/");
+  }, [userIsAuthorized, navigate]);
 
   return (
     authCheckCompleted &&
-    !savedUser && (
+    !userIsAuthorized && (
       <div className="window login-window">
         <TitleBar title="Login" />
         <div className="window-body">

@@ -38,7 +38,7 @@ export default function Home() {
 
   const handleLogout = () => {
     if (window.confirm("sign out?")) {
-      localStorage.removeItem("poet_user");
+      localStorage.removeItem("poet_auth_token");
       navigate("/login");
     }
   };

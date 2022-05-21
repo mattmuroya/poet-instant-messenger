@@ -15,6 +15,19 @@ module.exports.getAllUsers = async (req, res, next) => {
   }
 };
 
+module.exports.getCurrentUser = async (req, res, next) => {
+  try {
+    const decodedToken = jwt.verify(req.token, process.env.JWT_SECRET);
+    const user = await User.findById(decodedToken.id)
+      .populate("friends", "username")
+      .populate("invitesReceived", "username")
+      .populate("invitesSent", "username");
+    res.json({ user });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports.getUserById = async (req, res, next) => {
   try {
     const decodedToken = jwt.verify(req.token, process.env.JWT_SECRET);

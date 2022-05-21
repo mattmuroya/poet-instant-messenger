@@ -25,15 +25,23 @@ export default function LoginForm() {
     e.preventDefault();
     try {
       if (inputsAreValid()) {
-        const { data } = await axios.post("/api/users/login", {
+        const res = await axios.post("/api/users/login", {
           username,
           password,
         });
-        localStorage.setItem("poet_user", JSON.stringify(data));
-        setUser(data);
+        const { data } = await axios.get("/api/users/current", {
+          headers: {
+            Authorization: `bearer ${res.data.token}`,
+            // for testing purposes
+            // Authorization: "bearer BAD_TOKEN",
+          },
+        });
+        localStorage.setItem("poet_auth_token", res.data.token);
+        setUser(data.user);
         navigate("/");
       }
     } catch (error) {
+      console.error(error.response.data.error);
       setErrorMessage(error.response.data.error);
     }
   };

@@ -3,34 +3,48 @@ import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
 
 export const useAuth = () => {
-  const [savedUser, setSavedUser] = useState(null);
+  // const [savedUser, setSavedUser] = useState(null);
+  const [userIsAuthorized, setUserIsAuthorized] = useState(null);
   const [authCheckCompleted, setAuthCheckCompleted] = useState(false);
 
   const { setUser } = useContext(UserContext);
 
   useEffect(() => {
     (async () => {
-      const lastSavedUser = JSON.parse(localStorage.getItem("poet_user"));
+      const savedToken = localStorage.getItem("poet_auth_token");
       try {
-        if (lastSavedUser) {
-          const { data } = await axios.post("/api/auth", lastSavedUser, {
+        if (savedToken) {
+          // check if token is valid; get newToken if yes, catch if no
+          const res = await axios.post(
+            "/api/auth",
+            {},
+            {
+              headers: {
+                Authorization: `bearer ${savedToken}`,
+              },
+            }
+          );
+          // get current user with newToken
+          const { data } = await axios.get("/api/users/current", {
             headers: {
-              Authorization: `bearer ${lastSavedUser.token}`,
-              // Authorization: "bearer BADTOKEN",
+              Authorization: `bearer ${res.data.newToken}`,
+              // for testing purposes
+              // Authorization: "bearer BAD_TOKEN",
             },
           });
-          localStorage.setItem("poet_user", JSON.stringify(data));
-          setSavedUser(data);
-          setUser(data);
+          localStorage.setItem("poet_auth_token", res.data.newToken);
+          setUserIsAuthorized(true);
+          setUser(data.user);
         }
       } catch (error) {
         console.error(error);
-        localStorage.removeItem("poet_user");
+        localStorage.removeItem("poet_auth_token");
       } finally {
         setAuthCheckCompleted(true);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { savedUser, authCheckCompleted };
+  return { userIsAuthorized, authCheckCompleted };
 };

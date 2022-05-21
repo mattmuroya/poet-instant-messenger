@@ -9,15 +9,15 @@ import RegistrationForm from "../components/RegistrationForm";
 export default function Regsiter() {
   const navigate = useNavigate();
 
-  const { savedUser, authCheckCompleted } = useAuth();
+  const { userIsAuthorized, authCheckCompleted } = useAuth();
 
   useEffect(() => {
-    if (savedUser) navigate("/");
-  }, [savedUser, navigate]);
+    if (userIsAuthorized) navigate("/");
+  }, [userIsAuthorized, navigate]);
 
   return (
     authCheckCompleted &&
-    !savedUser && (
+    !userIsAuthorized && (
       <div className="window registration-window">
         <TitleBar title="Register" />
         <div className="window-body">
