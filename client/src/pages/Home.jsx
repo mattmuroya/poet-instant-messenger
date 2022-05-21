@@ -62,9 +62,9 @@ export default function Home() {
           <ChatContainer mobile={mobile} />
         </div>
         <div className="status-bar">
-          <p className="status-bar-field">Press F1 for help</p>
-          <p className="status-bar-field">Slide 1</p>
-          <p className="status-bar-field">CPU Usage: 14%</p>
+          <p className="status-bar-field">
+            Welcome, <strong>{user.username}</strong>!
+          </p>
         </div>
       </div>
     )

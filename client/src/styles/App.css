@@ -176,10 +176,6 @@ details::-webkit-details-marker {
   gap: 10px;
 }
 
-.status {
-  flex: 0 0 80px;
-}
-
 .contact-list {
   overflow: scroll;
   flex: 1;
@@ -238,6 +234,12 @@ details {
   flex-direction: row-reverse;
   justify-content: space-between;
   gap: 8px;
+}
+
+.user-details {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 /* === */

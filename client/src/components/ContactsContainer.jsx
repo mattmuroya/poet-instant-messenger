@@ -1,5 +1,3 @@
-import { useContext, useState } from "react";
-import { UserContext } from "../contexts/UserContext";
 import ChatRoomList from "./ChatRoomList";
 import FriendsList from "./FriendsList";
 import AllUsersList from "./AllUsersList";
@@ -9,8 +7,6 @@ export default function ContactsContainer({
   chatListExpanded,
   setChatListExpanded,
 }) {
-  const { user } = useContext(UserContext);
-
   return (
     <div
       className={`contacts-container ${
@@ -22,9 +18,6 @@ export default function ContactsContainer({
         <FriendsList setChatListExpanded={setChatListExpanded} />
         <AllUsersList />
       </ul>
-      <div className="status">
-        <p>Hello, {user.username}!</p>
-      </div>
     </div>
   );
 }

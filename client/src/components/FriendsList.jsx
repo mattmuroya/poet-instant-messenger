@@ -1,17 +1,22 @@
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
+
 export default function FriendsList({ setChatListExpanded }) {
-  // for development, will be fetched from server later
-  const onlineFriends = ["lalib035", "N8DaBballPlaya", "TipDaddy78"];
+  const { user } = useContext(UserContext);
 
-  const offlineFriends = [
-    "p0k3m0n_m45t3r",
-    "lifesAboxOchocolates",
-    "xXx_NIRVANA_xXx",
-    "iLuvNickCarter99",
-  ];
+  // for development. data to be fetched from the server in prod.
+  // const onlineFriends = ["lalib035", "N8DaBballPlaya", "TipDaddy78"];
+  // const offlineFriends = [
+  //   "p0k3m0n_m45t3r",
+  //   "lifesAboxOchocolates",
+  //   "xXx_NIRVANA_xXx",
+  //   "iLuvNickCarter99",
+  // ];
+  // const invitesReceived = ["amell013"];
+  // const invitesSent = ["TheKid65", "ZeldaLuvvr94"];
 
-  const invitesReceived = ["amell013"];
-
-  const invitesSent = ["TheKid65", "ZeldaLuvvr94"];
+  // NOTE: need to figure out whether/how to handle online vs. offline users.
+  // maybe just show single list and status indicator by each user?
 
   return (
     <li className="top">
@@ -20,16 +25,16 @@ export default function FriendsList({ setChatListExpanded }) {
         <li>
           <details open>
             <summary>
-              <span className="li-emoji">🟢</span> Online (3)
+              <span className="li-emoji">🟢</span> Online (2)
             </summary>
             <ul>
-              {onlineFriends.map((friend) => (
-                <li key={friend}>
+              {user.friends.map((friend) => (
+                <li key={friend.id}>
                   <button
                     className="link-button"
                     onClick={() => setChatListExpanded(false)}
                   >
-                    {friend}
+                    {friend.username}
                   </button>
                 </li>
               ))}
@@ -39,16 +44,16 @@ export default function FriendsList({ setChatListExpanded }) {
         <li>
           <details open>
             <summary>
-              <span className="li-emoji">🔴</span> Offline (4)
+              <span className="li-emoji">⚪️</span> Offline (2)
             </summary>
             <ul>
-              {offlineFriends.map((friend) => (
-                <li key={friend}>
+              {user.friends.map((friend) => (
+                <li key={friend.id}>
                   <button
                     className="link-button"
                     onClick={() => setChatListExpanded(false)}
                   >
-                    {friend}
+                    {friend.username}
                   </button>
                 </li>
               ))}
@@ -59,9 +64,10 @@ export default function FriendsList({ setChatListExpanded }) {
           <details open>
             <summary>Invites Received (1)</summary>
             <ul>
-              {invitesReceived.map((invite) => (
-                <li key={invite}>
-                  {invite} <button className="link-button">accept</button>{" "}
+              {user.invitesReceived.map((invite) => (
+                <li key={invite.id}>
+                  {invite.username}{" "}
+                  <button className="link-button">accept</button>{" "}
                   <button className="link-button">reject</button>
                 </li>
               ))}
@@ -72,9 +78,10 @@ export default function FriendsList({ setChatListExpanded }) {
           <details open>
             <summary>Invites Sent (2)</summary>
             <ul>
-              {invitesSent.map((invite) => (
-                <li key={invite}>
-                  {invite} <button className="link-button">cancel</button>
+              {user.invitesSent.map((invite) => (
+                <li key={invite.id}>
+                  {invite.username}{" "}
+                  <button className="link-button">cancel</button>
                 </li>
               ))}
             </ul>
