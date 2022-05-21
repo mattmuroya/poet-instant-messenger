@@ -9,10 +9,14 @@ const User = require("../models/user");
 const resetTestData = async () => {
   await User.deleteMany({});
 
+  // create admin
+
   const admin = await api.post("/api/users/register").send({
     username: "admin",
     password: "admin1234",
   });
+
+  // create users 1 and 2 as friends
 
   const user1 = await api.post("/api/users/register").send({
     username: "user1",
@@ -24,12 +28,66 @@ const resetTestData = async () => {
     password: "user1234",
   });
 
-  await User.findByIdAndUpdate(user1.body.id, {
-    $push: { friends: user2.body.id },
+  await User.findByIdAndUpdate(user1.body.user.id, {
+    $push: { friends: user2.body.user.id },
   });
 
-  await User.findByIdAndUpdate(user2.body.id, {
-    $push: { friends: user1.body.id },
+  await User.findByIdAndUpdate(user2.body.user.id, {
+    $push: { friends: user1.body.user.id },
+  });
+
+  // create users A, B, C, D for admin testing
+
+  const userA = await api.post("/api/users/register").send({
+    username: "userA",
+    password: "user1234",
+  });
+
+  const userB = await api.post("/api/users/register").send({
+    username: "userB",
+    password: "user1234",
+  });
+
+  const userC = await api.post("/api/users/register").send({
+    username: "userC",
+    password: "user1234",
+  });
+
+  const userD = await api.post("/api/users/register").send({
+    username: "userD",
+    password: "user1234",
+  });
+
+  await User.findByIdAndUpdate(admin.body.user.id, {
+    $push: {
+      friends: { $each: [userA.body.user.id, userB.body.user.id] },
+      invitesReceived: userC.body.user.id,
+      invitesSent: userD.body.user.id,
+    },
+  });
+
+  await User.findByIdAndUpdate(userA.body.user.id, {
+    $push: {
+      friends: admin.body.user.id,
+    },
+  });
+
+  await User.findByIdAndUpdate(userB.body.user.id, {
+    $push: {
+      friends: admin.body.user.id,
+    },
+  });
+
+  await User.findByIdAndUpdate(userC.body.user.id, {
+    $push: {
+      invitesSent: admin.body.user.id,
+    },
+  });
+
+  await User.findByIdAndUpdate(userD.body.user.id, {
+    $push: {
+      invitesReceived: admin.body.user.id,
+    },
   });
 
   //=====
