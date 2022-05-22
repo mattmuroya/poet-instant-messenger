@@ -58,37 +58,37 @@ const resetTestData = async () => {
     password: "user1234",
   });
 
-  await User.findByIdAndUpdate(admin.body.user.id, {
-    $push: {
-      friends: { $each: [userA.body.user.id, userB.body.user.id] },
-      invitesReceived: userC.body.user.id,
-      invitesSent: userD.body.user.id,
-    },
-  });
+  // await User.findByIdAndUpdate(admin.body.user.id, {
+  //   $push: {
+  //     friends: { $each: [userA.body.user.id, userB.body.user.id] },
+  //     invitesReceived: userC.body.user.id,
+  //     invitesSent: userD.body.user.id,
+  //   },
+  // });
 
-  await User.findByIdAndUpdate(userA.body.user.id, {
-    $push: {
-      friends: admin.body.user.id,
-    },
-  });
+  // await User.findByIdAndUpdate(userA.body.user.id, {
+  //   $push: {
+  //     friends: admin.body.user.id,
+  //   },
+  // });
 
-  await User.findByIdAndUpdate(userB.body.user.id, {
-    $push: {
-      friends: admin.body.user.id,
-    },
-  });
+  // await User.findByIdAndUpdate(userB.body.user.id, {
+  //   $push: {
+  //     friends: admin.body.user.id,
+  //   },
+  // });
 
-  await User.findByIdAndUpdate(userC.body.user.id, {
-    $push: {
-      invitesSent: admin.body.user.id,
-    },
-  });
+  // await User.findByIdAndUpdate(userC.body.user.id, {
+  //   $push: {
+  //     invitesSent: admin.body.user.id,
+  //   },
+  // });
 
-  await User.findByIdAndUpdate(userD.body.user.id, {
-    $push: {
-      invitesReceived: admin.body.user.id,
-    },
-  });
+  // await User.findByIdAndUpdate(userD.body.user.id, {
+  //   $push: {
+  //     invitesReceived: admin.body.user.id,
+  //   },
+  // });
 
   //=====
 

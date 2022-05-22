@@ -102,3 +102,34 @@ module.exports.registerUser = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports.sendInvite = async (req, res, next) => {
+  try {
+    const { id } = jwt.verify(req.token, process.env.JWT_SECRET);
+    const { recipientId } = req.body;
+
+    const sender = await User.findById(id);
+    if (
+      sender.friends.includes(recipientId) ||
+      sender.invitesSent.includes(recipientId)
+    ) {
+      return res.status(409).json({
+        error: "Duplicate invite.",
+      });
+    }
+    await User.findByIdAndUpdate(recipientId, {
+      $push: {
+        invitesReceived: id,
+      },
+    });
+    await User.findByIdAndUpdate(id, {
+      $push: {
+        invitesSent: recipientId,
+      },
+    });
+
+    res.status(201).json({ recipientId });
+  } catch (error) {
+    next(error);
+  }
+};
