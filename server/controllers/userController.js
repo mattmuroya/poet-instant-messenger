@@ -107,7 +107,6 @@ module.exports.sendInvite = async (req, res, next) => {
   try {
     const { id } = jwt.verify(req.token, process.env.JWT_SECRET);
     const { recipientId } = req.body;
-
     const sender = await User.findById(id);
     if (
       sender.friends.includes(recipientId) ||
@@ -117,18 +116,93 @@ module.exports.sendInvite = async (req, res, next) => {
         error: "Duplicate invite.",
       });
     }
-    await User.findByIdAndUpdate(recipientId, {
+    const updatedRecipient = await User.findByIdAndUpdate(recipientId, {
       $push: {
         invitesReceived: id,
       },
     });
-    await User.findByIdAndUpdate(id, {
+    if (!updatedRecipient) {
+      return res.status(400).json({
+        error: "Invalid userId.",
+      });
+    }
+    const updatedSender = await User.findByIdAndUpdate(id, {
       $push: {
         invitesSent: recipientId,
       },
     });
-
+    if (!updatedSender) {
+      return res.status(400).json({
+        error: "Invalid userId.",
+      });
+    }
     res.status(201).json({ recipientId });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.acceptInvite = async (req, res, next) => {
+  try {
+    const { id } = jwt.verify(req.token, process.env.JWT_SECRET);
+    const { acceptedId } = req.body;
+    const updatedAccepted = await User.findByIdAndUpdate(acceptedId, {
+      $push: {
+        friends: id,
+      },
+      $pull: {
+        invitesSent: id,
+      },
+    });
+    if (!updatedAccepted) {
+      return res.status(400).json({
+        error: "Invalid userId.",
+      });
+    }
+    const updatedAcceptor = await User.findByIdAndUpdate(id, {
+      $push: {
+        friends: acceptedId,
+      },
+      $pull: {
+        invitesReceived: acceptedId,
+      },
+    });
+    if (!updatedAcceptor) {
+      return res.status(400).json({
+        error: "Invalid userId.",
+      });
+    }
+    res.status(201).json({ acceptedId });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.rejectInvite = async (req, res, next) => {
+  try {
+    const { id } = jwt.verify(req.token, process.env.JWT_SECRET);
+    const { rejectedId } = req.body;
+    const updatedRejected = await User.findByIdAndUpdate(rejectedId, {
+      $pull: {
+        invitesSent: id,
+      },
+    });
+    if (!updatedRejected) {
+      return res.status(400).json({
+        error: "Invalid userId.",
+      });
+    }
+    const updatedRejector = await User.findByIdAndUpdate(id, {
+      $pull: {
+        invitesReceived: rejectedId,
+      },
+    });
+    if (!updatedRejector) {
+      return res.status(400).json({
+        error: "Invalid userId.",
+      });
+    }
+    res.status(201).json({ rejectedId });
   } catch (error) {
     next(error);
   }

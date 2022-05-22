@@ -58,6 +58,26 @@ const resetTestData = async () => {
     password: "user1234",
   });
 
+  // ===
+
+  const userE = await api.post("/api/users/register").send({
+    username: "userE",
+    password: "user1234",
+  });
+
+  const userF = await api.post("/api/users/register").send({
+    username: "userF",
+    password: "user1234",
+  });
+
+  await User.findByIdAndUpdate(userE.body.user.id, {
+    $push: { invitesSent: userF.body.user.id },
+  });
+
+  await User.findByIdAndUpdate(userF.body.user.id, {
+    $push: { invitesReceived: userE.body.user.id },
+  });
+
   // await User.findByIdAndUpdate(admin.body.user.id, {
   //   $push: {
   //     friends: { $each: [userA.body.user.id, userB.body.user.id] },
