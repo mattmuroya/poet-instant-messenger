@@ -58,6 +58,7 @@ export default function RegistrationForm() {
           id="username"
           type="text"
           onChange={(e) => setUsername(e.target.value)}
+          autoFocus
         />
       </div>
       <div className="field-row-stacked">

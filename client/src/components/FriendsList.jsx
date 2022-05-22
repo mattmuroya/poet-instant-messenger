@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
+import ContactActionButton from "./ContactActionButton";
 
 export default function FriendsList({ setChatListExpanded }) {
   const { user, setUser } = useContext(UserContext);
@@ -118,18 +119,14 @@ export default function FriendsList({ setChatListExpanded }) {
               {user.invitesReceived.map((invite) => (
                 <li key={invite.id}>
                   {invite.username}{" "}
-                  <button
-                    className="link-button"
-                    onClick={() => handleAcceptInvite(invite)}
-                  >
-                    accept
-                  </button>{" "}
-                  <button
-                    className="link-button"
-                    onClick={() => handleRejectInvite(invite)}
-                  >
-                    reject
-                  </button>
+                  <ContactActionButton
+                    action={() => handleAcceptInvite(invite)}
+                    text="accept"
+                  />{" "}
+                  <ContactActionButton
+                    action={() => handleRejectInvite(invite)}
+                    text="reject"
+                  />
                 </li>
               ))}
             </ul>

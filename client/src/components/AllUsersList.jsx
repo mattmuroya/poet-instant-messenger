@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
+import ContactActionButton from "./ContactActionButton";
 
 export default function AllUsersList() {
   const [users, setUsers] = useState([]);
@@ -8,7 +9,8 @@ export default function AllUsersList() {
 
   const { user, setUser } = useContext(UserContext);
 
-  console.log(user);
+  // console.log(user);
+
   // const allUsers = [
   //   "BritneySpears",
   //   "JustinTimberlake",
@@ -82,12 +84,10 @@ export default function AllUsersList() {
               {usersToShowFiltered.map((userFromList) => (
                 <li key={userFromList.id}>
                   {userFromList.username}{" "}
-                  <button
-                    className="link-button"
-                    onClick={() => handleSendInvite(userFromList)}
-                  >
-                    invite
-                  </button>
+                  <ContactActionButton
+                    action={() => handleSendInvite(userFromList)}
+                    text="invite"
+                  />
                 </li>
               ))}
             </ul>
