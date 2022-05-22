@@ -23,9 +23,7 @@ export default function FriendsList({ setChatListExpanded }) {
     try {
       await axios.put(
         "/api/users/invite/accept",
-        {
-          acceptedId: invite.id,
-        },
+        { acceptedId: invite.id },
         {
           headers: {
             Authorization: `bearer ${localStorage.getItem("poet_auth_token")}`,
@@ -35,14 +33,11 @@ export default function FriendsList({ setChatListExpanded }) {
       // hopefully if the put request fails, the following code doesn't execute
       const newUserState = {
         ...user,
-        friends: user.friends.concat([
-          { username: invite.username, id: invite.id },
-        ]),
+        friends: user.friends.concat([invite]),
         invitesReceived: user.invitesReceived.filter((item) => {
           return item.id !== invite.id;
         }),
       };
-
       setUser(newUserState);
     } catch (error) {
       console.error(error.response.data.error);
@@ -53,9 +48,7 @@ export default function FriendsList({ setChatListExpanded }) {
     try {
       await axios.put(
         "/api/users/invite/reject",
-        {
-          rejectedId: invite.id,
-        },
+        { rejectedId: invite.id },
         {
           headers: {
             Authorization: `bearer ${localStorage.getItem("poet_auth_token")}`,
@@ -68,7 +61,6 @@ export default function FriendsList({ setChatListExpanded }) {
           return item.id !== invite.id;
         }),
       };
-
       setUser(newUserState);
     } catch (error) {
       console.error(error.response.data.error);
@@ -79,7 +71,7 @@ export default function FriendsList({ setChatListExpanded }) {
     <li className="top">
       <strong style={{ color: "purple" }}>✨ My Friends ✨</strong>
       <ul>
-        <li>
+        {/* <li>
           <details open>
             <summary>
               <span className="li-emoji">🟢</span> Online ({user.friends.length}
@@ -98,7 +90,7 @@ export default function FriendsList({ setChatListExpanded }) {
               ))}
             </ul>
           </details>
-        </li>
+        </li> */}
         <li>
           <details open>
             <summary>
@@ -150,7 +142,12 @@ export default function FriendsList({ setChatListExpanded }) {
               {user.invitesSent.map((invite) => (
                 <li key={invite.id}>
                   {invite.username}{" "}
-                  <button className="link-button">cancel</button>
+                  <button
+                    className="link-button"
+                    onClick={() => alert("to implement: cancel request")}
+                  >
+                    cancel
+                  </button>
                 </li>
               ))}
             </ul>

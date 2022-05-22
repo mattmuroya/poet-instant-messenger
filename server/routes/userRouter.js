@@ -1,6 +1,7 @@
 const userRouter = require("express").Router();
 const {
   getAllUsers,
+  getRedactedUsers,
   getCurrentUser,
   getUserById,
   loginUser,
@@ -11,6 +12,7 @@ const {
 } = require("../controllers/userController");
 
 userRouter.get("/", getAllUsers);
+userRouter.get("/redacted", getRedactedUsers);
 userRouter.get("/current", getCurrentUser);
 userRouter.get("/:id", getUserById);
 userRouter.post("/login", loginUser);

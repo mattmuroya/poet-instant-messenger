@@ -15,6 +15,19 @@ module.exports.getAllUsers = async (req, res, next) => {
   }
 };
 
+module.exports.getRedactedUsers = async (req, res, next) => {
+  try {
+    jwt.verify(req.token, process.env.JWT_SECRET);
+    const data = await User.find({});
+    const users = data.map((user) => {
+      return { username: user.username, id: user._id.toString() };
+    });
+    res.json({ users });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports.getCurrentUser = async (req, res, next) => {
   try {
     const decodedToken = jwt.verify(req.token, process.env.JWT_SECRET);
