@@ -32,12 +32,12 @@ export const useAuth = () => {
               // Authorization: "bearer BAD_TOKEN",
             },
           });
+          if (!data) throw new Error("User not found.");
           localStorage.setItem("poet_auth_token", res.data.newToken);
           setUserIsAuthorized(true);
           setUser(data.user);
         }
       } catch (error) {
-        console.error(error);
         localStorage.removeItem("poet_auth_token");
       } finally {
         setAuthCheckCompleted(true);

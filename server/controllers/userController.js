@@ -22,6 +22,12 @@ module.exports.getCurrentUser = async (req, res, next) => {
       .populate("friends", "username")
       .populate("invitesReceived", "username")
       .populate("invitesSent", "username");
+
+    if (!user) {
+      return res.status(401).json({
+        error: "User not found.",
+      });
+    }
     res.json({ user });
   } catch (error) {
     next(error);
