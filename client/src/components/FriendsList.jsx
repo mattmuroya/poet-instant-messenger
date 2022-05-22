@@ -49,6 +49,32 @@ export default function FriendsList({ setChatListExpanded }) {
     }
   };
 
+  const handleRejectInvite = async (invite) => {
+    try {
+      await axios.put(
+        "/api/users/invite/reject",
+        {
+          rejectedId: invite.id,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${localStorage.getItem("poet_auth_token")}`,
+          },
+        }
+      );
+      const newUserState = {
+        ...user,
+        invitesReceived: user.invitesReceived.filter((item) => {
+          return item.id !== invite.id;
+        }),
+      };
+
+      setUser(newUserState);
+    } catch (error) {
+      console.error(error.response.data.error);
+    }
+  };
+
   return (
     <li className="top">
       <strong style={{ color: "purple" }}>✨ My Friends ✨</strong>
@@ -106,7 +132,12 @@ export default function FriendsList({ setChatListExpanded }) {
                   >
                     accept
                   </button>{" "}
-                  <button className="link-button">reject</button>
+                  <button
+                    className="link-button"
+                    onClick={() => handleRejectInvite(invite)}
+                  >
+                    reject
+                  </button>
                 </li>
               ))}
             </ul>
