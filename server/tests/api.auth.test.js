@@ -4,7 +4,7 @@ const api = supertest(app);
 const { resetTestData, closeConnection } = require("../utils/reset");
 const jwt = require("jsonwebtoken");
 
-beforeAll(resetTestData);
+beforeAll(resetTestData, 10000);
 afterAll(closeConnection);
 
 describe("saved token validation", () => {

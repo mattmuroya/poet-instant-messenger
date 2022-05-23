@@ -4,7 +4,7 @@ const api = supertest(app);
 const User = require("../models/user");
 const { resetTestData, closeConnection } = require("../utils/reset");
 
-beforeAll(resetTestData);
+beforeAll(resetTestData, 10000);
 afterAll(closeConnection);
 
 describe("user registration", () => {

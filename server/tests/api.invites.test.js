@@ -4,11 +4,11 @@ const api = supertest(app);
 const User = require("../models/user");
 const { resetTestData, closeConnection } = require("../utils/reset");
 
-beforeAll(resetTestData);
+beforeAll(resetTestData, 10000);
 afterAll(closeConnection);
 
 describe("sending invites", () => {
-  test("can send an invite with valid token", async () => {
+  test("can send an invite with valid token (AB)", async () => {
     const loginRes = await api.post("/api/users/login").send({
       username: "userA",
       password: "user1234",
@@ -130,6 +130,85 @@ describe("sending invites", () => {
 
     expect(user1.invitesSent).toHaveLength(0);
     expect(user2updated.invitesReceived).toHaveLength(0);
+  });
+});
+
+describe("cancelling invites", () => {
+  test("can send an invite with valid token (CD)", async () => {
+    const loginRes = await api.post("/api/users/login").send({
+      username: "userC",
+      password: "user1234",
+    });
+    const userD = await User.findOne({ username: "userD" });
+    const recipientId = userD._id.toString();
+    const token = loginRes.body.token;
+    const res = await api
+      .put("/api/users/invite")
+      .send({
+        recipientId,
+      })
+      .set({
+        Authorization: `bearer ${token}`,
+      })
+      .expect(201);
+    expect(res.body.recipientId).toBe(recipientId);
+
+    const userC = await User.findOne({ username: "userC" });
+    const userDupdated = await User.findOne({ username: "userD" });
+
+    expect(userC.invitesSent).toHaveLength(1);
+    expect(userDupdated.invitesReceived).toHaveLength(1);
+  });
+
+  test("cancel invite fails if the Id is not found", async () => {
+    const loginRes = await api.post("/api/users/login").send({
+      username: "userC",
+      password: "user1234",
+    });
+    const userD = await User.findOne({ username: "userD" });
+    const token = loginRes.body.token;
+    const res = await api
+      .put("/api/users/invite/cancel")
+      .send({
+        recipientId: "628983a161bcbd373da975c6",
+      })
+      .set({
+        Authorization: `bearer ${token}`,
+      })
+      .expect(400);
+    expect(res.error.text).toBe('{"error":"Invalid userId."}');
+
+    const userC = await User.findOne({ username: "userC" });
+    const userDupdated = await User.findOne({ username: "userD" });
+
+    expect(userC.invitesSent).toHaveLength(1);
+    expect(userDupdated.invitesReceived).toHaveLength(1);
+  });
+
+  test("can cancel a pending invite with valid Id", async () => {
+    const loginRes = await api.post("/api/users/login").send({
+      username: "userC",
+      password: "user1234",
+    });
+    const userD = await User.findOne({ username: "userD" });
+    const recipientId = userD._id.toString();
+    const token = loginRes.body.token;
+    const res = await api
+      .put("/api/users/invite/cancel")
+      .send({
+        recipientId,
+      })
+      .set({
+        Authorization: `bearer ${token}`,
+      })
+      .expect(201);
+    expect(res.body.recipientId).toBe(recipientId);
+
+    const userC = await User.findOne({ username: "userC" });
+    const userDupdated = await User.findOne({ username: "userD" });
+
+    expect(userC.invitesSent).toHaveLength(0);
+    expect(userDupdated.invitesReceived).toHaveLength(0);
   });
 });
 

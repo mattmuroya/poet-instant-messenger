@@ -37,7 +37,7 @@ module.exports.getCurrentUser = async (req, res, next) => {
       .populate("invitesSent", "username");
 
     if (!user) {
-      return res.status(401).json({
+      return res.status(404).json({
         error: "User not found.",
       });
     }
@@ -147,6 +147,46 @@ module.exports.sendInvite = async (req, res, next) => {
     }
     const updatedSender = await User.findByIdAndUpdate(id, {
       $push: {
+        invitesSent: recipientId,
+      },
+    });
+    if (!updatedSender) {
+      return res.status(400).json({
+        error: "Invalid userId.",
+      });
+    }
+    res.status(201).json({ recipientId });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.cancelInvite = async (req, res, next) => {
+  try {
+    const { id } = jwt.verify(req.token, process.env.JWT_SECRET);
+    const { recipientId } = req.body;
+    const sender = await User.findById(id);
+    const recipient = await User.findById(recipientId);
+    if (
+      !sender.invitesSent.includes(recipientId) ||
+      !recipient.invitesReceived.includes(id)
+    ) {
+      return res.status(400).json({
+        error: "Invalid userId.",
+      });
+    }
+    const updatedRecipient = await User.findByIdAndUpdate(recipientId, {
+      $pull: {
+        invitesReceived: id,
+      },
+    });
+    if (!updatedRecipient) {
+      return res.status(400).json({
+        error: "Invalid userId.",
+      });
+    }
+    const updatedSender = await User.findByIdAndUpdate(id, {
+      $pull: {
         invitesSent: recipientId,
       },
     });
