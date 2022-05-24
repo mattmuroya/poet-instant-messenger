@@ -68,6 +68,31 @@ export default function FriendsList({ setChatListExpanded }) {
     }
   };
 
+  const handleCancelInvite = async (invite) => {
+    try {
+      await axios.put(
+        "/api/users/invite/cancel",
+        { recipientId: invite.id },
+        {
+          headers: {
+            Authorization: `bearer ${localStorage.getItem("poet_auth_token")}`,
+          },
+        }
+      );
+      console.log(user.invitesSent);
+      const newUserState = {
+        ...user,
+        invitesSent: user.invitesSent.filter((item) => {
+          return item.id !== invite.id;
+        }),
+      };
+      console.log(newUserState.invitesSent);
+      setUser(newUserState);
+    } catch (error) {
+      console.error(error.response.data.error);
+    }
+  };
+
   return (
     <li className="top">
       <strong style={{ color: "purple" }}>✨ My Friends ✨</strong>
@@ -139,12 +164,16 @@ export default function FriendsList({ setChatListExpanded }) {
               {user.invitesSent.map((invite) => (
                 <li key={invite.id}>
                   {invite.username}{" "}
-                  <button
+                  {/* <button
                     className="link-button"
                     onClick={() => alert("to implement: cancel request")}
                   >
                     cancel
-                  </button>
+                  </button> */}
+                  <ContactActionButton
+                    action={() => handleCancelInvite(invite)}
+                    text="cancel"
+                  />
                 </li>
               ))}
             </ul>
