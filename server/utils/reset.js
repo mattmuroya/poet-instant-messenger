@@ -5,8 +5,10 @@ const api = supertest(app);
 const info = require("../utils/info");
 
 const User = require("../models/user");
+const Message = require("../models/message");
 
 const resetTestData = async () => {
+  await Message.deleteMany({});
   await User.deleteMany({});
 
   // create admin
