@@ -175,8 +175,8 @@ describe("cancelling invites", () => {
       .set({
         Authorization: `bearer ${token}`,
       })
-      .expect(400);
-    expect(res.error.text).toBe('{"error":"Invalid userId."}');
+      .expect(404);
+    expect(res.error.text).toBe('{"error":"Invite not found."}');
 
     const userC = await User.findOne({ username: "userC" });
     const userDupdated = await User.findOne({ username: "userD" });

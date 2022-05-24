@@ -129,7 +129,8 @@ module.exports.sendInvite = async (req, res, next) => {
     const sender = await User.findById(id);
     if (
       sender.friends.includes(recipientId) ||
-      sender.invitesSent.includes(recipientId)
+      sender.invitesSent.includes(recipientId) ||
+      sender.invitesReceived.includes(recipientId)
     ) {
       return res.status(409).json({
         error: "Duplicate invite.",
@@ -171,8 +172,8 @@ module.exports.cancelInvite = async (req, res, next) => {
       !sender.invitesSent.includes(recipientId) ||
       !recipient.invitesReceived.includes(id)
     ) {
-      return res.status(400).json({
-        error: "Invalid userId.",
+      return res.status(404).json({
+        error: "Invite not found.",
       });
     }
     const updatedRecipient = await User.findByIdAndUpdate(recipientId, {
@@ -205,6 +206,18 @@ module.exports.acceptInvite = async (req, res, next) => {
   try {
     const { id } = jwt.verify(req.token, process.env.JWT_SECRET);
     const { acceptedId } = req.body;
+
+    const acceptor = await User.findById(id);
+    const accepted = await User.findById(acceptedId);
+    if (
+      !acceptor.invitesReceived.includes(acceptedId) ||
+      !accepted.invitesSent.includes(id)
+    ) {
+      return res.status(404).json({
+        error: "Invite not found.",
+      });
+    }
+
     const updatedAccepted = await User.findByIdAndUpdate(acceptedId, {
       $push: {
         friends: id,
@@ -241,6 +254,16 @@ module.exports.rejectInvite = async (req, res, next) => {
   try {
     const { id } = jwt.verify(req.token, process.env.JWT_SECRET);
     const { rejectedId } = req.body;
+    const rejector = await User.findById(id);
+    const rejected = await User.findById(rejectedId);
+    if (
+      !rejector.invitesReceived.includes(rejectedId) ||
+      !rejected.invitesSent.includes(id)
+    ) {
+      return res.status(404).json({
+        error: "Invite not found.",
+      });
+    }
     const updatedRejected = await User.findByIdAndUpdate(rejectedId, {
       $pull: {
         invitesSent: id,
