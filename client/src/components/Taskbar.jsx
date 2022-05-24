@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
+import { Context } from "../contexts/Context";
 
 import windowsLogo from "../assets/images/windows-logo.png";
 
 export default function Taskbar() {
-  const { user } = useContext(UserContext);
+  const { user } = useContext(Context);
 
   const handleStartButtonClick = () => {
     alert(user ? `hello, ${user.username}!` : "please login");

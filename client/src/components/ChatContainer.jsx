@@ -1,9 +1,10 @@
-import { useRef, useState } from "react";
+import { useContext, useState } from "react";
+import { Context } from "../contexts/Context";
 
 export default function ChatContainer() {
   const [message, setMessage] = useState("");
 
-  const messageInput = useRef();
+  const { chat } = useContext(Context);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
@@ -13,7 +14,6 @@ export default function ChatContainer() {
   const handleEnterKey = (e) => {
     if (e.keyCode === 13 && !e.shiftKey) {
       e.preventDefault();
-      // messageInput.submit();
       setMessage("");
       alert(message);
     }
@@ -22,6 +22,7 @@ export default function ChatContainer() {
   return (
     <div className="chat-container">
       <div className="message-pane">
+        {chat && chat.username}
         <p>hello</p>
         <p>hey wazup!</p>
         <p>nm just chillin w josh. we got pizza</p>
@@ -34,11 +35,7 @@ export default function ChatContainer() {
         <p>np see u then</p>
         <p>kk!</p>
       </div>
-      <form
-        ref={messageInput}
-        className="message-input"
-        onSubmit={(e) => handleSendMessage(e)}
-      >
+      <form className="message-input" onSubmit={(e) => handleSendMessage(e)}>
         <textarea
           placeholder="Type your message here..."
           value={message}

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../contexts/UserContext";
+import { Context } from "../contexts/Context";
 
 import TitleBar from "../components/TitleBar";
 import Toolbar from "../components/Toolbar";
@@ -11,7 +11,7 @@ export default function Home() {
   const [mobile, setMobile] = useState(false);
   const [chatListExpanded, setChatListExpanded] = useState(true);
 
-  const { user } = useContext(UserContext);
+  const { user, chat } = useContext(Context);
 
   const navigate = useNavigate();
 
@@ -64,6 +64,9 @@ export default function Home() {
         <div className="status-bar">
           <p className="status-bar-field">
             Welcome, <strong>{user.username}</strong>!
+          </p>
+          <p className="status-bar-field">
+            Currenty chatting with <strong>{chat.username}</strong>.
           </p>
         </div>
       </div>

@@ -1,24 +1,15 @@
 import axios from "axios";
 import { useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
+import { Context } from "../contexts/Context";
 import ContactActionButton from "./ContactActionButton";
 
 export default function FriendsList({ setChatListExpanded }) {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, setChat } = useContext(Context);
 
-  // for development. data to be fetched from the server in prod.
-  // const onlineFriends = ["lalib035", "N8DaBballPlaya", "TipDaddy78"];
-  // const offlineFriends = [
-  //   "p0k3m0n_m45t3r",
-  //   "lifesAboxOchocolates",
-  //   "xXx_NIRVANA_xXx",
-  //   "iLuvNickCarter99",
-  // ];
-  // const invitesReceived = ["amell013"];
-  // const invitesSent = ["TheKid65", "ZeldaLuvvr94"];
-
-  // NOTE: need to figure out whether/how to handle online vs. offline users.
-  // maybe just show single list and status indicator by each user?
+  const handleSwitchChat = (chat) => {
+    setChat(chat);
+    setChatListExpanded(false);
+  };
 
   const handleAcceptInvite = async (invite) => {
     try {
@@ -31,7 +22,6 @@ export default function FriendsList({ setChatListExpanded }) {
           },
         }
       );
-      // hopefully if the put request fails, the following code doesn't execute
       const newUserState = {
         ...user,
         friends: user.friends.concat([invite]),
@@ -97,26 +87,6 @@ export default function FriendsList({ setChatListExpanded }) {
     <li className="top">
       <strong style={{ color: "purple" }}>✨ My Friends ✨</strong>
       <ul>
-        {/* <li>
-          <details open>
-            <summary>
-              <span className="li-emoji">🟢</span> Online ({user.friends.length}
-              )
-            </summary>
-            <ul>
-              {user.friends.map((friend) => (
-                <li key={friend.id}>
-                  <button
-                    className="link-button"
-                    onClick={() => setChatListExpanded(false)}
-                  >
-                    {friend.username}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </details>
-        </li> */}
         <li>
           <details open>
             <summary>
@@ -128,7 +98,7 @@ export default function FriendsList({ setChatListExpanded }) {
                 <li key={friend.id}>
                   <button
                     className="link-button"
-                    onClick={() => setChatListExpanded(false)}
+                    onClick={() => handleSwitchChat(friend)}
                   >
                     {friend.username}
                   </button>
@@ -164,12 +134,6 @@ export default function FriendsList({ setChatListExpanded }) {
               {user.invitesSent.map((invite) => (
                 <li key={invite.id}>
                   {invite.username}{" "}
-                  {/* <button
-                    className="link-button"
-                    onClick={() => alert("to implement: cancel request")}
-                  >
-                    cancel
-                  </button> */}
                   <ContactActionButton
                     action={() => handleCancelInvite(invite)}
                     text="cancel"
@@ -183,3 +147,10 @@ export default function FriendsList({ setChatListExpanded }) {
     </li>
   );
 }
+
+// const offlineFriends = [
+//   "p0k3m0n_m45t3r",
+//   "xXx_NIRVANA_xXx",
+//   "iLuvNickCarter99",
+//   "ZeldaLuvvr94",
+// ];

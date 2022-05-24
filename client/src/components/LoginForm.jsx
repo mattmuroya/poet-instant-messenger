@@ -1,14 +1,14 @@
 import axios from "axios";
 import { useState, useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { UserContext } from "../contexts/UserContext";
+import { Context } from "../contexts/Context";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useContext(Context);
 
   const navigate = useNavigate();
   const location = useLocation();

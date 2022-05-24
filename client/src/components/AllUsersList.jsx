@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../contexts/UserContext";
+import { Context } from "../contexts/Context";
 import ContactActionButton from "./ContactActionButton";
 
 export default function AllUsersList() {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(Context);
 
   // console.log(user);
 

@@ -1,6 +1,9 @@
 import { createContext } from "react";
 
-export const UserContext = createContext({
+export const Context = createContext({
   user: null,
   setUser: () => {},
+
+  chat: null,
+  setChat: () => {},
 });

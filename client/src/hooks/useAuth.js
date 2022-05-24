@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { UserContext } from "../contexts/UserContext";
+import { Context } from "../contexts/Context";
 
 export const useAuth = () => {
   // const [savedUser, setSavedUser] = useState(null);
   const [userIsAuthorized, setUserIsAuthorized] = useState(null);
   const [authCheckCompleted, setAuthCheckCompleted] = useState(false);
 
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useContext(Context);
 
   useEffect(() => {
     (async () => {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { UserContext } from "./contexts/UserContext";
+import { Context } from "./contexts/Context";
 import "./styles/App.css";
 
 import Home from "./pages/Home";
@@ -11,10 +11,11 @@ import Taskbar from "./components/Taskbar";
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [chat, setChat] = useState(null);
 
   return (
     <div className="desktop">
-      <UserContext.Provider value={{ user, setUser }}>
+      <Context.Provider value={{ user, setUser, chat, setChat }}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -24,7 +25,7 @@ export default function App() {
           </Routes>
         </BrowserRouter>
         <Taskbar />
-      </UserContext.Provider>
+      </Context.Provider>
     </div>
   );
 }
