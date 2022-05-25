@@ -28,9 +28,72 @@ describe("sending messages", () => {
       .expect(201);
     expect(res.body.message.text).toBe("Hello, world!");
 
-    console.log(res.body.message);
+    const messages = await Message.find({});
+    expect(messages).toHaveLength(3); // two test messages prepopulated
+  });
+
+  test("second user can respond with new message", async () => {
+    const admin = await User.findOne({ username: "admin" });
+    const loginRes = await api.post("/api/users/login").send({
+      username: "userA",
+      password: "user1234",
+    });
+    const token = loginRes.body.token;
+    const res = await api
+      .post("/api/messages")
+      .send({
+        recipient: admin._id.toString(),
+        text: "Howzit!",
+      })
+      .set({
+        Authorization: `bearer ${token}`,
+      })
+      .expect(201);
+    expect(res.body.message.text).toBe("Howzit!");
 
     const messages = await Message.find({});
-    expect(messages).toHaveLength(1);
+    expect(messages).toHaveLength(4);
+  });
+
+  test("post message fails with missing text", async () => {
+    const userA = await User.findOne({ username: "userA" });
+    const loginRes = await api.post("/api/users/login").send({
+      username: "admin",
+      password: "admin1234",
+    });
+    const token = loginRes.body.token;
+    const res = await api
+      .post("/api/messages")
+      .send({
+        recipient: userA._id.toString(),
+        // text: "",
+      })
+      .set({
+        Authorization: `bearer ${token}`,
+      })
+      .expect(400);
+    expect(res.error.text).toBe('{"error":"Message body cannot be empty."}');
+
+    const messages = await Message.find({});
+    expect(messages).toHaveLength(4);
+  });
+});
+
+describe("reading messages", () => {
+  test("retrieve messages between two users", async () => {
+    const userA = await User.findOne({ username: "userA" });
+    const loginRes = await api.post("/api/users/login").send({
+      username: "admin",
+      password: "admin1234",
+    });
+    const token = loginRes.body.token;
+    const res = await api
+      .get(`/api/messages/${userA._id.toString()}`)
+      .set({
+        Authorization: `bearer ${token}`,
+      })
+      .expect(200);
+    // console.log(res.body.messages);
+    expect(res.body.messages).toHaveLength(2);
   });
 });

@@ -38,6 +38,18 @@ const resetTestData = async () => {
     $push: { friends: user1.body.user.id },
   });
 
+  await Message.create({
+    sender: user1.body.user.id,
+    recipient: user2.body.user.id,
+    text: "hey user2!",
+  });
+
+  await Message.create({
+    sender: user2.body.user.id,
+    recipient: user1.body.user.id,
+    text: "omg what's up user1!",
+  });
+
   // create users A, B, C, D for admin testing
 
   const userA = await api.post("/api/users/register").send({
