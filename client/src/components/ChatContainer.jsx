@@ -1,12 +1,15 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Context } from "../contexts/Context";
+import { v4 as uuidv4 } from "uuid";
 
 export default function ChatContainer() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
   const { user, chat } = useContext(Context);
+
+  const scrollRef = useRef();
 
   useEffect(() => {
     (async () => {
@@ -17,8 +20,9 @@ export default function ChatContainer() {
             Authorization: `bearer ${localStorage.getItem("poet_auth_token")}`,
           },
         });
-        // console.log(data.messages);
-        setMessages(data.messages);
+        setMessages(
+          data.messages.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
+        );
       } catch (error) {
         setMessages([]);
         console.log(error);
@@ -26,16 +30,42 @@ export default function ChatContainer() {
     })();
   }, [chat]);
 
-  const handleSendMessage = (e) => {
+  useEffect(() => {
+    // ?. is optional chaining
+    // returns undef instead of error if no scrollRef.current
+    scrollRef.current?.scrollIntoView();
+  }, [messages]);
+
+  const handleSendMessage = async (e) => {
     e.preventDefault();
-    alert("to implement: send message", message);
+    try {
+      // update react state before posting message to server for faster UX
+      // need to implement elegant error handling if post req fails after sending
+      setMessages([
+        ...messages,
+        { id: uuidv4(), sender: user, recipient: chat, text: message },
+      ]);
+      setMessage("");
+      await axios.post(
+        "/api/messages",
+        {
+          recipient: chat.id,
+          text: message,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${localStorage.getItem("poet_auth_token")}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleEnterKey = (e) => {
     if (e.keyCode === 13 && !e.shiftKey) {
-      e.preventDefault();
-      setMessage("");
-      alert(message);
+      handleSendMessage(e);
     }
   };
 
@@ -45,7 +75,7 @@ export default function ChatContainer() {
         <div>
           {messages.map((message) => {
             return (
-              <p key={message.id}>
+              <p ref={scrollRef} key={message.id}>
                 <span
                   className={
                     message.sender.id === user.id
@@ -68,7 +98,9 @@ export default function ChatContainer() {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => handleEnterKey(e)}
         />
-        <button type="submit">Send</button>
+        <button type="submit" disabled={!chat ? true : false}>
+          Send
+        </button>
       </form>
     </div>
   );

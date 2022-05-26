@@ -34,11 +34,14 @@ module.exports.sendMessage = async (req, res, next) => {
         error: "Message body cannot be empty.",
       });
     }
-    const message = await Message.create({
+    let message = await Message.create({
       sender: id,
       recipient,
       text,
     });
+    message = await Message.findById(message._id)
+      .populate("sender", "username")
+      .populate("recipient", "username");
     res.status(201).json({ message });
   } catch (error) {
     next(error);
