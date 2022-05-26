@@ -73,22 +73,24 @@ export default function ChatContainer() {
     <div className="chat-container">
       <div className="message-pane">
         <div>
-          {messages.map((message) => {
-            return (
-              <p ref={scrollRef} key={message.id}>
-                <span
-                  className={
-                    message.sender.id === user.id
-                      ? "sender-name"
-                      : "recipient-name"
-                  }
-                >
-                  {message.sender.username}:
-                </span>{" "}
-                {message.text}
-              </p>
-            );
-          })}
+          {!chat
+            ? "Select a contact from your Friends list to begin chatting!"
+            : messages.map((message) => {
+                return (
+                  <p ref={scrollRef} key={message.id}>
+                    <span
+                      className={
+                        message.sender.id === user.id
+                          ? "sender-name"
+                          : "recipient-name"
+                      }
+                    >
+                      {message.sender.username}:
+                    </span>{" "}
+                    {message.text}
+                  </p>
+                );
+              })}
         </div>
       </div>
       <form className="message-input" onSubmit={(e) => handleSendMessage(e)}>
@@ -97,6 +99,7 @@ export default function ChatContainer() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => handleEnterKey(e)}
+          disabled={!chat ? true : false}
         />
         <button type="submit" disabled={!chat ? true : false}>
           Send

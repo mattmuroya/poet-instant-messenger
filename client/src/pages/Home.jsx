@@ -11,7 +11,7 @@ export default function Home() {
   const [mobile, setMobile] = useState(false);
   const [chatListExpanded, setChatListExpanded] = useState(true);
 
-  const { user, chat } = useContext(Context);
+  const { user, setUser, chat, setChat } = useContext(Context);
 
   const navigate = useNavigate();
 
@@ -40,6 +40,8 @@ export default function Home() {
     if (window.confirm("sign out?")) {
       localStorage.removeItem("poet_auth_token");
       navigate("/login");
+      setUser(null);
+      setChat(null);
     }
   };
 

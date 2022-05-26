@@ -1,10 +1,14 @@
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "../contexts/Context";
 import ContactActionButton from "./ContactActionButton";
 
 export default function FriendsList({ setChatListExpanded }) {
   const { user, setUser, chat, setChat } = useContext(Context);
+
+  useEffect(() => {
+    if (!chat && user.friends.length > 0) setChat(user.friends[0]);
+  }, []);
 
   const handleSwitchChat = (chat) => {
     setChat(chat);
@@ -89,10 +93,7 @@ export default function FriendsList({ setChatListExpanded }) {
       <ul>
         <li>
           <details open>
-            <summary>
-              <span className="li-emoji">⚪️</span> Offline (
-              {user.friends.length})
-            </summary>
+            <summary>All Friends ({user.friends.length})</summary>
             <ul>
               {user.friends.map((friend) => (
                 <li key={friend.id}>
