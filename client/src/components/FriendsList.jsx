@@ -85,7 +85,7 @@ export default function FriendsList({ setChatListExpanded }) {
 
   return (
     <li className="top">
-      <strong style={{ color: "navy" }}>✨ My Friends ✨</strong>
+      <strong style={{ color: "purple" }}>✨ My Friends ✨</strong>
       <ul>
         <li>
           <details open>

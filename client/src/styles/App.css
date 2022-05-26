@@ -152,7 +152,7 @@ details::-webkit-details-marker {
 }
 
 .selected {
-  /* font-weight: bold; */
+  font-weight: bold;
   color: purple;
 }
 
@@ -215,6 +215,16 @@ details {
   box-shadow: var(--border-field);
   padding: 6px;
   margin: 0;
+}
+
+.sender-name {
+  font-weight: bold;
+  color: red;
+}
+
+.recipient-name {
+  font-weight: bold;
+  color: blue;
 }
 
 .message-input {

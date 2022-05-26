@@ -6,7 +6,7 @@ export default function ChatContainer() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const { chat } = useContext(Context);
+  const { user, chat } = useContext(Context);
 
   useEffect(() => {
     (async () => {
@@ -44,7 +44,20 @@ export default function ChatContainer() {
       <div className="message-pane">
         <div>
           {messages.map((message) => {
-            return <p key={message.id}>{message.text}</p>;
+            return (
+              <p key={message.id}>
+                <span
+                  className={
+                    message.sender.id === user.id
+                      ? "sender-name"
+                      : "recipient-name"
+                  }
+                >
+                  {message.sender.username}:
+                </span>{" "}
+                {message.text}
+              </p>
+            );
           })}
         </div>
       </div>

@@ -11,7 +11,9 @@ module.exports.getMessages = async (req, res, next) => {
         { sender: id, recipient: recipient },
         { sender: recipient, recipient: id },
       ],
-    });
+    })
+      .populate("sender", "username")
+      .populate("recipient", "username");
     if (!messages || messages.length === 0) {
       return res.status(404).json({
         error: "Messages not found.",
