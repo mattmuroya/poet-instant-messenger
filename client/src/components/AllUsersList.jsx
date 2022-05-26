@@ -69,7 +69,7 @@ export default function AllUsersList() {
 
   return (
     <li className="top">
-      <strong style={{ color: "purple" }}>✨ Find Friends ✨</strong>
+      <strong style={{ color: "navy" }}>✨ Find Friends ✨</strong>
       <ul>
         <li>
           <details open>

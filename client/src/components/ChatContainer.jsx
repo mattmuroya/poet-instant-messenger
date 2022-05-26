@@ -1,10 +1,30 @@
-import { useContext, useState } from "react";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../contexts/Context";
 
 export default function ChatContainer() {
   const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
 
   const { chat } = useContext(Context);
+
+  useEffect(() => {
+    (async () => {
+      if (!chat) return;
+      try {
+        const { data } = await axios.get(`/api/messages/${chat.id}`, {
+          headers: {
+            Authorization: `bearer ${localStorage.getItem("poet_auth_token")}`,
+          },
+        });
+        // console.log(data.messages);
+        setMessages(data.messages);
+      } catch (error) {
+        setMessages([]);
+        console.log(error);
+      }
+    })();
+  }, [chat]);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
@@ -22,18 +42,11 @@ export default function ChatContainer() {
   return (
     <div className="chat-container">
       <div className="message-pane">
-        {chat && chat.username}
-        <p>hello</p>
-        <p>hey wazup!</p>
-        <p>nm just chillin w josh. we got pizza</p>
-        <p>dude that's so cool. what kind</p>
-        <p>pepperoni obvs. tha best</p>
-        <p>you goin to the game saturday?</p>
-        <p>yes! I gotta find a ride tho</p>
-        <p>My mom can probly pic u up. we're gonna get lunch if u wanna come</p>
-        <p>whoa that would be awesome! thx</p>
-        <p>np see u then</p>
-        <p>kk!</p>
+        <div>
+          {messages.map((message) => {
+            return <p key={message.id}>{message.text}</p>;
+          })}
+        </div>
       </div>
       <form className="message-input" onSubmit={(e) => handleSendMessage(e)}>
         <textarea

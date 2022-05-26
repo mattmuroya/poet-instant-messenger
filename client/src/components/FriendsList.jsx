@@ -4,7 +4,7 @@ import { Context } from "../contexts/Context";
 import ContactActionButton from "./ContactActionButton";
 
 export default function FriendsList({ setChatListExpanded }) {
-  const { user, setUser, setChat } = useContext(Context);
+  const { user, setUser, chat, setChat } = useContext(Context);
 
   const handleSwitchChat = (chat) => {
     setChat(chat);
@@ -85,7 +85,7 @@ export default function FriendsList({ setChatListExpanded }) {
 
   return (
     <li className="top">
-      <strong style={{ color: "purple" }}>✨ My Friends ✨</strong>
+      <strong style={{ color: "navy" }}>✨ My Friends ✨</strong>
       <ul>
         <li>
           <details open>
@@ -97,7 +97,11 @@ export default function FriendsList({ setChatListExpanded }) {
               {user.friends.map((friend) => (
                 <li key={friend.id}>
                   <button
-                    className="link-button"
+                    className={`link-button ${
+                      chat && friend.username === chat.username
+                        ? "selected"
+                        : ""
+                    }`}
                     onClick={() => handleSwitchChat(friend)}
                   >
                     {friend.username}

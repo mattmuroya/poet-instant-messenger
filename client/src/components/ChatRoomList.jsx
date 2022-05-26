@@ -3,7 +3,7 @@ export default function ChatRoomList({ setChatListExpanded }) {
 
   return (
     <li className="top">
-      <strong style={{ color: "purple" }}>✨ Public Chat Rooms ✨</strong>
+      <strong style={{ color: "navy" }}>✨ Public Chat Rooms ✨</strong>
       <ul>
         <li>
           <details open>

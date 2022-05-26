@@ -65,9 +65,11 @@ export default function Home() {
           <p className="status-bar-field">
             Welcome, <strong>{user.username}</strong>!
           </p>
-          <p className="status-bar-field">
-            Currenty chatting with <strong>{chat.username}</strong>.
-          </p>
+          {chat && (
+            <p className="status-bar-field">
+              Currenty chatting with <strong>{chat.username}</strong>.
+            </p>
+          )}
         </div>
       </div>
     )

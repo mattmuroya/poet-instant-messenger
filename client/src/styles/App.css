@@ -151,6 +151,11 @@ details::-webkit-details-marker {
   outline-offset: 0px;
 }
 
+.selected {
+  /* font-weight: bold; */
+  color: purple;
+}
+
 /* main chat window */
 
 .home-window {
