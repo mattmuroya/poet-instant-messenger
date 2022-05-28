@@ -16,16 +16,14 @@ export default function ChatContainer() {
       console.log("setting messages from server");
       if (!chat) return;
       try {
-        console.log({ chat });
-        if (chat.isChatroom) {
-          console.log("is chatroom");
-        }
-        setMessages([]);
         const { data } = await axios.get(`/api/messages/${chat.id}`, {
           headers: {
             Authorization: `bearer ${localStorage.getItem("poet_auth_token")}`,
           },
         });
+        console.log(
+          data.messages.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
+        );
         setMessages(
           data.messages.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
         );

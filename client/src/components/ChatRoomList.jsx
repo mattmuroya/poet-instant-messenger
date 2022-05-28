@@ -1,17 +1,5 @@
-import { useContext } from "react";
-import { Context } from "../contexts/Context";
-
 export default function ChatRoomList({ setChatListExpanded }) {
-  const chatrooms = [{ name: "General", id: "general", isChatroom: true }];
-
-  const { setChat } = useContext(Context);
-
-  const handleSwitchChatroom = (room) => {
-    console.log("swtiching");
-    console.log({ room });
-    setChatListExpanded(false);
-    setChat(room);
-  };
+  const chatRooms = ["General", "Music", "Movies", "Games", "Technology"];
 
   return (
     <li className="top">
@@ -21,13 +9,13 @@ export default function ChatRoomList({ setChatListExpanded }) {
           <details open>
             <summary>All Chats</summary>
             <ul>
-              {chatrooms.map((room) => (
-                <li key={room.id}>
+              {chatRooms.map((chatRoom) => (
+                <li key={chatRoom}>
                   <button
                     className="link-button"
-                    onClick={() => handleSwitchChatroom(room)}
+                    onClick={() => setChatListExpanded(false)}
                   >
-                    {room.name}
+                    {chatRoom}
                   </button>
                 </li>
               ))}
