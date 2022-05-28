@@ -12,10 +12,13 @@ import Taskbar from "./components/Taskbar";
 export default function App() {
   const [user, setUser] = useState(null);
   const [chat, setChat] = useState(null);
+  const [socket, setSocket] = useState(null);
 
   return (
     <div className="desktop">
-      <Context.Provider value={{ user, setUser, chat, setChat }}>
+      <Context.Provider
+        value={{ user, setUser, chat, setChat, socket, setSocket }}
+      >
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />

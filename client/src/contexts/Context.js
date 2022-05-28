@@ -6,4 +6,7 @@ export const Context = createContext({
 
   chat: null,
   setChat: () => {},
+
+  socket: null,
+  setSocket: () => {},
 });

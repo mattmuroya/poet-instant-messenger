@@ -19,3 +19,4 @@ Development of the API endpoints follows test-driven development (TDD) practices
 ## Optimizations
 
 - Currently, the loginUser method and the useAuth hook both send two requests; a POST request to authenticate the current user (or get a new token), and then if authorized, a GET request to retrieve the user details. It might be more efficient/stable to send the authenticated user details along with the POST request response instead of requiring a second request. This would require a refactor for both the client request methods and the API controllers.
+- I'd like to make the client-side routing such that the URL reads \<base>/chat/\<username>. This way if a user refreshes the application, it will reopen the current chat.

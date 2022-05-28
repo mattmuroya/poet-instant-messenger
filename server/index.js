@@ -7,24 +7,32 @@ const info = require("./utils/info");
 const server = http.createServer(app);
 const io = new Server(server);
 
+const onlineUsers = {};
+
 io.on("connection", (socket) => {
   info("---");
   info("user connected");
   info(socket.id);
 
-  // socket.on('join_room', (roomId) => {
-  //   socket.join(roomId)
-  //   console.log(`Socket ${socket.id} joined Room ${roomId}`)
-  // })
+  socket.on("user_online", (user) => {
+    onlineUsers[user.id] = socket.id;
+    console.log(onlineUsers);
+  });
 
-  // socket.on('send_message', message => {
-  //   console.log('message sent to server');
-  //   socket.to(message.room).emit('receive_message', message);
-  // });
+  socket.on("send_message", (message) => {
+    socket
+      .to(onlineUsers[message.recipient.id])
+      .emit("receive_message", message);
+  });
 
   socket.on("disconnect", () => {
+    // io.emit("get_disconnected_user");
     info("user disconnected");
   });
+
+  // socket.on("receive_disconnected_user", (user) => {
+  //   delete onlineUsers[user.id];
+  // });
 });
 
 server.listen(PORT, () => {

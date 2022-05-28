@@ -7,7 +7,7 @@ export default function ChatContainer() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const { user, chat } = useContext(Context);
+  const { user, chat, socket } = useContext(Context);
 
   const scrollRef = useRef();
 
@@ -31,6 +31,13 @@ export default function ChatContainer() {
   }, [chat]);
 
   useEffect(() => {
+    if (socket)
+      socket.on("receive_message", (message) => {
+        console.log(message);
+      });
+  }, [socket]);
+
+  useEffect(() => {
     // ?. is optional chaining
     // returns undef instead of error if no scrollRef.current
     scrollRef.current?.scrollIntoView();
@@ -46,7 +53,7 @@ export default function ChatContainer() {
         { id: uuidv4(), sender: user, recipient: chat, text: message },
       ]);
       setMessage("");
-      await axios.post(
+      const { data } = await axios.post(
         "/api/messages",
         {
           recipient: chat.id,
@@ -58,6 +65,7 @@ export default function ChatContainer() {
           },
         }
       );
+      socket.emit("send_message", data.message);
     } catch (error) {
       console.log(error);
     }

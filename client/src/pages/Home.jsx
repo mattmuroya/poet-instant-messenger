@@ -7,17 +7,31 @@ import Toolbar from "../components/Toolbar";
 import ContactsContainer from "../components/ContactsContainer";
 import ChatContainer from "../components/ChatContainer";
 
+import { io } from "socket.io-client";
+
 export default function Home() {
+  // const [socket, setSocket] = useState(null);
   const [mobile, setMobile] = useState(false);
   const [chatListExpanded, setChatListExpanded] = useState(true);
 
-  const { user, setUser, chat, setChat } = useContext(Context);
+  const { user, setUser, chat, setChat, socket, setSocket } =
+    useContext(Context);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) navigate("/login");
   }, [user, navigate]);
+
+  useEffect(() => {
+    if (user) setSocket(io());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  useEffect(() => {
+    if (socket) socket.emit("user_online", user);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket]);
 
   useEffect(() => {
     if (window.innerWidth < 700) {
@@ -42,6 +56,8 @@ export default function Home() {
       navigate("/login");
       setUser(null);
       setChat(null);
+      socket.disconnect(user);
+      setSocket(null);
     }
   };
 
@@ -51,6 +67,8 @@ export default function Home() {
         <TitleBar title="Home" handleLogout={handleLogout} />
         <Toolbar
           mobile={mobile}
+          // socket={socket}
+          // setSocket={setSocket}
           handleLogout={handleLogout}
           chatListExpanded={chatListExpanded}
           setChatListExpanded={setChatListExpanded}

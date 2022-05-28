@@ -8,6 +8,7 @@ export default function FriendsList({ setChatListExpanded }) {
 
   useEffect(() => {
     if (!chat && user.friends.length > 0) setChat(user.friends[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSwitchChat = (chat) => {
