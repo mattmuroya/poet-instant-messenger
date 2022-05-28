@@ -13,6 +13,7 @@ export default function ChatContainer() {
 
   useEffect(() => {
     (async () => {
+      console.log("setting messages from server");
       if (!chat) return;
       try {
         const { data } = await axios.get(`/api/messages/${chat.id}`, {
@@ -20,6 +21,9 @@ export default function ChatContainer() {
             Authorization: `bearer ${localStorage.getItem("poet_auth_token")}`,
           },
         });
+        console.log(
+          data.messages.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
+        );
         setMessages(
           data.messages.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
         );
@@ -32,8 +36,12 @@ export default function ChatContainer() {
 
   useEffect(() => {
     if (socket) {
-      socket.on("receive_message", (message) => {
-        console.log(message);
+      socket.on("receive_message", (receivedMessage) => {
+        // for some reason the spread operator was causing
+        // the Messages state to revert to an empty array.
+        if (receivedMessage.sender.id === chat.id) {
+          setMessages((prevMessages) => prevMessages.concat(receivedMessage));
+        }
       });
     }
   }, [socket]);

@@ -21,7 +21,6 @@ export default function AllUsersList() {
 
   useEffect(() => {
     (async () => {
-      console.log("hi");
       const { data } = await axios.get("/api/users/redacted", {
         headers: {
           Authorization: `bearer ${localStorage.getItem("poet_auth_token")}`,

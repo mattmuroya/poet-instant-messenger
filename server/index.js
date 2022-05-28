@@ -20,6 +20,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send_message", (message) => {
+    console.log(message);
     if (onlineUsers[message.recipient.id]) {
       io.to(onlineUsers[message.recipient.id]).emit("receive_message", message);
     }
