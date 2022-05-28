@@ -16,6 +16,12 @@ const populateProdData = async () => {
     password: process.env.mattmuroya,
   });
 
+  // create guest
+  await api.post("/api/users/register").send({
+    username: "guest",
+    password: process.env.GUEST_PW,
+  });
+
   // create users
 
   await api.post("/api/users/register").send({

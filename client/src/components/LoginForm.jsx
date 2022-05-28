@@ -46,10 +46,27 @@ export default function LoginForm() {
     }
   };
 
-  const handleLoginAsGuest = (e) => {
+  const handleLoginAsGuest = async (e) => {
     e.preventDefault();
-    alert("to implement: set guest user");
-    // navigate("/");
+    try {
+      const res = await axios.post("/api/users/login", {
+        username: "guest",
+        password: process.env.REACT_APP_GUEST_PW,
+      });
+      const { data } = await axios.get("/api/users/current", {
+        headers: {
+          Authorization: `bearer ${res.data.token}`,
+          // for testing purposes
+          // Authorization: "bearer BAD_TOKEN",
+        },
+      });
+      localStorage.setItem("poet_auth_token", res.data.token);
+      setUser(data.user);
+      navigate("/");
+    } catch (error) {
+      console.error(error.response.data.error);
+      setErrorMessage(error.response.data.error);
+    }
   };
 
   return (

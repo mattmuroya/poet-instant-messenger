@@ -17,6 +17,12 @@ const resetTestData = async () => {
     password: "admin1234",
   });
 
+  // create guest
+  await api.post("/api/users/register").send({
+    username: "guest",
+    password: process.env.GUEST_PW,
+  });
+
   // create users 1 and 2 as friends
 
   const user1 = await api.post("/api/users/register").send({
