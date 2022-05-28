@@ -24,6 +24,12 @@ export default function Home() {
   }, [user, navigate]);
 
   useEffect(() => {
+    if (window.innerWidth < 700) {
+      setMobile(true);
+    }
+  }, []);
+
+  useEffect(() => {
     if (user) setSocket(io());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
@@ -32,12 +38,6 @@ export default function Home() {
     if (socket) socket.emit("user_online", user);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
-
-  useEffect(() => {
-    if (window.innerWidth < 700) {
-      setMobile(true);
-    }
-  }, []);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
