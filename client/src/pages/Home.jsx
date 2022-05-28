@@ -56,7 +56,7 @@ export default function Home() {
       navigate("/login");
       setUser(null);
       setChat(null);
-      socket.disconnect(user);
+      socket.disconnect();
       setSocket(null);
     }
   };

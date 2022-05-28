@@ -31,10 +31,11 @@ export default function ChatContainer() {
   }, [chat]);
 
   useEffect(() => {
-    if (socket)
+    if (socket) {
       socket.on("receive_message", (message) => {
         console.log(message);
       });
+    }
   }, [socket]);
 
   useEffect(() => {

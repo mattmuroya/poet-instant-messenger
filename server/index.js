@@ -20,19 +20,19 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send_message", (message) => {
-    socket
-      .to(onlineUsers[message.recipient.id])
-      .emit("receive_message", message);
+    if (onlineUsers[message.recipient.id]) {
+      io.to(onlineUsers[message.recipient.id]).emit("receive_message", message);
+    }
   });
 
   socket.on("disconnect", () => {
-    // io.emit("get_disconnected_user");
+    for (let userId in onlineUsers) {
+      if (onlineUsers[userId] === socket.id) {
+        delete onlineUsers[userId];
+      }
+    }
     info("user disconnected");
   });
-
-  // socket.on("receive_disconnected_user", (user) => {
-  //   delete onlineUsers[user.id];
-  // });
 });
 
 server.listen(PORT, () => {
