@@ -4,21 +4,12 @@ const app = require("../app");
 const api = supertest(app);
 const info = require("../utils/info");
 
-const Chatroom = require("../models/chatroom");
 const User = require("../models/user");
 const Message = require("../models/message");
 
 const resetTestData = async () => {
   await Message.deleteMany({});
   await User.deleteMany({});
-  await Chatroom.deleteMany({});
-
-  // create chatrooms
-
-  const general = await Chatroom.create({
-    name: "General",
-    nameCanonical: "general",
-  });
 
   // create admin
 
@@ -57,12 +48,6 @@ const resetTestData = async () => {
     sender: user2.body.user.id,
     recipient: user1.body.user.id,
     text: "omg what's up user1!",
-  });
-
-  await Message.create({
-    sender: admin.body.user.id,
-    chatroom: general._id,
-    text: "this is a message in the general thread.",
   });
 
   // create users A, B, C, D for admin testing

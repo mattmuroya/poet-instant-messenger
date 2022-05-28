@@ -7,7 +7,6 @@ const reqLogger = require("./middleware/reqLogger");
 const tokenExtractor = require("./middleware/tokenExtractor");
 
 const authRouter = require("./routes/authRouter");
-const chatroomRouter = require("./routes/chatroomRouter");
 const userRouter = require("./routes/userRouter");
 const messageRouter = require("./routes/messageRouter");
 const catchHandler = require("./middleware/catchHandler");
@@ -35,7 +34,6 @@ app.use(tokenExtractor);
 
 // REQUEST ROUTERS
 app.use("/api/auth", authRouter);
-app.use("/api/chatrooms", chatroomRouter);
 app.use("/api/users", userRouter);
 app.use("/api/messages", messageRouter);
 
