@@ -13,7 +13,7 @@ export default function ChatContainer() {
 
   useEffect(() => {
     (async () => {
-      console.log("setting messages from server");
+      setMessages([]);
       if (!chat) return;
       try {
         const { data } = await axios.get(`/api/messages/${chat.id}`, {
@@ -21,9 +21,6 @@ export default function ChatContainer() {
             Authorization: `bearer ${localStorage.getItem("poet_auth_token")}`,
           },
         });
-        console.log(
-          data.messages.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
-        );
         setMessages(
           data.messages.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
         );
@@ -35,24 +32,26 @@ export default function ChatContainer() {
   }, [chat]);
 
   useEffect(() => {
-    if (socket) {
-      socket.on("receive_message", (receivedMessage) => {
-        // for some reason the spread operator was causing
-        // the Messages state to revert to an empty array.
-        if (receivedMessage.sender.id === chat.id) {
-          setMessages((prevMessages) => prevMessages.concat(receivedMessage));
-        }
-      });
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socket]);
-
-  useEffect(() => {
     // ?. is optional chaining
     // returns undef instead of error if no scrollRef.current
     scrollRef.current?.scrollIntoView();
   }, [messages]);
+
+  useEffect(() => {
+    if (socket) socket.on("receive_message", updateReceivedMessage);
+    return () => {
+      if (socket) socket.off("receive_message", updateReceivedMessage);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket, chat]);
+
+  const updateReceivedMessage = (receivedMessage) => {
+    // for some reason the spread operator was causing
+    // the Messages state to revert to an empty array.
+    if (chat && receivedMessage.sender.id === chat.id) {
+      setMessages((prevMessages) => prevMessages.concat(receivedMessage));
+    }
+  };
 
   const handleSendMessage = async (e) => {
     e.preventDefault();

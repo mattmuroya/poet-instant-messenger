@@ -93,7 +93,6 @@ describe("reading messages", () => {
         Authorization: `bearer ${token}`,
       })
       .expect(200);
-    // console.log(res.body.messages);
     expect(res.body.messages).toHaveLength(2);
   });
 });

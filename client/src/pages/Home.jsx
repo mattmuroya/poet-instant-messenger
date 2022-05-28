@@ -10,7 +10,6 @@ import ChatContainer from "../components/ChatContainer";
 import { io } from "socket.io-client";
 
 export default function Home() {
-  // const [socket, setSocket] = useState(null);
   const [mobile, setMobile] = useState(false);
   const [chatListExpanded, setChatListExpanded] = useState(true);
 
@@ -18,6 +17,12 @@ export default function Home() {
     useContext(Context);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (window.innerWidth < 700) {
+      setMobile(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (!user) navigate("/login");
@@ -32,12 +37,6 @@ export default function Home() {
     if (socket) socket.emit("user_online", user);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
-
-  useEffect(() => {
-    if (window.innerWidth < 700) {
-      setMobile(true);
-    }
-  }, []);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
