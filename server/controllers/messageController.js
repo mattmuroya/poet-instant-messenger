@@ -14,23 +14,11 @@ module.exports.getMessages = async (req, res, next) => {
     })
       .populate("sender", "username")
       .populate("recipient", "username");
-    // if (!messages) {
-    //   return res.status(404).json({
-    //     error: "Messages not found.",
-    //   });
-    // }
-    res.status(200).json({ messages });
-  } catch (error) {
-    next(error);
-  }
-};
-
-module.exports.getChatroomMessages = async (req, res, next) => {
-  try {
-    const chatroom = req.params.id;
-    const messages = await Message.find({
-      chatroom,
-    }).populate("sender", "username");
+    if (!messages) {
+      return res.status(404).json({
+        error: "Messages not found.",
+      });
+    }
     res.status(200).json({ messages });
   } catch (error) {
     next(error);
@@ -40,7 +28,7 @@ module.exports.getChatroomMessages = async (req, res, next) => {
 module.exports.sendMessage = async (req, res, next) => {
   try {
     const { id } = jwt.verify(req.token, process.env.JWT_SECRET);
-    const { recipient, chatroom, text } = req.body;
+    const { recipient, text } = req.body;
     if (!text) {
       return res.status(400).json({
         error: "Message body cannot be empty.",
@@ -49,13 +37,11 @@ module.exports.sendMessage = async (req, res, next) => {
     let message = await Message.create({
       sender: id,
       recipient,
-      chatroom,
       text,
     });
     message = await Message.findById(message._id)
       .populate("sender", "username")
-      .populate("recipient", "username")
-      .populate("chatroom", "name");
+      .populate("recipient", "username");
     res.status(201).json({ message });
   } catch (error) {
     next(error);

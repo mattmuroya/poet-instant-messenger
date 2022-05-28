@@ -29,7 +29,7 @@ describe("sending messages", () => {
     expect(res.body.message.text).toBe("Hello, world!");
 
     const messages = await Message.find({});
-    expect(messages).toHaveLength(4); // three test messages prepopulated
+    expect(messages).toHaveLength(3); // two test messages prepopulated
   });
 
   test("second user can respond with new message", async () => {
@@ -52,7 +52,7 @@ describe("sending messages", () => {
     expect(res.body.message.text).toBe("Howzit!");
 
     const messages = await Message.find({});
-    expect(messages).toHaveLength(5);
+    expect(messages).toHaveLength(4);
   });
 
   test("post message fails with missing text", async () => {
@@ -75,7 +75,7 @@ describe("sending messages", () => {
     expect(res.error.text).toBe('{"error":"Message body cannot be empty."}');
 
     const messages = await Message.find({});
-    expect(messages).toHaveLength(5);
+    expect(messages).toHaveLength(4);
   });
 });
 
