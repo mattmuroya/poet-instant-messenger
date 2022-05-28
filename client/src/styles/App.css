@@ -104,6 +104,7 @@ details::-webkit-details-marker {
 
 .not-found-window .content {
   display: flex;
+  align-items: center;
   gap: 1rem;
 }
 
@@ -115,12 +116,15 @@ details::-webkit-details-marker {
 
 .login-window,
 .registration-window {
-  width: 300px;
+  width: 80%;
+  max-width: 330px;
 }
 
 .login-window img,
 .registration-window img {
   width: 100%;
+  padding: 20px 0;
+  background-color: #fff;
 }
 
 .error-message {

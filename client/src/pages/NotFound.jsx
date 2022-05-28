@@ -11,7 +11,7 @@ export default function NotFound() {
           404: Not Found - Poet Instant Messenger
         </div>
         <div className="title-bar-controls">
-          <button aria-label="Close"></button>
+          {/* <button aria-label="Close"></button> */}
         </div>
       </div>
       <div className="window-body">
@@ -19,7 +19,9 @@ export default function NotFound() {
           <img src={Error} alt="not found" />
           <p>404: Not Found.</p>
         </div>
-        <button onClick={() => navigate("/")}>OK</button>
+        <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+          <button onClick={() => navigate("/")}>OK</button>
+        </div>
       </div>
     </div>
   );

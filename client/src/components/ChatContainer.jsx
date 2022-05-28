@@ -44,6 +44,8 @@ export default function ChatContainer() {
         }
       });
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
 
   useEffect(() => {

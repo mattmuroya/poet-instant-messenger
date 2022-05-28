@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import windowsLogo from "../assets/images/windows-logo.png";
+import poetLogo from "../assets/images/poet-logo.png";
 import { useAuth } from "../hooks/useAuth";
 import TitleBar from "../components/TitleBar";
 import LoginForm from "../components/LoginForm";
@@ -25,7 +25,7 @@ export default function Login() {
       <div className="window login-window">
         <TitleBar title="Login" />
         <div className="window-body">
-          <img src={windowsLogo} alt="login" />
+          <img src={poetLogo} alt="login" />
           <LoginForm />
         </div>
       </div>
