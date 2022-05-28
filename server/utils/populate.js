@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const supertest = require("supertest");
 const app = require("../app");
 const api = supertest(app);
-const info = require("../utils/info");
 
 const User = require("../models/user");
 const Message = require("../models/message");
@@ -14,7 +13,7 @@ const populateProdData = async () => {
   // create admin
   await api.post("/api/users/register").send({
     username: "mattmuroya",
-    password: process.env.ADMIN_USER_PW,
+    password: process.env.mattmuroya,
   });
 
   // create users
@@ -52,7 +51,7 @@ const closeConnection = async () => {
 const populate = async () => {
   await populateProdData();
   await closeConnection();
-  info("production Db reset complete");
+  console.log("production Db reset complete");
 };
 
 module.exports = {
