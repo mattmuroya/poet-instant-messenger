@@ -1,15 +1,18 @@
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "../contexts/Context";
 import ContactActionButton from "./ContactActionButton";
 
 export default function FriendsList({ setChatListExpanded }) {
   const { user, setUser, chat, setChat } = useContext(Context);
 
-  // useEffect(() => {
-  //   if (!chat && user.friends.length > 0) setChat(user.friends[0]);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    if (!chat && user.friends.length > 0) {
+      setChat(user.friends[0]);
+      setChatListExpanded(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSwitchChat = (c) => {
     setChat(c);
@@ -152,10 +155,3 @@ export default function FriendsList({ setChatListExpanded }) {
     </li>
   );
 }
-
-// const offlineFriends = [
-//   "p0k3m0n_m45t3r",
-//   "xXx_NIRVANA_xXx",
-//   "iLuvNickCarter99",
-//   "ZeldaLuvvr94",
-// ];

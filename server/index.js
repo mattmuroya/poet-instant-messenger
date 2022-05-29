@@ -16,7 +16,7 @@ io.on("connection", (socket) => {
 
   socket.on("user_online", (user) => {
     onlineUsers[user.id] = socket.id;
-    console.log(onlineUsers);
+    // console.log(onlineUsers);
   });
 
   socket.on("send_message", (message) => {

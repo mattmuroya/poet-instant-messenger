@@ -4,6 +4,7 @@ import AllUsersList from "./AllUsersList";
 
 export default function ContactsContainer({
   mobile,
+  setMobile,
   chatListExpanded,
   setChatListExpanded,
 }) {
@@ -15,7 +16,10 @@ export default function ContactsContainer({
     >
       <ul className="tree-view contact-list">
         {/* <ChatRoomList setChatListExpanded={setChatListExpanded} /> */}
-        <FriendsList setChatListExpanded={setChatListExpanded} />
+        <FriendsList
+          setMobile={setMobile}
+          setChatListExpanded={setChatListExpanded}
+        />
         <AllUsersList />
       </ul>
     </div>

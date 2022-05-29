@@ -8,7 +8,7 @@ export default function Toolbar({
     <div className="toolbar">
       <button onClick={handleLogout}>Sign Out</button>
       {mobile && !chatListExpanded && (
-        <button onClick={() => setChatListExpanded(true)}>Back</button>
+        <button onClick={() => setChatListExpanded(true)}>◀ Friend List</button>
       )}
     </div>
   );

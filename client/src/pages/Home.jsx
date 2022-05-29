@@ -66,8 +66,6 @@ export default function Home() {
         <TitleBar title="Home" handleLogout={handleLogout} />
         <Toolbar
           mobile={mobile}
-          // socket={socket}
-          // setSocket={setSocket}
           handleLogout={handleLogout}
           chatListExpanded={chatListExpanded}
           setChatListExpanded={setChatListExpanded}
@@ -75,6 +73,7 @@ export default function Home() {
         <div className="window-body">
           <ContactsContainer
             mobile={mobile}
+            setMobile={setMobile}
             chatListExpanded={chatListExpanded}
             setChatListExpanded={setChatListExpanded}
           />
