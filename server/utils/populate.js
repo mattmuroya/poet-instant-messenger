@@ -16,26 +16,20 @@ const populateProdData = async () => {
     password: process.env.mattmuroya,
   });
 
-  // create guest
-  const guest = await api.post("/api/users/register").send({
-    username: "guest",
-    password: process.env.GUEST_PW,
-  });
-
   // make guest friends with mattmuroya
-  await User.findByIdAndUpdate(mattmuroya.body.user.id, {
-    $push: { friends: guest.body.user.id },
-  });
+  // await User.findByIdAndUpdate(mattmuroya.body.user.id, {
+  //   $push: { friends: guest.body.user.id },
+  // });
 
-  await User.findByIdAndUpdate(guest.body.user.id, {
-    $push: { friends: mattmuroya.body.user.id },
-  });
+  // await User.findByIdAndUpdate(guest.body.user.id, {
+  //   $push: { friends: mattmuroya.body.user.id },
+  // });
 
-  await Message.create({
-    sender: mattmuroya.body.user.id,
-    recipient: guest.body.user.id,
-    text: "Hi! I'm Matt Muroya. Thanks for checking out Poet Instant Messenger! I'd love to hear your feedback, suggestions or bug reports. Feel free to create an account and message me right here in the app! Or, send me an email or message on LinkedIn :)",
-  });
+  // await Message.create({
+  //   sender: mattmuroya.body.user.id,
+  //   recipient: guest.body.user.id,
+  //   text: "Hi! I'm Matt Muroya. Thanks for checking out Poet Instant Messenger! I'd love to hear your feedback, suggestions or bug reports. Feel free to create an account and message me right here in the app! Or, send me an email or message on LinkedIn :)",
+  // });
 
   // create users
 
@@ -65,8 +59,8 @@ const populateProdData = async () => {
   });
 
   await api.post("/api/users/register").send({
-    username: "Tamagotchi_Tanya",
-    password: process.env.Tamagotchi_Tanya,
+    username: "T4m4gotchi_T4ny4",
+    password: process.env.T4m4gotchi_T4ny4,
   });
 
   await api.post("/api/users/register").send({
@@ -74,14 +68,25 @@ const populateProdData = async () => {
     password: process.env.jtimberlake,
   });
 
-  // make matt and guest friends with zelda girl
-  await User.findByIdAndUpdate(mattmuroya.body.user.id, {
-    $push: { friends: zeldagirl.body.user.id },
+  await api.post("/api/users/register").send({
+    username: "MsRachelGreen",
+    password: process.env.MsRachelGreen,
   });
 
-  await User.findByIdAndUpdate(zeldagirl.body.user.id, {
-    $push: { friends: mattmuroya.body.user.id },
+  // create guest
+  const guest = await api.post("/api/users/register").send({
+    username: "guest",
+    password: process.env.GUEST_PW,
   });
+
+  // make matt and guest friends with zelda girl
+  // await User.findByIdAndUpdate(mattmuroya.body.user.id, {
+  //   $push: { friends: zeldagirl.body.user.id },
+  // });
+
+  // await User.findByIdAndUpdate(zeldagirl.body.user.id, {
+  //   $push: { friends: mattmuroya.body.user.id },
+  // });
 
   await User.findByIdAndUpdate(guest.body.user.id, {
     $push: { friends: zeldagirl.body.user.id },

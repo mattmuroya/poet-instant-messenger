@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Message = require("../models/message");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -115,6 +116,24 @@ module.exports.registerUser = async (req, res, next) => {
       usernameCanonical,
       passwordHash,
     });
+
+    // for the demo app
+    if (user.username !== "mightymorphinmatt") {
+      const mattmuroya = await User.findOne({ username: "mightymorphinmatt" });
+      if (mattmuroya) {
+        await User.findByIdAndUpdate(user._id, {
+          $push: { friends: mattmuroya._id },
+        });
+        await User.findByIdAndUpdate(mattmuroya._id, {
+          $push: { friends: user._id },
+        });
+        await Message.create({
+          sender: mattmuroya._id,
+          recipient: user._id,
+          text: "Hi! I'm Matt Muroya. Thanks for checking out Poet Instant Messenger! I'd love to hear your feedback, suggestions, or bug reports. Feel free to message me via email, LinkedIn, or right here in the app! :)",
+        });
+      }
+    }
     res.status(201).json({ user });
   } catch (error) {
     console.log(error);
