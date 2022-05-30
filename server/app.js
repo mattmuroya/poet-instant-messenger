@@ -25,10 +25,7 @@ const errorHandler = require("./middleware/errorHandler");
 
 // STATIC FILES SERVER
 if (process.env.NODE_ENV === "production") {
-  app.use(
-    "/static",
-    express.static(path.join(__dirname, "../client/build/static"))
-  );
+  app.use("/static", express.static(path.join(__dirname, "/build/static")));
 }
 
 // REQUEST PROCESSORS
@@ -45,7 +42,7 @@ app.use("/api/messages", messageRouter);
 // app.use(catchHandler);
 app.get("*", (req, res) => {
   res.sendFile("index.html", {
-    root: path.join(__dirname, "../client/build/"),
+    root: path.join(__dirname, "/build"),
   });
 });
 
