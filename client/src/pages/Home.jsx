@@ -19,7 +19,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (window.innerWidth < 700) {
+    if (window.innerWidth < 800) {
       setMobile(true);
     }
   }, []);
@@ -46,7 +46,7 @@ export default function Home() {
   }, []);
 
   const handleResize = () => {
-    window.innerWidth < 700 ? setMobile(true) : setMobile(false);
+    window.innerWidth < 800 ? setMobile(true) : setMobile(false);
   };
 
   const handleLogout = () => {

@@ -81,6 +81,58 @@ details::-webkit-details-marker {
   background: #c0c0c0;
 }
 
+.desktop-icon-container {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+@media screen and (max-width: 800px) {
+  .desktop-icon-container {
+    top: 16px;
+    flex-direction: row;
+    gap: 50px;
+  }
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+.github {
+  top: 50px;
+}
+
+.linkedin {
+  top: 200px;
+}
+
+.desktop-icon img {
+  width: 50px;
+}
+
+.desktop-icon p {
+  text-align: center;
+  color: #fff;
+}
+
+@media screen and (max-width: 800px) {
+  .desktop-icon img {
+    width: 40px;
+  }
+
+  .desktop-icon p {
+    font-size: 11px;
+  }
+}
+
 .start-button {
   padding: 2px 5px;
   height: 100%;
@@ -164,10 +216,23 @@ details::-webkit-details-marker {
 
 .home-window {
   height: 80vh;
-  width: 80vw;
+  width: 60vw;
   max-width: 1000px;
   display: flex;
   flex-direction: column;
+}
+
+@media screen and (max-width: 800px) {
+  .window {
+    width: 80%;
+    margin-top: 30px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .home-window {
+    height: 70vh;
+  }
 }
 
 .home-window .window-body {
