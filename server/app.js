@@ -35,7 +35,8 @@ if (process.env.NODE_ENV === "production") {
 
 // STATIC FILES SERVER
 if (process.env.NODE_ENV === "production") {
-  app.use("/static", express.static(path.join(__dirname, "/build/static")));
+  // app.use("/static", express.static(path.join(__dirname, "/build/static")));
+  app.use(express.static("build"));
 }
 
 // REQUEST PROCESSORS

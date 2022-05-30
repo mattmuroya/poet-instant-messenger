@@ -63,9 +63,9 @@ const populateProdData = async () => {
     password: process.env.T4m4gotchi_T4ny4,
   });
 
-  await api.post("/api/users/register").send({
-    username: "jtimberlake",
-    password: process.env.jtimberlake,
+  const timberlake = await api.post("/api/users/register").send({
+    username: "timberlake",
+    password: process.env.timberlake,
   });
 
   await api.post("/api/users/register").send({
@@ -79,14 +79,51 @@ const populateProdData = async () => {
     password: process.env.GUEST_PW,
   });
 
-  // make matt and guest friends with zelda girl
-  // await User.findByIdAndUpdate(mattmuroya.body.user.id, {
-  //   $push: { friends: zeldagirl.body.user.id },
-  // });
+  // make guest friends with timberlake and zelda
 
-  // await User.findByIdAndUpdate(zeldagirl.body.user.id, {
-  //   $push: { friends: mattmuroya.body.user.id },
-  // });
+  await User.findByIdAndUpdate(guest.body.user.id, {
+    $push: { friends: timberlake.body.user.id },
+  });
+
+  await User.findByIdAndUpdate(timberlake.body.user.id, {
+    $push: { friends: guest.body.user.id },
+  });
+
+  await Message.create({
+    sender: guest.body.user.id,
+    recipient: timberlake.body.user.id,
+    text: "hey justin!",
+  });
+
+  await Message.create({
+    sender: timberlake.body.user.id,
+    recipient: guest.body.user.id,
+    text: "hey man what's up!",
+  });
+
+  await Message.create({
+    sender: guest.body.user.id,
+    recipient: timberlake.body.user.id,
+    text: "ur in a band right? i was messing around with some lyrics and got this cool song i wanna show you",
+  });
+
+  await Message.create({
+    sender: timberlake.body.user.id,
+    recipient: guest.body.user.id,
+    text: "dude right on! what's it called?",
+  });
+
+  await Message.create({
+    sender: guest.body.user.id,
+    recipient: timberlake.body.user.id,
+    text: "it's called Bye Bye Bye, and i made up this cool dance to go along with it too",
+  });
+
+  await Message.create({
+    sender: timberlake.body.user.id,
+    recipient: guest.body.user.id,
+    text: "awesome, we're having a band practice this weekend if u wanna swing by and teach us!",
+  });
 
   await User.findByIdAndUpdate(guest.body.user.id, {
     $push: { friends: zeldagirl.body.user.id },
@@ -97,15 +134,33 @@ const populateProdData = async () => {
   });
 
   await Message.create({
+    sender: zeldagirl.body.user.id,
+    recipient: guest.body.user.id,
+    text: "heyyy did u beat Ocarina of Time yet???",
+  });
+
+  await Message.create({
     sender: guest.body.user.id,
     recipient: zeldagirl.body.user.id,
-    text: "Hey ZeldaGirl94! Have you beaten Ocarina of Time yet? The final battle was super intense!",
+    text: "my cousin is borrowing my N64 til next friday :-( don't spoil it for me!",
   });
 
   await Message.create({
     sender: zeldagirl.body.user.id,
     recipient: guest.body.user.id,
-    text: "Ahhh no I haven't beaten it yet! My cousin is borrowing my N64 til next Friday :-( Don't spoil it for me!",
+    text: "haha ok! btw u should come over tmrw after school! i just got this 2 player game called goldeneye",
+  });
+
+  await Message.create({
+    sender: zeldagirl.body.user.id,
+    recipient: guest.body.user.id,
+    text: "i think my mom is making homemade pizza ;)",
+  });
+
+  await Message.create({
+    sender: guest.body.user.id,
+    recipient: zeldagirl.body.user.id,
+    text: "OMG ur mom's pizza is da BOMB! c u 2morrow!",
   });
 
   // send request to nirvana
