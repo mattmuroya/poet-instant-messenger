@@ -95,7 +95,7 @@ details::-webkit-details-marker {
   .desktop-icon-container {
     top: 16px;
     flex-direction: row;
-    gap: 50px;
+    justify-content: space-between;
   }
 }
 
@@ -104,14 +104,6 @@ details::-webkit-details-marker {
   flex-direction: column;
   align-items: center;
   text-decoration: none;
-}
-
-.github {
-  top: 50px;
-}
-
-.linkedin {
-  top: 200px;
 }
 
 .desktop-icon img {
