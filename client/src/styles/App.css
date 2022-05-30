@@ -212,6 +212,7 @@ details {
 }
 
 .message-pane {
+  /* position: relative; */
   overflow-y: scroll;
   flex: 1;
   display: block;
@@ -229,6 +230,16 @@ details {
 .recipient-name {
   font-weight: bold;
   color: blue;
+}
+
+.typing-indicator {
+  /* position: absolute; */
+  left: 10;
+  bottom: 0;
+  color: #999;
+  font-style: italic;
+  /* display: flex;
+  flex-direction: row-reverse; */
 }
 
 .message-input {

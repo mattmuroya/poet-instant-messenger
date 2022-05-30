@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 export default function ChatContainer() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [otherUserTyping, setOtherUserTyping] = useState(false);
 
   const { user, chat, socket } = useContext(Context);
 
@@ -32,10 +33,36 @@ export default function ChatContainer() {
   }, [chat]);
 
   useEffect(() => {
+    if (socket) {
+      message !== ""
+        ? socket.emit("typing", { typing: true, recipient: chat })
+        : // setTimeout so it doesn't emit "not typing" right when the input is cleared
+          // as you send a message. The sendMessage function will emit the "not typing"
+          // after it's done sending message data. Makes the UX less jarring for the recipient
+          setTimeout(() => {
+            socket.emit("typing", { typing: false, recipient: chat });
+          }, 1000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [message]);
+
+  useEffect(() => {
     // ?. is optional chaining
     // returns undef instead of error if no scrollRef.current
     scrollRef.current?.scrollIntoView();
-  }, [messages]);
+  }, [messages, otherUserTyping]);
+
+  useEffect(() => {
+    if (socket) socket.on("chat_typing", updateChatTyping);
+    return () => {
+      if (socket) socket.off("chat_typing", updateChatTyping);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket, chat]);
+
+  const updateChatTyping = (typing) => {
+    setOtherUserTyping(typing);
+  };
 
   useEffect(() => {
     if (socket) socket.on("receive_message", updateReceivedMessage);
@@ -50,6 +77,7 @@ export default function ChatContainer() {
     // the Messages state to revert to an empty array.
     if (chat && receivedMessage.sender.id === chat.id) {
       setMessages((prevMessages) => prevMessages.concat(receivedMessage));
+      setOtherUserTyping(false);
     }
   };
 
@@ -89,28 +117,33 @@ export default function ChatContainer() {
 
   return (
     <div className="chat-container">
+      {/* <div> */}
       <div className="message-pane">
-        <div>
-          {!chat
-            ? "Select a contact from your Friends list to begin chatting!"
-            : messages.map((message) => {
-                return (
-                  <p ref={scrollRef} key={message.id}>
-                    <span
-                      className={
-                        message.sender.id === user.id
-                          ? "sender-name"
-                          : "recipient-name"
-                      }
-                    >
-                      {message.sender.username}:
-                    </span>{" "}
-                    {message.text}
-                  </p>
-                );
-              })}
-        </div>
+        {!chat
+          ? "Select a contact from your Friends list to begin chatting!"
+          : messages.map((message) => {
+              return (
+                <p ref={scrollRef} key={message.id}>
+                  <span
+                    className={
+                      message.sender.id === user.id
+                        ? "sender-name"
+                        : "recipient-name"
+                    }
+                  >
+                    {message.sender.username}:
+                  </span>{" "}
+                  {message.text}
+                </p>
+              );
+            })}
+        {chat && otherUserTyping && (
+          <div ref={scrollRef} className="typing-indicator">
+            {chat.username} is typing...
+          </div>
+        )}
       </div>
+      {/* </div> */}
       <form className="message-input" onSubmit={(e) => handleSendMessage(e)}>
         <textarea
           placeholder="Type your message here..."

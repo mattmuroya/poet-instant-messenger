@@ -19,6 +19,12 @@ io.on("connection", (socket) => {
     // console.log(onlineUsers);
   });
 
+  socket.on("typing", (data) => {
+    if (onlineUsers[data.recipient.id]) {
+      io.to(onlineUsers[data.recipient.id]).emit("chat_typing", data.typing);
+    }
+  });
+
   socket.on("send_message", (message) => {
     if (onlineUsers[message.recipient.id]) {
       io.to(onlineUsers[message.recipient.id]).emit("receive_message", message);
