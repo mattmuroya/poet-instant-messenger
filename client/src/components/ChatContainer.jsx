@@ -125,7 +125,8 @@ export default function ChatContainer() {
       {/* <div> */}
       <div className="message-pane">
         {!chat
-          ? "Select a contact from your Friends list to begin chatting!"
+          ? // ? "Select a contact from your Friends list to begin chatting!"
+            ""
           : messages.map((message) => {
               return (
                 <p ref={scrollRef} key={message.id}>
@@ -151,13 +152,22 @@ export default function ChatContainer() {
       {/* </div> */}
       <form className="message-input" onSubmit={(e) => handleSendMessage(e)}>
         <textarea
-          placeholder="Type your message here..."
+          placeholder={
+            user.username === "guest"
+              ? "You are currently logged in as a Guest. To send invites and chat with friends, please register as a new user!"
+              : "Type your message here..."
+          }
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => handleEnterKey(e)}
-          disabled={!chat ? true : false}
+          // disabled={!chat ? true : false}
+          disabled={user.username === "guest" ? true : false}
         />
-        <button type="submit" disabled={!chat ? true : false}>
+        <button
+          type="submit"
+          // disabled={!chat ? true : false}
+          disabled={user.username === "guest" ? true : false}
+        >
           Send
         </button>
       </form>

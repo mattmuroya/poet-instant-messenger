@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.a70e2b77.css",
-    "main.js": "/static/js/main.760213ef.js",
+    "main.css": "/static/css/main.1f48b003.css",
+    "main.js": "/static/js/main.3efefc8a.js",
     "static/media/poet-logo.png": "/static/media/poet-logo.4bc214417805286f7d0f.png",
     "static/media/Ubuntu-R.ttf": "/static/media/Ubuntu-R.5d5340410d5982ca5432.ttf",
     "static/media/Ubuntu-B.ttf": "/static/media/Ubuntu-B.dcbada85323904e0cb69.ttf",
@@ -12,11 +12,11 @@
     "static/media/ms_sans_serif.woff2": "/static/media/ms_sans_serif.0348082abb503fb6a8c2.woff2",
     "static/media/ms_sans_serif_bold.woff2": "/static/media/ms_sans_serif_bold.7fcf57cc6e87ecddbf64.woff2",
     "index.html": "/index.html",
-    "main.a70e2b77.css.map": "/static/css/main.a70e2b77.css.map",
-    "main.760213ef.js.map": "/static/js/main.760213ef.js.map"
+    "main.1f48b003.css.map": "/static/css/main.1f48b003.css.map",
+    "main.3efefc8a.js.map": "/static/js/main.3efefc8a.js.map"
   },
   "entrypoints": [
-    "static/css/main.a70e2b77.css",
-    "static/js/main.760213ef.js"
+    "static/css/main.1f48b003.css",
+    "static/js/main.3efefc8a.js"
   ]
 }

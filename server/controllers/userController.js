@@ -130,7 +130,7 @@ module.exports.registerUser = async (req, res, next) => {
         await Message.create({
           sender: mattmuroya._id,
           recipient: user._id,
-          text: "Hi! I'm Matt Muroya. Thanks for checking out Poet Instant Messenger! I'd love to hear your feedback, suggestions, or bug reports. Feel free to message me via email, LinkedIn, or right here in the app! :)",
+          text: "Hi! I'm Matt Muroya. Thanks for checking out Poet Instant Messenger! I'd love to hear your feedback, suggestions, or bug reports. Feel free to message me via email, LinkedIn, or right here in the app :)",
         });
       }
     }

@@ -191,6 +191,10 @@ details::-webkit-details-marker {
   cursor: pointer;
 }
 
+.disabled {
+  color: #777;
+}
+
 .link-button:focus,
 .link-button:active {
   box-shadow: none !important;
