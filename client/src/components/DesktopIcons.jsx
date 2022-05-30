@@ -1,6 +1,7 @@
-import SourceLogo from "../assets/images/source.png";
-import GithubLogo from "../assets/images/github.png";
-import LinkedinLogo from "../assets/images/linkedin.png";
+import SourceIcon from "../assets/images/source.png";
+import GithubIcon from "../assets/images/github.png";
+import LinkedinIcon from "../assets/images/linkedin.png";
+import EmailIcon from "../assets/images/email.png";
 
 export default function DesktopIcons() {
   return (
@@ -9,20 +10,24 @@ export default function DesktopIcons() {
         target="_blank"
         rel="noopener noreferrer"
         href="https://github.com/mattmuroya/poet"
-        className="desktop-icon github"
+        className="desktop-icon"
       >
-        <img src={SourceLogo} alt="github" />
+        <img src={SourceIcon} alt="source code" />
         <p>Source code</p>
+      </a>
+      <a href="mailto:matt.muroya@gmail.com" className="desktop-icon">
+        <img src={EmailIcon} alt="email" />
+        <p>E-mail me!</p>
       </a>
       <a
         target="_blank"
         rel="noopener noreferrer"
-        href="https://github.com/mattmuroya/"
-        className="desktop-icon github"
+        href="https://www.linkedin.com/in/mattmuroya/"
+        className="desktop-icon"
       >
-        <img src={GithubLogo} alt="github" />
+        <img src={LinkedinIcon} alt="linkedin" />
         <p>
-          github.com/
+          linkedin.com/in/
           <br />
           mattmuroya
         </p>
@@ -30,12 +35,12 @@ export default function DesktopIcons() {
       <a
         target="_blank"
         rel="noopener noreferrer"
-        href="https://www.linkedin.com/in/mattmuroya/"
-        className="desktop-icon linkedin"
+        href="https://github.com/mattmuroya/"
+        className="desktop-icon"
       >
-        <img src={LinkedinLogo} alt="linkedin" />
+        <img src={GithubIcon} alt="github" />
         <p>
-          linkedin.com/in/
+          github.com/
           <br />
           mattmuroya
         </p>

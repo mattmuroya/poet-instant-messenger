@@ -71,7 +71,7 @@ const populateProdData = async () => {
 
   await api.post("/api/users/register").send({
     username: "jtimberlake",
-    password: process.env.JTimberlake,
+    password: process.env.jtimberlake,
   });
 
   // make matt and guest friends with zelda girl
