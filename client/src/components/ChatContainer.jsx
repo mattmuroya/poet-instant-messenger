@@ -86,6 +86,7 @@ export default function ChatContainer() {
     try {
       // update react state before posting message to server for faster UX
       // need to implement elegant error handling if post req fails after sending
+      if (message === "") throw new Error("Message body cannot be empty.");
       setMessages([
         ...messages,
         { id: uuidv4(), sender: user, recipient: chat, text: message },
