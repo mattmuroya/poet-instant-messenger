@@ -23,6 +23,16 @@ const errorHandler = require("./middleware/errorHandler");
   }
 })();
 
+// HEROKU SSL REDIRECT
+// https://stackoverflow.com/questions/34862065/force-my-heroku-app-to-use-ssl-https
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    if (req.header("x-forwarded-proto") !== "https")
+      res.redirect(`https://${req.header("host")}${req.url}`);
+    else next();
+  });
+}
+
 // STATIC FILES SERVER
 if (process.env.NODE_ENV === "production") {
   app.use("/static", express.static(path.join(__dirname, "/build/static")));
