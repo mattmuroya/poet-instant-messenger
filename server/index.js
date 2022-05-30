@@ -21,7 +21,7 @@ io.on("connection", (socket) => {
 
   socket.on("typing", (data) => {
     if (onlineUsers[data.recipient.id]) {
-      io.to(onlineUsers[data.recipient.id]).emit("chat_typing", data.typing);
+      io.to(onlineUsers[data.recipient.id]).emit("chat_typing", data);
     }
   });
 

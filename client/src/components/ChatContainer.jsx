@@ -35,12 +35,16 @@ export default function ChatContainer() {
   useEffect(() => {
     if (socket) {
       message !== ""
-        ? socket.emit("typing", { typing: true, recipient: chat })
+        ? socket.emit("typing", { typing: true, sender: user, recipient: chat })
         : // delay so it doesn't emit "not typing" right when the input is cleared
           // as you send a message. The sendMessage function will emit the "not typing"
-          // after it's done sending message data. Makes the UX less jarring for the recipient
+          // after it's done sending message data. Makes it less jarring for recipient
           setTimeout(() => {
-            socket.emit("typing", { typing: false, recipient: chat });
+            socket.emit("typing", {
+              typing: false,
+              sender: user,
+              recipient: chat,
+            });
           }, 200);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,8 +64,8 @@ export default function ChatContainer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket, chat]);
 
-  const updateChatTyping = (typing) => {
-    setOtherUserTyping(typing);
+  const updateChatTyping = (data) => {
+    if (data.sender.id === chat.id) setOtherUserTyping(data.typing);
   };
 
   useEffect(() => {
