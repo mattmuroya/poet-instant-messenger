@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0632a531.css",
+    "main.js": "/static/js/main.3c5b5f73.js",
+    "static/media/poet-logo.png": "/static/media/poet-logo.4bc214417805286f7d0f.png",
+    "static/media/Ubuntu-R.ttf": "/static/media/Ubuntu-R.5d5340410d5982ca5432.ttf",
+    "static/media/Ubuntu-B.ttf": "/static/media/Ubuntu-B.dcbada85323904e0cb69.ttf",
+    "static/media/github.png": "/static/media/github.e922c0bc0b371ff0616a.png",
+    "static/media/linkedin.png": "/static/media/linkedin.7a5eab93c7daf7d2ceeb.png",
+    "static/media/ms_sans_serif.woff": "/static/media/ms_sans_serif.aac84aa6de42b83d1a62.woff",
+    "static/media/ms_sans_serif_bold.woff": "/static/media/ms_sans_serif_bold.9fbe71248995f1c639d4.woff",
+    "static/media/ms_sans_serif.woff2": "/static/media/ms_sans_serif.0348082abb503fb6a8c2.woff2",
+    "static/media/ms_sans_serif_bold.woff2": "/static/media/ms_sans_serif_bold.7fcf57cc6e87ecddbf64.woff2",
+    "index.html": "/index.html",
+    "main.0632a531.css.map": "/static/css/main.0632a531.css.map",
+    "main.3c5b5f73.js.map": "/static/js/main.3c5b5f73.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0632a531.css",
+    "static/js/main.3c5b5f73.js"
+  ]
+}
