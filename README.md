@@ -2,7 +2,7 @@
 
 Poet is a full stack MERN (MongoDB, Express, React, and Node.js) instant messenger with real-time client-server communication, styled in the spirit of the retro-classic IM apps of the late ‘90s.
 
-![GIF](./poet-demo.gif)
+![GIF](./assets/poet-demo.gif)
 
 Try it out! https://poet.mattmuroya.com/login
 
