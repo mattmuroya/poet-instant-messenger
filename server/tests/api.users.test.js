@@ -118,7 +118,7 @@ describe("getting user data", () => {
         Authorization: `bearer ${token}`,
       })
       .expect(200);
-    expect(res.body.users).toHaveLength(10); // 10th user added in prev test
+    expect(res.body.users).toHaveLength(11); // 11th user added in prev test
   });
 
   test("get user data rejected with missing/invalid token", async () => {

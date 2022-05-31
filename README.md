@@ -35,6 +35,8 @@ The back end is a [Node.js](https://nodejs.org/en/) server built on using the [E
 - Seperate development and production databases for ease of development/testing with a custom reset/sample data utility.
 - Test-driven development (TDD) with [Jest](https://jestjs.io/) and [Supertest](https://github.com/visionmedia/supertest) for all API endpoints, focused mainly on segmented integration testing. Tests cover execution and error handling for authentication, user administration, user actions (sending invites and adding friends), and sending and receiving messages.
 
+![tdd](./assets/poet-tdd.png)
+
 ### Optimizations
 
 - Most API routes require token authorization, however an authorized user could technically request any data they want by accessing the endpoint and setting their token to the `Authorization` header. I would like to improve security by restricting access to a one's own data only.
