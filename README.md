@@ -1,22 +1,46 @@
 # Poet Instant Messenger
 
-Poet is a modern full stack chat app with real-time client-server communication via Socket.io, styled in the spirit of the instant messengers of the ‘90s. Token-authenticated RESTful API with full CRUD functionality built following test-driven development (TDD) practices.
+Poet is a full stack MERN (MongoDB, Express, React, and Node.js) instant messenger with real-time client-server communication, styled in the spirit of the retro-classic IM apps of the late ‘90s.
 
-## '90s Styling
+![GIF](./poet-demo.gif)
 
-Poet is styled in the spirit of the early instant messenger apps of the '90s; think AIM, MSN Messenger, ICQ, and Yahoo! Messenger. The main theme uses the excellent [98.css package by jdan](https://github.com/jdan/98.css), with some custom elements and minor modifications in the interest of overall usability/accessibility. As much as we all love turn-of-the-century MS San Serif, it was never meant to be rendered in a modern web browser on the big, high-resolution displays we have today.
+Try it out! https://poet.mattmuroya.com/login
 
-## JWT authentication layer with custom refresh implementation
+## Front end
 
-When a user signs in, the server responds with a JSON web token (JWT) set to expire in 24 hours. The token is saved to localStorage. Each time the user reloads the application, the client executes a custom hook which sends the saved token back to the server for verification.
+The front end is a [React](https://reactjs.org/) client built using [create-react-app](https://create-react-app.dev/) and structured with [React Router](https://reactrouter.com/).
 
-If the token is invalid or expired, the server responds with a 401 status code and the user is redirected to the login page. If the token is still valid, the server responds with a new token which replaces the original in localStorage, effectively resetting the 24 hour expiry period.
+### Highlights
 
-## Testing
+- Function components with `useEffect()` for performing lifecycle methods and `useState()` for managing local state.
+- React Context API for global state managementment of the current user, chat, and WebSocket connection.
+- Custom hook for validating the current session/auth token and fetching user details from the server.
+- Retro-classic '90s styling based on the excellent [98.css by jdan](https://github.com/jdan/98.css), with minor modifications to fonts and sizing in the interest of overall usability.
 
-Development of the API endpoints follows test-driven development (TDD) practices. In the project's current state, unit-level functionality is fairly basic and doesn't require automated testing, but for all major API functionality, including registration, login, authentication/authorization, sending/receiving invites, and sending/receiving messages, I've implemented fully automated integration and (segmented) end-to-end testing using [Jest](https://jestjs.io/) and [Supertest](https://github.com/visionmedia/supertest). I've also written a handy utility that I can use to reset the test DB with dummy data independent of the testing scripts.
+### Optimizations
 
-## Optimizations
+- The home page at `<base>/` does not indicate chat IDs dynamically. I'd like to make the client-side routing such that the URL reads `<base>/chat/<username>` so that if the user refreshes the application, it can reopen the current chat.
+- The UI doesn't notify you of missed messages. This would require extracting the individual items on the friend list to a separate component so you can render counts for each.
+- Would like to add the ability to edit/delete sent messages.
 
-- Currently, the loginUser method and the useAuth hook both send two requests; a POST request to authenticate the current user (or get a new token), and then if authorized, a GET request to retrieve the user details. It might be more efficient/stable to send the authenticated user details along with the POST request response instead of requiring a second request. This would require a refactor for both the client request methods and the API controllers.
-- I'd like to make the client-side routing such that the URL reads \<base>/chat/\<username>. This way if a user refreshes the application, it will reopen the current chat.
+## Back end
+
+The backend is a [Node.js](https://nodejs.org/en/) application built on an [Express](https://expressjs.com/) server. The server also technically serves all the static client-side files from a build folder.
+
+### Highlights
+
+- Real-time event-driven WebSocket communication via [Socket.IO](https://socket.io/), allowing for live chat between users.
+- JSON Web Token (JWT) user auth. Each time a user reloads the application, the server either refreshes the token (resetting the expiry period), or prompts re-authentication if it is missing/invalid/expired.
+- Custom middlewares for error handling, token validation, and request logging (in development mode).
+- Seperate development and production databases for ease of development/testing with a custom reset/sample data utility.
+- Test-driven development (TDD) with [Jest](https://jestjs.io/) and [Supertest](https://github.com/visionmedia/supertest) for all API endpoints, focused mainly on segmented integration testing. Tests cover execution and error handling for authentication, user administration, user actions (sending invites and adding friends), and sending and receiving messages.
+
+### Optimizations
+
+- Most API routes require token authorization, however an authorized user could technically request any data they want by accessing the endpoint and setting their token to the `Authorization` header. I would like to improve security by restricting access to a one's own data only.
+- There are some event handlers/hooks on the front end e.g. `useAuth()` which require multiple fetch requests to retrieve the necessary data. It would improve speed and efficiency to modify server response data to eliminate the need for multiple requests.
+
+## Development challenges
+
+- Architecture: the planning stage is critical when building any full stack application. If you don't plan for modularity and extensibility, it can be difficult to implement new features because everything is so tightly coupled. For example, I
+- State management: At first, the current user details, chat, and WebSocket data were all managed in a single parent component; this required some messy prop-drilling until I refactored to manage these things globally with React's Context API. I'm looking forward to exploring how [Redux](https://redux.js.org/) could improve my future projects.
