@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Context } from "../contexts/Context";
 import { v4 as uuidv4 } from "uuid";
 
-export default function ChatContainer() {
+export default function ChatContainer({ chatListExpanded }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [otherUserTyping, setOtherUserTyping] = useState(false);
@@ -143,7 +143,7 @@ export default function ChatContainer() {
                 </p>
               );
             })}
-        {chat && otherUserTyping && (
+        {chat && !chatListExpanded && otherUserTyping && (
           <div ref={scrollRef} className="typing-indicator">
             {chat.username} is typing...
           </div>

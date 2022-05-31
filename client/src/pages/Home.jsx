@@ -77,7 +77,7 @@ export default function Home() {
             chatListExpanded={chatListExpanded}
             setChatListExpanded={setChatListExpanded}
           />
-          <ChatContainer mobile={mobile} />
+          <ChatContainer mobile={mobile} chatListExpanded={chatListExpanded} />
         </div>
         <div className="status-bar">
           <p className="status-bar-field">
