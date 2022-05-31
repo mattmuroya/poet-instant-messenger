@@ -42,5 +42,5 @@ The backend is a [Node.js](https://nodejs.org/en/) application built on an [Expr
 
 ## Development challenges
 
-- Architecture: the planning stage is critical when building any full stack application. If you don't plan for modularity and extensibility, it can be difficult to implement new features because everything is so tightly coupled. For example, I
+- Architecture: the planning stage is critical when building any full stack application. If you don't plan for loose coupling, modularity and extensibility, it can be difficult to implement new features. For example, in order to implement public/group chats, I'll need to refactor the Message schema and/or client message rendering entirely; currently, the entire front end depends on a very specific 1:1 sender-recipient relationship to render messages in the chat window. In a group chat, there is no specific recipient, unless I am able to treat a chat room as if it were another user ("chat" state in the app). To be determined...
 - State management: At first, the current user details, chat, and WebSocket data were all managed in a single parent component; this required some messy prop-drilling until I refactored to manage these things globally with [React's Context API](https://reactjs.org/docs/context.html). I'm looking forward to exploring how [Redux](https://redux.js.org/) could improve my future projects.
