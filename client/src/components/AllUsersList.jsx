@@ -33,6 +33,7 @@ export default function AllUsersList() {
 
   const usersToShow = users.filter((elem) => {
     return !(
+      elem.username === "guest" ||
       user.id === elem.id ||
       user.friends.some((e) => e.id === elem.id) ||
       user.invitesReceived.some((e) => e.id === elem.id) ||
