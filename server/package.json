@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "copyclientbuild": "rm -rf build && cd ../client && cp -r build ../server",
-    "deploy": "cd ../ && git subtree push --prefix server heroku main",
     "start": "NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development nodemon index.js",
     "test": "NODE_ENV=test jest --verbose --runInBand",

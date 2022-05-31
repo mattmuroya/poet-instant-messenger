@@ -6,9 +6,13 @@ import ContactActionButton from "./ContactActionButton";
 export default function FriendsList({ setChatListExpanded }) {
   const { user, setUser, chat, setChat } = useContext(Context);
 
+  const friendList = [...user.friends].sort((a, b) =>
+    a.username.toLowerCase() < b.username.toLowerCase() ? -1 : 1
+  );
+
   useEffect(() => {
-    if (!chat && user.friends.length > 0) {
-      setChat(user.friends[0]);
+    if (!chat && friendList.length > 0) {
+      setChat(friendList[0]);
       setChatListExpanded(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,10 +93,6 @@ export default function FriendsList({ setChatListExpanded }) {
       console.error(error.response.data.error);
     }
   };
-
-  const friendList = [...user.friends].sort((a, b) =>
-    a.username.toLowerCase() < b.username.toLowerCase() ? -1 : 1
-  );
 
   return (
     <li className="top">
