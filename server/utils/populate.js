@@ -13,7 +13,7 @@ const populateProdData = async () => {
   // create admin
   const mattmuroya = await api.post("/api/users/register").send({
     username: "mightymorphinmatt",
-    password: process.env.mattmuroya,
+    password: process.env.mightymorphinmatt,
   });
 
   // create users
@@ -29,8 +29,8 @@ const populateProdData = async () => {
   });
 
   const nirvana = await api.post("/api/users/register").send({
-    username: "xXx_NIRVANA_xXX",
-    password: process.env.xXx_NIRVANA_xXX,
+    username: "xXx_nIrVaNa_xXx",
+    password: process.env.xXx_nIrVaNa_xXx,
   });
 
   const zeldagirl = await api.post("/api/users/register").send({
@@ -39,38 +39,33 @@ const populateProdData = async () => {
   });
 
   await api.post("/api/users/register").send({
-    username: "mjordan_23",
-    password: process.env.mjordan_23,
+    username: "got_hoops_23",
+    password: process.env.got_hoops_23,
   });
 
   await api.post("/api/users/register").send({
-    username: "lil_t4m4gotchi",
-    password: process.env.lil_t4m4gotchi,
+    username: "tamagotchibabe96",
+    password: process.env.tamagotchibabe96,
   });
 
   const timberlake = await api.post("/api/users/register").send({
-    username: "timberlake",
-    password: process.env.timberlake,
+    username: "mr_timberlake",
+    password: process.env.mr_timberlake,
   });
 
   await api.post("/api/users/register").send({
-    username: "MsRachelGreen",
-    password: process.env.MsRachelGreen,
+    username: "itzBRITZ",
+    password: process.env.itzBRITZ,
   });
 
   await api.post("/api/users/register").send({
-    username: "itzBRITZbitz",
-    password: process.env.itzBRITZbitz,
+    username: "BIG_YOSHI",
+    password: process.env.BIG_YOSHI,
   });
 
   await api.post("/api/users/register").send({
-    username: "chigui33",
-    password: process.env.chigui33,
-  });
-
-  await api.post("/api/users/register").send({
-    username: "l337h4x0r",
-    password: process.env.l337h4x0r,
+    username: "d00mguy",
+    password: process.env.d00mguy,
   });
 
   // create guest

@@ -31,15 +31,19 @@ export default function AllUsersList() {
     })();
   }, []);
 
-  const usersToShow = users.filter((elem) => {
-    return !(
-      elem.username === "guest" ||
-      user.id === elem.id ||
-      user.friends.some((e) => e.id === elem.id) ||
-      user.invitesReceived.some((e) => e.id === elem.id) ||
-      user.invitesSent.some((e) => e.id === elem.id)
+  const usersToShow = users
+    .filter((elem) => {
+      return !(
+        elem.username === "guest" ||
+        user.id === elem.id ||
+        user.friends.some((e) => e.id === elem.id) ||
+        user.invitesReceived.some((e) => e.id === elem.id) ||
+        user.invitesSent.some((e) => e.id === elem.id)
+      );
+    })
+    .sort((a, b) =>
+      a.username.toLowerCase() < b.username.toLowerCase() ? -1 : 1
     );
-  });
 
   const usersToShowFiltered = usersToShow.filter((user) => {
     return user.username.toLowerCase().includes(searchTerm.toLowerCase());

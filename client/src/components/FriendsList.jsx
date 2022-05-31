@@ -90,6 +90,10 @@ export default function FriendsList({ setChatListExpanded }) {
     }
   };
 
+  const friendList = [...user.friends].sort((a, b) =>
+    a.username.toLowerCase() < b.username.toLowerCase() ? -1 : 1
+  );
+
   return (
     <li className="top">
       <strong style={{ color: "purple" }}>✨ My Friends ✨</strong>
@@ -98,7 +102,7 @@ export default function FriendsList({ setChatListExpanded }) {
           <details open>
             <summary>All Friends ({user.friends.length})</summary>
             <ul>
-              {user.friends.map((friend) => (
+              {friendList.map((friend) => (
                 <li key={friend.id}>
                   <button
                     className={`link-button ${
