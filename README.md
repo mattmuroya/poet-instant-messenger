@@ -15,7 +15,7 @@ The front end is a [React](https://reactjs.org/) client built using [create-reac
 - Function components with `useEffect()` for performing lifecycle methods and `useState()` for managing local state.
 - React Context API for global state managementment of the current user, chat, and WebSocket connection.
 - Custom hook for validating the current session/auth token and fetching user details from the server.
-- Retro-classic '90s styling based on the excellent [98.css by jdan](https://github.com/jdan/98.css), with minor modifications to fonts and sizing in the interest of overall usability.
+- Retro-classic '90s styling based on the excellent [98.css by jdan](https://github.com/jdan/98.css), with a handful of custom elements and minor modifications to fonts and sizing in the interest of overall usability.
 
 ### Optimizations
 
@@ -25,7 +25,7 @@ The front end is a [React](https://reactjs.org/) client built using [create-reac
 
 ## Back end
 
-The backend is a [Node.js](https://nodejs.org/en/) application built on an [Express](https://expressjs.com/) server. The server also technically serves all the static client-side files from a build folder.
+The back end is a [Node.js](https://nodejs.org/en/) server built on using the [Express](https://expressjs.com/) framework. The server also technically serves all the static client-side files from a build folder.
 
 ### Highlights
 
