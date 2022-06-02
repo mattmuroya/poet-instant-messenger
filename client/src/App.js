@@ -14,12 +14,22 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [chat, setChat] = useState(null);
   const [socket, setSocket] = useState(null);
+  const [otherUserTyping, setOtherUserTyping] = useState(false);
 
   return (
     <div className="desktop">
       <DesktopIcons />
       <Context.Provider
-        value={{ user, setUser, chat, setChat, socket, setSocket }}
+        value={{
+          user,
+          setUser,
+          chat,
+          setChat,
+          socket,
+          setSocket,
+          otherUserTyping,
+          setOtherUserTyping,
+        }}
       >
         <BrowserRouter>
           <Routes>

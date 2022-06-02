@@ -9,4 +9,7 @@ export const Context = createContext({
 
   socket: null,
   setSocket: () => {},
+
+  otherUserTyping: false,
+  setOtherUserTyping: () => {},
 });

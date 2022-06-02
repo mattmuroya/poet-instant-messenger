@@ -6,9 +6,10 @@ import { v4 as uuidv4 } from "uuid";
 export default function ChatContainer({ chatListExpanded }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [otherUserTyping, setOtherUserTyping] = useState(false);
+  // const [otherUserTyping, setOtherUserTyping] = useState(false);
 
-  const { user, chat, socket } = useContext(Context);
+  const { user, chat, socket, otherUserTyping, setOtherUserTyping } =
+    useContext(Context);
 
   const scrollRef = useRef();
 

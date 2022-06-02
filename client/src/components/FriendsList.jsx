@@ -4,7 +4,8 @@ import { Context } from "../contexts/Context";
 import ContactActionButton from "./ContactActionButton";
 
 export default function FriendsList({ setChatListExpanded }) {
-  const { user, setUser, chat, setChat } = useContext(Context);
+  const { user, setUser, chat, setChat, setOtherUserTyping } =
+    useContext(Context);
 
   const friendList = [...user.friends].sort((a, b) =>
     a.username.toLowerCase() < b.username.toLowerCase() ? -1 : 1
@@ -20,6 +21,7 @@ export default function FriendsList({ setChatListExpanded }) {
 
   const handleSwitchChat = (c) => {
     setChat(c);
+    setOtherUserTyping(false);
     setChatListExpanded(false);
   };
 
