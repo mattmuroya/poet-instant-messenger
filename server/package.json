@@ -9,7 +9,8 @@
     "dev": "NODE_ENV=development nodemon index.js",
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "reset": "NODE_ENV=development node -e \"require('./utils/reset').reset()\"",
-    "populate": "NODE_ENV=productionDb node -e \"require('./utils/populate').populate()\""
+    "populate": "NODE_ENV=productionDb node -e \"require('./utils/populate').populate()\"",
+    "guest": "NODE_ENV=productionDb node -e \"require('./utils/guest').populateGuest()"
   },
   "keywords": [],
   "author": "",
