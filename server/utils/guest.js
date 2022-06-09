@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
+const supertest = require("supertest");
+const app = require("../app");
+const api = supertest(app);
 
-const User = require("../models/user");
-const Message = require("../models/message");
+// const User = require("../models/user");
+// const Message = require("../models/message");
 
 const createGuest = async () => {
-  await Message.deleteMany({});
-  await User.deleteMany({});
+  // await Message.deleteMany({});
+  // await User.deleteMany({});
 
   await api.post("/api/users/register").send({
     username: "guest",
@@ -20,7 +23,7 @@ const closeConnection = async () => {
 const populateGuest = async () => {
   await createGuest();
   await closeConnection();
-  console.log("production Db reset complete");
+  console.log("guest utility completed execution.");
 };
 
 module.exports = {
