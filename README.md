@@ -12,7 +12,7 @@ Poet is my first attempt at building a solo full stack web application, intended
 
 If you would like to view the app in production, there is a live demo available at https://poet.mattmuroya.com/.
 
-If you would like to run the app in development mode on your local machine, you will need to set up your own instance of MongoDB, download the project files, and create two `.env` files containing the required environment variables.
+If you would like to run the app locally in development mode on your computer, you will need to set up your own instance of MongoDB, download the project files, and create two `.env` files containing the required environment variables.
 
 ### Set Up MongoDB
 
@@ -60,15 +60,19 @@ You will need to create two `.env` files which contain "environment variables." 
 
         REACT_APP_GUEST_PW="password"
 
-    - REACT_APP_GUEST_PW should match the `GUEST_PW` you provided in the `server/.env` file.
+    - `REACT_APP_GUEST_PW` should match the `GUEST_PW` you provided in the `server/.env` file.
 
 5.  Save both files.
 
-### Run the Guest Utility
+### Run the Guest Account Utility
 
-Inside the `server/utils` directory, there are several utilities used for populating the database with testing data. We will be running the `guest.js` utility with the predefined NPM script.
+Inside the `server/utils` directory, there are several utilities for populating the database with test data. We will be running a predefined NPM script to execute `guest.js` which will initialize a guest account with the password you specified in your `.env` files.
 
-// TO BE CONFIGURED
+`cd` in to the `server` directory and run the guest script.
+
+    npm run guest
+
+If the operation fails, double-check that the connection string you provided contains the correct database credentials.
 
 ### Start the Application
 
@@ -86,7 +90,11 @@ In the second terminal window, `cd` into the `client` directory and run the deve
 
     npm start
 
-The client should start automatically on http://localhost:3000/. You can log in as a guest, or register your own user account.
+The client should start automatically on http://localhost:3000/.
+
+#### Congratulations!
+
+You now have a fully-functional copy of Poet running locally on your computer. You should be able to log in as a guest using the link on the login page, or create and log in with your own account. Have fun!
 
 ## Client Design
 
@@ -132,7 +140,3 @@ The back end is a [Node.js](https://nodejs.org/en/) server built on using the [E
 
 - Architecture: the planning stage is critical when building any full stack application. If you don't plan for loose coupling, modularity and extensibility, it can be difficult to implement new features. For example, in order to implement public/group chats, I'll need to refactor the Message schema and/or client message rendering entirely; currently, the entire front end depends on a very specific 1:1 sender-recipient relationship to render messages in the chat window. In a group chat, there is no specific recipient, unless I am able to treat a chat room as if it were another user ("chat" state in the app). To be determined...
 - State management: At first, the current user details, chat, and WebSocket data were all managed in a single parent component; this required some messy prop-drilling until I refactored to manage these things globally with [React's Context API](https://reactjs.org/docs/context.html). I'm looking forward to exploring how [Redux](https://redux.js.org/) could improve my future projects.
-
-```
-
-```
