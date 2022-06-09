@@ -92,7 +92,7 @@ In the second terminal window, `cd` into the `client` directory and run the deve
 
 The client should start automatically on http://localhost:3000/.
 
-#### Congratulations!
+### Congratulations!
 
 You now have a fully-functional copy of Poet running locally on your computer. You should be able to log in as a guest using the link on the login page, or create and log in with your own account. Have fun!
 
