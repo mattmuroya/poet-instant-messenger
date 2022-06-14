@@ -118,3 +118,56 @@ In development mode, the client (front end) and server (back end) run on seperat
 The client should start automatically on http://localhost:3000/.
 
 You should now have a fully-functional copy of Poet running locally on your computer. Try logging in as a guest using the link on the login page, or create a new account on the register page. Have fun!
+
+## API Reference
+
+Poet's backend is a RESTful API Node.js server (contained within the `server` directory). This section contains reference documentation for the API endpoints.
+
+All API requests must have an authorization header
+
+There are two primary resource categories:
+
+- [users](#users)
+- [messages](#messages)
+
+There is also an endpoint for refreshing the user's authentication:
+
+- [auth](#auth)
+
+### users
+
+Provides access to user data and actions, including registration, login, and sending/cancelling/receiving/rejecting friend invites.
+
+#### **`GET:`** /users/
+
+#### **`GET:`** /users/redacted
+
+#### **`GET:`** /users/current
+
+#### **`GET:`** /users/{id}
+
+#### **`POST:`** /users/login/
+
+#### **`POST:`** /users/register/
+
+#### **`PUT:`** /users/invite/
+
+#### **`PUT:`** /users/invite/cancel/
+
+#### **`PUT:`** /users/invite/accept/
+
+#### **`PUT:`** /users/invite/reject/
+
+### messages
+
+Provides the access to retrieve stored messages and send new messages.
+
+#### **`GET:`** /messages/{chatId}/
+
+#### **`POST:`** /messages/
+
+### auth
+
+Validates the current user's authentication status and refreshes or revokes the auth token accordingly.
+
+#### **`POST:`** /auth/
