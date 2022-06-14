@@ -8,7 +8,10 @@ Try it out! https://poet.mattmuroya.com/
 
 ## About this Document
 
-This document provides directions for setting up and running a copy of Poet on your local machine. It assume some basic familiarity with setting up an instance of MongoDB and running git/npm commands from the command line.
+This document provides directions for setting up and running a copy of Poet on your local machine, as well as reference for the backend API endpoints. It assume some basic familiarity with setting up an instance of MongoDB and running git/npm commands from the command line.
+
+- [How to Run This Application](#how-to-run-this-application)
+- [API Reference](#api-reference)
 
 ## How to Run This Application
 
@@ -138,36 +141,36 @@ There is also an endpoint for refreshing the user's authentication:
 
 Provides access to user data and actions, including registration, login, and sending/cancelling/receiving/rejecting friend invites.
 
-#### **`GET:`** /users/
+#### **`GET`** /users/
 
-#### **`GET:`** /users/redacted
+#### **`GET`** /users/redacted
 
-#### **`GET:`** /users/current
+#### **`GET`** /users/current
 
-#### **`GET:`** /users/{id}
+#### **`GET`** /users/{id}
 
-#### **`POST:`** /users/login/
+#### **`POST`** /users/login/
 
-#### **`POST:`** /users/register/
+#### **`POST`** /users/register/
 
-#### **`PUT:`** /users/invite/
+#### **`PUT`** /users/invite/
 
-#### **`PUT:`** /users/invite/cancel/
+#### **`PUT`** /users/invite/cancel/
 
-#### **`PUT:`** /users/invite/accept/
+#### **`PUT`** /users/invite/accept/
 
-#### **`PUT:`** /users/invite/reject/
+#### **`PUT`** /users/invite/reject/
 
 ### messages
 
 Provides the access to retrieve stored messages and send new messages.
 
-#### **`GET:`** /messages/{chatId}/
+#### **`GET`** /messages/{chatId}/
 
-#### **`POST:`** /messages/
+#### **`POST`** /messages/
 
 ### auth
 
 Validates the current user's authentication status and refreshes or revokes the auth token accordingly.
 
-#### **`POST:`** /auth/
+#### **`POST`** /auth/
