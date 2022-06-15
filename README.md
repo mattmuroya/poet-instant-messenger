@@ -8,7 +8,7 @@ Try it out! https://poet.mattmuroya.com/
 
 ## About this Document
 
-This document provides directions for setting up and running a copy of Poet on your local machine. It assume some basic familiarity with setting up an instance of MongoDB and running git/npm commands from the command line.
+This document provides directions for setting up and running a copy of Poet on your local machine. It assume some basic familiarity with setting up an instance of MongoDB and running Git/NPM commands from the command line.
 
 ## How to Run This Application
 
@@ -32,13 +32,14 @@ Once you have set up your database and access credentials, make note of your "co
 
 [Clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) this repository to your Desktop (or wherever you keep your projects). Once you have the project files, install the necessary dependencies:
 
-1.  Open your terminal, `cd` into the `server` directory inside the project folder, and install server dependencies.
+1.  Open a terminal window.
+2.  `cd` into the `server` directory inside the project folder and install server dependencies.
 
     ```console
     $ cd Desktop/poet/server && npm install
     ```
 
-2.  `cd` into the `client` directory and install client dependencies.
+3.  `cd` into the `client` directory and install client dependencies.
 
     ```console
     $ cd ../client && npm install
@@ -83,15 +84,16 @@ You need to set these environment variables locally so that Poet can access them
 
 ### 4. Run the guest account utility
 
-The `server/utils` directory contains several utilities for populating the database with test and demo data. You only need to worry about `guest.js`. There is a predefined NPM script which will initialize the guest account with the password you specified in your `.env` files.
+The `server/utils` directory contains several utilities for populating the database with test and demo data. `guest.js` sets up the guest account only. There is a predefined NPM script which will initialize the guest account with the password you specified in your `.env` files. Running this script is also a good way to test your database connection.
 
-1. `cd` in to the `server` directory and run the guest script.
+1. Open a new terminal window.
+2. `cd` in to the `server` directory and run the guest script.
 
    ```console
    $ npm run guest
    ```
 
-If the operation fails, double-check that the connection string you provided contains the correct database credentials.
+If the operation fails with a MongoDB-related error, double-check that the connection string you provided contains the correct database credentials.
 
 ### 5. Start the application
 
