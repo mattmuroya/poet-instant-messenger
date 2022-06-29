@@ -2,7 +2,7 @@
 
 ![Poet Demo GIF](./assets/poet-demo.gif)
 
-Poet is a full stack MERN ([MongoDB](https://www.mongodb.com/),
+Poet is a full stack JavaScript/MERN ([MongoDB](https://www.mongodb.com/),
 [Express](https://expressjs.com/), [React](https://reactjs.org/), and
 [Node.js](https://nodejs.org/en/)) instant messenger with real-time WebSocket
 communication via [Socket.IO](https://socket.io/), styled in the spirit of the
@@ -13,7 +13,7 @@ Try it out! https://poet-instant-messenger.herokuapp.com/
 ## About this Document
 
 This document provides directions for setting up a copy of Poet on your local
-machine. It assume some basic familiarity with configuring your own MongoDB
+machine. It assumes some basic familiarity with configuring your own MongoDB
 instance and running Git/NPM commands from the command line.
 
 ## How to Run This Application
@@ -63,8 +63,8 @@ have the project files, install the necessary dependencies:
 
 ### 3. Configure environment variables
 
-Poet requires several _environment variables_ to run. An environment variable is
-a variable set by whatever "process" is running your application. In production,
+Poet requires several _environment variables_. An environment variable is a
+variable set by whatever process is running your application. In production,
 this process is your hosting platform (Poet runs on
 [Heroku](https://www.heroku.com/)). In development, this process is your local
 dev server.
@@ -86,44 +86,47 @@ from the dev server running on your computer.
     ```
     PORT=3001
 
-    MONGODB_URL_TEST="mongodb+srv://<username>:<password>@<host>/?retryWrites=true&w=majority"
+    MONGODB_URL_TEST="mongodb+srv://<DB_USERNAME>:<DB_PASSWORD>@<DB_HOST>/?retryWrites=true&w=majority"
 
-    JWT_SECRET="<long_string_of_random_characters>"
+    JWT_SECRET="<STRING_OF_RANDOM_CHARACTERS>"
 
-    GUEST_PW="<password>"
+    GUEST_PW="<GUEST_PASSWORD>"
     ```
 
     - `PORT=3001` instructs the dev server to run on localhost:3001. Do not
       change this variable.
-    - `MONGODB_URL_TEST` is your MongoDB connection string. Replace the
-      placeholder with the string you generated when setting up your database in
-      step 1.
+    - `MONGODB_URL_TEST` is your MongoDB connection string. Replace
+      `<DB_USERNAME>`, `<DB_PASSWORD>`, and `<DB_HOST>` with the respective
+      values in your MongoDB connection string from step 1.
     - `JWT_SECRET` is a private key that your application uses to encode and
-      decode [JWT access tokens](https://jwt.io/) for user authorization. It can
-      be any random string with a recommended minimum length of 32 characters
-      (alphanumeric, `-`, `_`, and `.`).
+      decode [JWT access tokens](https://jwt.io/) for user authorization.
+      Replace `<STRING_OF_RANDOM_CHARACTERS>` with any random string; the
+      recommended minimum length is 32 characters (alphanumeric, `-`, `_`, and
+      `.`).
     - `GUEST_PW` is the password that Poet will assign to the guest account when
-      you run database utility in the next step. It can be any string of at
-      least 8 characters.
+      you run database utility in the next step. Replace `<GUEST_PASSWORD>` with
+      any string of at least 8 characters.
 
 4.  Open `client/.env` and paste in the following:
 
-        REACT_APP_GUEST_PW="password"
+        REACT_APP_GUEST_PW="<PASSWORD>"
 
-    - `REACT_APP_GUEST_PW` must match the `GUEST_PW` you provided in the
-      `server/.env` file.
+    - `REACT_APP_GUEST_PW` should match the guest password you provided in
+      `server/.env`. Replace `<PASSWORD>` with the same guest password you used
+      above.
 
 5.  Save and close both `.env` files.
 
 ### 4. Run the guest account utility
 
 The `server/utils` directory contains several utilities for populating the
-database with test and demo data, however you only need to run `guest.js`, which
-sets up the guest account (for the "login as guest" feature).
+database with test and demo data. You only need to run `guest.js`, which creates
+a guest account and saves the user details to the database (for the "login as a
+guest" feature).
 
-There is a predefined NPM script which will create the guest user with the
-password you specified in your `.env` files in the previous step. Running this
-script is a good way to test your database connection.
+There is a predefined NPM script which will create the guest account with the
+password you specified in your `.env` files in step 3. Running this script is a
+good way to test your database connection.
 
 1. Open a new terminal window.
 2. `cd` in to the `server` directory and run the guest script.
@@ -163,6 +166,7 @@ run both simultaneously.
 The client should start automatically on port 3000 at http://localhost:3000/
 (the server is on port 3001).
 
-You now have a fully-functional copy of Poet running locally on your computer!
-Try logging in as a guest using the link on the login page, or create a new
-account on the register page. Have fun!
+You should now have a fully functional copy of Poet running locally. Try logging
+in with the guest account using "login as a guest" at
+http://localhost:3000/login, or create a new account on
+http://localhost:3000/register. Have fun!
