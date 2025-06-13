@@ -1,6 +1,7 @@
 {
   "scripts": {
     "heroku-prebuild": "cd client && npm install && npm run build && cd .. && cd server && npm install && npm run copyclientbuild",
+    "render-prebuild": "cd client && npm install && npm run build && cd ../server && npm install && npm run copyclientbuild",
     "start": "cd server && npm start"
   }
 }

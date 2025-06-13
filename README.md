@@ -8,7 +8,7 @@ Poet is a full stack JavaScript/MERN ([MongoDB](https://www.mongodb.com/),
 communication via [Socket.IO](https://socket.io/), styled in the spirit of the
 retro-classic IM apps of the late ‘90s (think AIM, Yahoo, and MSN).
 
-Try it out! https://poet-instant-messenger.herokuapp.com/
+Try it out! https://poet-instant-messenger.onrender.com/
 
 ## About this Document
 
@@ -39,7 +39,9 @@ your local machine.
 5. [Start the application](#5-start-the-application)
 
 If you would like to view the app in production, see the
-[live demo](https://poet-instant-messenger.herokuapp.com/).
+[live demo](https://poet-instant-messenger.onrender.com/), hosted on Render
+(Note: Render spins down applications on inactivity so it might take a minute or
+so to load).
 
 ### 1. Set up MongoDB
 
@@ -78,7 +80,7 @@ server and client dependencies.
 Poet requires several _environment variables_. An environment variable is a
 variable set by whatever process is running your application. In production,
 this process is your hosting platform (Poet runs on
-[Heroku](https://www.heroku.com/)). In development, this process is your local
+[Render](https://render.com/)). In development, this process is your local
 development server.
 
 You need to set these environment variables locally so that Poet can access them
